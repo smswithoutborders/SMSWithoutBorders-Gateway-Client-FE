@@ -1,0 +1,15 @@
+//import carbon styles
+$feature-flags: (
+  grid-columns-16: true,
+);
+// Feature flags
+$css--font-face: true;
+$css--plex: true;
+
+// Global styles
+@import "carbon-components/scss/globals/scss/css--font-face";
+
+@import 'carbon-components/scss/globals/scss/styles.scss';
+
+// import the grid
+@import 'carbon-components/scss/globals/grid/grid';
