@@ -6,10 +6,14 @@ $feature-flags: (
 $css--font-face: true;
 $css--plex: true;
 
+@import "carbon-components/scss/globals/scss/theme.scss";
+
+// Use the gray 10 theme
+$carbon--theme: $carbon--theme--g10;
+@include carbon--theme();
+
 // Global styles
-@import "carbon-components/scss/globals/scss/css--font-face";
+@import "carbon-components/scss/globals/scss/styles.scss";
 
-@import 'carbon-components/scss/globals/scss/styles.scss';
-
-// import the grid
-@import 'carbon-components/scss/globals/grid/grid';
+// Import carbon grid
+@import "carbon-components/scss/globals/grid/grid";

@@ -1,38 +1,14 @@
-.App {
-  text-align: center;
-}
+@import 'carbon-components/scss/globals/scss/vendor/@carbon/type/scss/font-family.scss';
+@import 'carbon-components/scss/globals/scss/vendor/@carbon/layout/scss/breakpoint.scss';
+@import 'carbon-components/scss/globals/scss/typography.scss';
+@import 'carbon-components/scss/globals/scss/vars.scss';
+@import 'carbon-components/scss/globals/scss/colors.scss';
+@import 'carbon-components/scss/globals/scss/theme.scss';
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
+// Use the gray 10 theme
+$carbon--theme: $carbon--theme--g10;
+@include carbon--theme();
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.bx--side-nav__navigation {
+  background-color: $ui-01;
 }
