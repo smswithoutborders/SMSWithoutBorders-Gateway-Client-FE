@@ -1,17 +1,21 @@
 import './App.scss';
 
 import {
-  HeaderContainer,
+  Content,
   Header,
-  HeaderName,
-  SkipToContent,
-  HeaderGlobalAction,
-  HeaderGlobalBar,
+  HeaderContainer,
   HeaderMenuButton,
+  HeaderName,
+  HeaderNavigation,
+  HeaderMenuItem,
+  HeaderGlobalBar,
+  HeaderGlobalAction,
+  SkipToContent,
   SideNav,
   SideNavItems,
-  SideNavLink
-
+  SideNavLink,
+  SideNavMenu,
+  SideNavMenuItem,
 } from 'carbon-components-react';
 
 import {
@@ -24,7 +28,10 @@ import {
 } from '@carbon/icons-react';
 
 import { Route, Switch } from 'react-router-dom';
-import { Content } from 'carbon-components-react';
+SideNav.displayName = 'SideNav';
+SideNavMenu.displayName = 'SideNavMenu';
+SideNavMenuItem.displayName = 'SideNavMenuItem';
+
 const App = () => {
 
   return (
@@ -32,17 +39,21 @@ const App = () => {
       <HeaderContainer
         render={({ isSideNavExpanded, onClickSideNavExpand }) => (
           <>
-            <Header aria-label="Afkanerd C - Deck">
+            <Header aria-label="IBM Platform Name">
               <SkipToContent />
               <HeaderMenuButton
                 aria-label="Open menu"
-                isCollapsible
                 onClick={onClickSideNavExpand}
                 isActive={isSideNavExpanded}
               />
               <HeaderName href="#" prefix="">
-                C | Deck
+                C - Deck
           </HeaderName>
+              <HeaderNavigation aria-label="C - Deck">
+                <HeaderMenuItem href="#">API</HeaderMenuItem>
+                <HeaderMenuItem href="#">Docs</HeaderMenuItem>
+                <HeaderMenuItem href="#">About</HeaderMenuItem>
+              </HeaderNavigation>
               <HeaderGlobalBar>
                 <HeaderGlobalAction
                   aria-label="Search">
@@ -57,36 +68,32 @@ const App = () => {
                   <AppSwitcher20 />
                 </HeaderGlobalAction>
               </HeaderGlobalBar>
-              <SideNav
-                aria-label="Side navigation"
-                isRail
-                defaultExpanded={true}
-                expanded={isSideNavExpanded}
-              >
+              <SideNav aria-label="Side navigation" expanded={isSideNavExpanded}>
                 <SideNavItems>
-                  <SideNavLink renderIcon={Grid32} href="#" large>
+                  <SideNavLink large renderIcon={Grid32} href="/">
                     Dashboard
-                </SideNavLink>
-                  <SideNavLink renderIcon={EmailNew32} href="#" large>
+              </SideNavLink>
+                  <SideNavLink large renderIcon={EmailNew32} href="/">
                     SMS
-                </SideNavLink>
-                  <SideNavLink renderIcon={IotPlatform16} href="#" large>
+              </SideNavLink>
+                  <SideNavLink large renderIcon={IotPlatform16} href="#">
                     Modems
-                </SideNavLink>
+              </SideNavLink>
                 </SideNavItems>
               </SideNav>
             </Header>
+
+            <Content id="main-content" className="bx--col-lg-13 bx--offset-lg-3">
+              <Switch>
+                <Route exact path="/" />
+                <Route exact path="/sms" />
+                <Route exact path="/sms/:modem" />
+                <Route exact path="/modems" />
+              </Switch>
+            </Content>
           </>
         )}
       />
-      
-      <Content>
-        <Switch>
-          <Route exact path="/" />
-          <Route path="/sms" />
-          <Route path="/modems" />
-        </Switch>
-      </Content>
     </>
   );
 }
