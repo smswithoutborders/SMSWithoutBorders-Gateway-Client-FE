@@ -14,8 +14,6 @@ import {
   SideNav,
   SideNavItems,
   SideNavLink,
-  SideNavMenu,
-  SideNavMenuItem,
 } from 'carbon-components-react';
 
 import {
@@ -27,10 +25,9 @@ import {
   IotPlatform16
 } from '@carbon/icons-react';
 
-import { Route, Switch } from 'react-router-dom';
-SideNav.displayName = 'SideNav';
-SideNavMenu.displayName = 'SideNavMenu';
-SideNavMenuItem.displayName = 'SideNavMenuItem';
+import { Route, Switch, Link } from 'react-router-dom';
+
+import DashBoard from './Content/Dashboard';
 
 const App = () => {
 
@@ -70,13 +67,13 @@ const App = () => {
               </HeaderGlobalBar>
               <SideNav aria-label="Side navigation" expanded={isSideNavExpanded}>
                 <SideNavItems>
-                  <SideNavLink large renderIcon={Grid32} href="/">
+                  <SideNavLink large renderIcon={Grid32} as={Link} to="/">
                     Dashboard
               </SideNavLink>
-                  <SideNavLink large renderIcon={EmailNew32} href="/">
+                  <SideNavLink large renderIcon={EmailNew32} as={Link} to="/sms">
                     SMS
               </SideNavLink>
-                  <SideNavLink large renderIcon={IotPlatform16} href="#">
+                  <SideNavLink large renderIcon={IotPlatform16} as={Link} to="/modems">
                     Modems
               </SideNavLink>
                 </SideNavItems>
@@ -85,7 +82,7 @@ const App = () => {
 
             <Content id="main-content" className="bx--col-lg-13 bx--offset-lg-3">
               <Switch>
-                <Route exact path="/" />
+                <Route exact path="/" component={DashBoard} />
                 <Route exact path="/sms" />
                 <Route exact path="/sms/:modem" />
                 <Route exact path="/modems" />

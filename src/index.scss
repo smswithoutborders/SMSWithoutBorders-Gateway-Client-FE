@@ -14,6 +14,7 @@ $carbon--theme: $carbon--theme--g10;
 
 // Global styles
 @import "carbon-components/scss/globals/scss/styles.scss";
+@import "@carbon/charts/styles.css";
 
 // Import carbon grid
 @import "carbon-components/scss/globals/grid/grid";
