@@ -46,7 +46,7 @@ const App = () => {
                 isActive={isSideNavExpanded}
               />
               <HeaderName href="#" prefix="">
-                C - Deck
+                C | Deck
           </HeaderName>
               <HeaderNavigation aria-label="C - Deck">
                 <HeaderMenuItem href="#">API</HeaderMenuItem>
