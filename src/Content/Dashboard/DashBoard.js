@@ -91,26 +91,23 @@ const gaugeOptions = {
     "width": "100%",
     "gauge": {
         "type": "full",
-        "status": "danger"
+        "status": "success",
+        "alignment": "center"
     }
 }
 
 const DonutData = [
     {
         "group": "Alcatel",
-        "value": 20000
+        "value": 2000
     },
     {
         "group": "Vodaphone",
-        "value": 65000
+        "value": 6500
     },
     {
         "group": "Huawei",
-        "value": 75000
-    },
-    {
-        "group": "TP-Link",
-        "value": 1200
+        "value": 7500
     }
 ];
 
@@ -119,10 +116,11 @@ const DonutOptions = {
     "resizable": true,
     "donut": {
         "center": {
-            "label": "Modems"
-        }
+            "label": "SMS / Modem"
+        },
+        "alignment": "center"
     },
-    "height": "350px"
+    "height": "350px",
 }
 
 const DashBoard = () => {
@@ -135,7 +133,16 @@ const DashBoard = () => {
             </div>
             <div className="bx--grid bx--grid--narrow">
                 <div className="bx--row">
-                    <div className="bx--col-lg-8">
+                    <div className="bx--col-lg-5">
+                        <div className="dash-card">
+                            <DonutChart
+                                data={DonutData}
+                                options={DonutOptions}
+                            />
+                        </div>
+                    </div>
+
+                    <div className="bx--col-lg-7">
                         <div className="dash-card">
                             <LineChart
                                 data={LineData}
@@ -143,19 +150,12 @@ const DashBoard = () => {
                             />
                         </div>
                     </div>
+
                     <div className="bx--col-lg-4">
                         <div className="dash-card">
                             <GaugeChart
                                 data={gaugeData}
                                 options={gaugeOptions}
-                            />
-                        </div>
-                    </div>
-                    <div className="bx--col-lg-4">
-                        <div className="dash-card">
-                            <DonutChart
-                                data={DonutData}
-                                options={DonutOptions}
                             />
                         </div>
                     </div>
