@@ -10,7 +10,8 @@ $carbon--theme: $carbon--theme--g10;
 @include carbon--theme();
 
 // import here so they inherit the theme g10
-@import "./Content/Dashboard/dashboard.scss";
+@import "./content/Dashboard/dashboard.scss";
+@import "./content/SMS/sms.scss";
 
 .bx--side-nav__navigation {
   background-color: $ui-01;
