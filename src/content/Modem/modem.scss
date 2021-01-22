@@ -1,0 +1,27 @@
+.modem-card {
+    background-color: $ui-01;
+    padding: $spacing-06;
+    border-radius: $spacing-03;
+    margin-bottom: $layout-03;
+    h3 {
+        @include carbon--type-style("productive-heading-03");
+    }
+    .modem-card__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: $layout-03;
+    }
+    .modem-card__body {
+        text-align: center;
+    }
+
+    .modem-card__footer {
+        display: flex;
+        justify-content: space-between;
+        margin-top: $layout-03;
+        button {
+            width:49.8%;
+        }
+    }
+}

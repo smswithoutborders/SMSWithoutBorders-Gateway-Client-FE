@@ -29,6 +29,7 @@ import { Route, Switch, Link } from 'react-router-dom';
 
 import DashBoard from './content/Dashboard';
 import SMS from './content/SMS';
+import Modem from './content/Modem';
 
 const App = () => {
 
@@ -74,7 +75,7 @@ const App = () => {
                   <SideNavLink large renderIcon={EmailNew32} element={Link} to="/sms">
                     SMS
               </SideNavLink>
-                  <SideNavLink large renderIcon={IotPlatform16} element={Link} to="/modems">
+                  <SideNavLink large renderIcon={IotPlatform16} element={Link} to="/modem">
                     Modems
               </SideNavLink>
                 </SideNavItems>
@@ -86,7 +87,7 @@ const App = () => {
                 <Route exact path="/" component={DashBoard} />
                 <Route exact path="/sms" component={SMS} />
                 <Route exact path="/sms/:modem" />
-                <Route exact path="/modems" />
+                <Route exact path="/modem" component={Modem} />
               </Switch>
             </Content>
           </>
