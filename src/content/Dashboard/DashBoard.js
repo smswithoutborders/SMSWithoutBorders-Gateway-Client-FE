@@ -133,7 +133,7 @@ const DashBoard = () => {
             </div>
             <div className="bx--grid bx--grid--narrow">
                 <div className="bx--row">
-                    <div className="bx--col-lg-5">
+                    <div className="bx--col-lg-6">
                         <div className="dash-card">
                             <DonutChart
                                 data={DonutData}
@@ -142,7 +142,7 @@ const DashBoard = () => {
                         </div>
                     </div>
 
-                    <div className="bx--col-lg-7">
+                    <div className="bx--col-lg-10">
                         <div className="dash-card">
                             <LineChart
                                 data={LineData}
@@ -150,7 +150,9 @@ const DashBoard = () => {
                             />
                         </div>
                     </div>
+                </div>
 
+                <div className="bx--row">
                     <div className="bx--col-lg-4">
                         <div className="dash-card">
                             <GaugeChart

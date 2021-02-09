@@ -38,7 +38,7 @@ const App = () => {
       <HeaderContainer
         render={({ isSideNavExpanded, onClickSideNavExpand }) => (
           <>
-            <Header aria-label="IBM Platform Name">
+            <Header aria-label="SMS without borders">
               <SkipToContent />
               <HeaderMenuButton
                 aria-label="Open menu"
