@@ -1,2 +1,2 @@
-import Modem from './Modem';
-export default Modem;
+import Modems from './Modems';
+export default Modems;

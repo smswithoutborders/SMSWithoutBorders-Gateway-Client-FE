@@ -12,7 +12,7 @@ $carbon--theme: $carbon--theme--g10;
 // import here so they inherit the theme g10
 @import "./content/Dashboard/dashboard.scss";
 @import "./content/SMS/sms.scss";
-@import "./content/Modem/modem.scss";
+@import "./content/Modem/modems.scss";
 
 .bx--side-nav__navigation {
   background-color: $ui-01;

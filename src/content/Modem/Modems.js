@@ -4,6 +4,32 @@ import { SiHuawei, SiVodafone } from "react-icons/si";
 
 import { Button } from 'carbon-components-react';
 
+import MockData from "./MockData";
+
+const singleModem = props => {
+
+    return (
+        <>
+            <div className="bx--col-lg-4">
+                <div className="modem-card">
+                    <div className="modem-card__header">
+                        <SiHuawei size={35} className="icon" />
+                        <h3>{props.model}</h3>
+                    </div>
+                    <div className="modem-card__body">
+                        <p>{props.IMEI}</p>
+                    </div>
+                    <div className="modem-card__footer">
+                        <Button kind="secondary">Details</Button>
+                        <Button kind="primary">Logs</Button>
+                    </div>
+                </div>
+            </div>
+        </>
+    );
+
+};
+
 const Modems = () => {
     return (
         <>
