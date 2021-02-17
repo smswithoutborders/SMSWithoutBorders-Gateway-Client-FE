@@ -6,9 +6,16 @@
 
     &:hover {
         cursor: pointer;
-        @include layer('pop-out')
+        @include layer("pop-out");
     }
     p {
         margin-top: $layout-01 / 2;
+        display: none;
+    }
+
+    @include carbon--breakpoint(md) {
+        p {
+            display:block;
+        }
     }
 }

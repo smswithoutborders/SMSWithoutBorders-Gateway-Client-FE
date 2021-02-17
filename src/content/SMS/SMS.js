@@ -67,28 +67,28 @@ const SMS = () => {
       </div>
       <div className="bx--grid bx--grid--narrow">
         <div className="bx--row">
-          <div className="bx--col-lg-4">
+          <div className="bx--col bx--col-lg-4">
             <div className="sms-card">
               <Send />
               <p>New SMS</p>
             </div>
           </div>
 
-          <div className="bx--col-lg-4">
+          <div className="bx--col bx--col-lg-4">
             <div className="sms-card">
               <BulkSend />
               <p>Bulk SMS</p>
             </div>
           </div>
 
-          <div className="bx--col-lg-4">
+          <div className="bx--col bx--col-lg-4">
             <div className="sms-card">
               <Schedule />
               <p> New Schedule</p>
             </div>
           </div>
 
-          <div className="bx--col-lg-4">
+          <div className="bx--col bx--col-lg-4">
             <div className="sms-card">
               <Contacts />
               <p>Contacts List</p>
