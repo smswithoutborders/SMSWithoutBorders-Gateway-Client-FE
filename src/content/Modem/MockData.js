@@ -8,7 +8,7 @@ const MockData = [
   },
   {
     id: 2,
-    brand: "vodaphone",
+    brand: "Vodafone",
     model: "SH-120",
     IMEI: "805487072577895"
   },
@@ -20,7 +20,7 @@ const MockData = [
   },
   {
     id: 4,
-    brand: "vodaphone",
+    brand: "Vodafone",
     model: "KE-36",
     IMEI: "805487056577784"
   },
