@@ -6,25 +6,28 @@ import { Button } from 'carbon-components-react';
 
 import MockData from "./MockData";
 
-const singleModem = props => {
-
-    return (
-        <>
-            <div className="bx--col-lg-4">
-                <div className="modem-card">
-                    <div className="modem-card__header">
-                        <SiHuawei size={35} className="icon" />
-                        <h3>{props.model}</h3>
-                    </div>
-                    <div className="modem-card__body">
-                        <p>{props.IMEI}</p>
-                    </div>
-                    <div className="modem-card__footer">
-                        <Button kind="secondary">Details</Button>
-                        <Button kind="primary">Logs</Button>
-                    </div>
+const ModemList = (props) => {
+    const modems = props.modems;
+    const modemsList = modems.map((modem) =>
+        <div className="bx--col-lg-4">
+            <div className="modem-card">
+                <div className="modem-card__header">
+                    <SiHuawei size={35} className="icon" />
+                    <h3>{modem.model}</h3>
+                </div>
+                <div className="modem-card__body">
+                    <p>{modem.IMEI}</p>
+                </div>
+                <div className="modem-card__footer">
+                    <Button kind="secondary">Details</Button>
+                    <Button kind="primary">Logs</Button>
                 </div>
             </div>
+        </div>
+    );
+    return (
+        <>
+            {modemsList}
         </>
     );
 
@@ -39,129 +42,7 @@ const Modems = () => {
             </div>
             <div className="bx--grid bx--grid--narrow">
                 <div className="bx--row">
-                    <div className="bx--col-lg-4">
-                        <div className="modem-card">
-                            <div className="modem-card__header">
-                                <SiHuawei size={35} className="icon" />
-                                <h3>E303</h3>
-                            </div>
-                            <div className="modem-card__body">
-                                <p>805487056577894</p>
-                            </div>
-                            <div className="modem-card__footer">
-                                <Button kind="secondary">Details</Button>
-                                <Button kind="primary">Logs</Button>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="bx--col-lg-4">
-                        <div className="modem-card">
-                            <div className="modem-card__header">
-                                <SiVodafone size={35} className="icon" />
-                                <h3>SH-120</h3>
-                            </div>
-                            <div className="modem-card__body">
-                                <p>805487056577894</p>
-                            </div>
-                            <div className="modem-card__footer">
-                                <Button kind="secondary">Details</Button>
-                                <Button kind="primary">Logs</Button>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="bx--col-lg-4">
-                        <div className="modem-card">
-                            <div className="modem-card__header">
-                                <SiHuawei size={35} className="icon" />
-                                <h3>E3131s</h3>
-                            </div>
-                            <div className="modem-card__body">
-                                <p>805487056577894</p>
-                            </div>
-                            <div className="modem-card__footer">
-                                <Button kind="secondary">Details</Button>
-                                <Button kind="primary">Logs</Button>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="bx--col-lg-4">
-                        <div className="modem-card">
-                            <div className="modem-card__header">
-                                <SiVodafone size={35} className="icon" />
-                                <h3>E156</h3>
-                            </div>
-                            <div className="modem-card__body">
-                                <p>805487056577894</p>
-                            </div>
-                            <div className="modem-card__footer">
-                                <Button kind="secondary">Details</Button>
-                                <Button kind="primary">Logs</Button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="bx--row">
-                    <div className="bx--col-lg-4">
-                        <div className="modem-card">
-                            <div className="modem-card__header">
-                                <SiHuawei size={35} className="icon" />
-                                <h3>E303</h3>
-                            </div>
-                            <div className="modem-card__body">
-                                <p>805487056577894</p>
-                            </div>
-                            <div className="modem-card__footer">
-                                <Button kind="secondary">Details</Button>
-                                <Button kind="primary">Logs</Button>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="bx--col-lg-4">
-                        <div className="modem-card">
-                            <div className="modem-card__header">
-                                <SiVodafone size={35} className="icon" />
-                                <h3>SH-120</h3>
-                            </div>
-                            <div className="modem-card__body">
-                                <p>805487056577894</p>
-                            </div>
-                            <div className="modem-card__footer">
-                                <Button kind="secondary">Details</Button>
-                                <Button kind="primary">Logs</Button>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="bx--col-lg-4">
-                        <div className="modem-card">
-                            <div className="modem-card__header">
-                                <SiHuawei size={35} className="icon" />
-                                <h3>E3131s</h3>
-                            </div>
-                            <div className="modem-card__body">
-                                <p>805487056577894</p>
-                            </div>
-                            <div className="modem-card__footer">
-                                <Button kind="secondary">Details</Button>
-                                <Button kind="primary">Logs</Button>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="bx--col-lg-4">
-                        <div className="modem-card">
-                            <div className="modem-card__header">
-                                <SiVodafone size={35} className="icon" />
-                                <h3>E156</h3>
-                            </div>
-                            <div className="modem-card__body">
-                                <p>805487056577894</p>
-                            </div>
-                            <div className="modem-card__footer">
-                                <Button kind="secondary">Details</Button>
-                                <Button kind="primary">Logs</Button>
-                            </div>
-                        </div>
-                    </div>
+                    <ModemList modems={MockData} />
                 </div>
             </div>
         </>
