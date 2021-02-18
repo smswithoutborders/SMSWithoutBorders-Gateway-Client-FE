@@ -26,12 +26,16 @@ const TextAreaProps = {
 const NewSMS = () => {
     return (
         <>
-            <div className="dash-header">
-                <h2><strong>New</strong> SMS</h2>
-                <p>compose new messages</p>
-            </div>
 
-            <div className="bx--grid bx--grid--narrow">
+
+            <div className="bx--grid">
+
+                <div className="bx--row">
+                    <div className="dash-header bx--col">
+                        <h2><strong>New</strong> SMS</h2>
+                        <p>compose new messages</p>
+                    </div>
+                </div>
                 <div className="bx--row">
                     <div className="bx--col">
                         <Form {...FormProps}>

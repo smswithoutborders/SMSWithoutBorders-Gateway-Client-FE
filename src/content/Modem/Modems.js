@@ -54,11 +54,14 @@ const ModemList = (props) => {
 const Modems = () => {
     return (
         <>
-            <div className="dash-header">
-                <h2><strong>Modem</strong> Nodes</h2>
-                <p>All nodes currently registered</p>
-            </div>
             <div className="bx--grid bx--grid--narrow">
+
+                <div className="bx--row">
+                    <div className="bx--col dash-header">
+                        <h2><strong>Modem</strong> Nodes</h2>
+                        <p>All nodes currently registered</p>
+                    </div>
+                </div>
                 <div className="bx--row">
                     <ModemList modems={MockData} />
                 </div>

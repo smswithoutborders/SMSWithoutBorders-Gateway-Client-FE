@@ -197,13 +197,14 @@ const GroupData = [
 const DashBoard = () => {
   return (
     <>
-      <div className="dash-header">
-        <h1>
-          <strong>C | Deck</strong> Metrics
-        </h1>
-        <p>Summary overview of Deku systems</p>
-      </div>
       <div className="bx--grid bx--grid--narrow">
+
+        <div className="bx--row">
+          <div className="bx--col dash-header">
+            <h1><strong>C | Deck</strong> Metrics</h1>
+            <p>Summary overview of Deku systems</p>
+          </div>
+        </div>
         <div className="bx--row">
           <div className="bx--col-lg-6">
             <div className="dash-card">

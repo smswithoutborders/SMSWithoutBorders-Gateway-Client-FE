@@ -61,13 +61,14 @@ const batchActionClick = () => {
 const SMS = () => {
   return (
     <>
-      <div className="dash-header">
-        <h2>
-          <strong>SMS</strong> Logs
-        </h2>
-        <p>Summary overview of SMS app type</p>
-      </div>
+
       <div className="bx--grid bx--grid--narrow">
+        <div className="bx--row">
+          <div className="bx--col dash-header">
+            <h2><strong>SMS</strong> Logs</h2>
+            <p>Summary overview of SMS app type</p>
+          </div>
+        </div>
         <div className="bx--row">
           <Link to="new-sms" className="bx--col bx--col-lg-4">
             <div className="sms-card">
