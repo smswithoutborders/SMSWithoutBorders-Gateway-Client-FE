@@ -15,7 +15,12 @@
 
     @include carbon--breakpoint(md) {
         p {
-            display:block;
+            display: block;
         }
     }
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
 }

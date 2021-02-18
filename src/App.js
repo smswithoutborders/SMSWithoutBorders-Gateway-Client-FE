@@ -30,6 +30,7 @@ import { Route, Switch, Link } from 'react-router-dom';
 import DashBoard from './content/Dashboard';
 import SMS from './content/SMS';
 import Modem from './content/Modem';
+import NewSMS from './components/NewSMS';
 
 const App = () => {
 
@@ -87,6 +88,7 @@ const App = () => {
                 <Route exact path="/" component={DashBoard} />
                 <Route exact path="/sms" component={SMS} />
                 <Route exact path="/sms/:modem" />
+                <Route exact path="/new-sms" component={NewSMS} />
                 <Route exact path="/modem" component={Modem} />
               </Switch>
             </Content>

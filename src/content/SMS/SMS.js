@@ -18,6 +18,8 @@ import {
   TableToolbarSearch,
 } from "carbon-components-react";
 
+import { Link } from 'react-router-dom';
+
 import {
   Delete16 as Delete,
   Download16 as Download,
@@ -67,33 +69,33 @@ const SMS = () => {
       </div>
       <div className="bx--grid bx--grid--narrow">
         <div className="bx--row">
-          <div className="bx--col bx--col-lg-4">
+          <Link to="new-sms" className="bx--col bx--col-lg-4">
             <div className="sms-card">
               <Send />
               <p>New SMS</p>
             </div>
-          </div>
+          </Link>
 
-          <div className="bx--col bx--col-lg-4">
+          <Link to="#" className="bx--col bx--col-lg-4">
             <div className="sms-card">
               <BulkSend />
               <p>Bulk SMS</p>
             </div>
-          </div>
+          </Link>
 
-          <div className="bx--col bx--col-lg-4">
+          <Link to="#" className="bx--col bx--col-lg-4">
             <div className="sms-card">
               <Schedule />
               <p> New Schedule</p>
             </div>
-          </div>
+          </Link>
 
-          <div className="bx--col bx--col-lg-4">
+          <Link to="#" className="bx--col bx--col-lg-4">
             <div className="sms-card">
               <Contacts />
               <p>Contacts List</p>
             </div>
-          </div>
+          </Link>
         </div>
         <div className="bx--row">
           <div className="bx--col-lg-16">
@@ -111,66 +113,66 @@ const SMS = () => {
                 getTableProps,
                 getTableContainerProps,
               }) => (
-                <TableContainer
-                  title="Current Queue"
-                  description="log of todays transactions across modems"
-                  {...getTableContainerProps()}
-                >
-                  <TableToolbar {...getToolbarProps()}>
-                    <TableBatchActions {...getBatchActionProps()}>
-                      <TableBatchAction
-                        tabIndex={
-                          getBatchActionProps().shouldShowBatchActions ? 0 : -1
-                        }
-                        renderIcon={Delete}
-                        onClick={batchActionClick(selectedRows)}
-                      >
-                        Delete
+                  <TableContainer
+                    title="Current Queue"
+                    description="log of todays transactions across modems"
+                    {...getTableContainerProps()}
+                  >
+                    <TableToolbar {...getToolbarProps()}>
+                      <TableBatchActions {...getBatchActionProps()}>
+                        <TableBatchAction
+                          tabIndex={
+                            getBatchActionProps().shouldShowBatchActions ? 0 : -1
+                          }
+                          renderIcon={Delete}
+                          onClick={batchActionClick(selectedRows)}
+                        >
+                          Delete
                       </TableBatchAction>
-                      <TableBatchAction
-                        tabIndex={
-                          getBatchActionProps().shouldShowBatchActions ? 0 : -1
-                        }
-                        renderIcon={Download}
-                        onClick={batchActionClick(selectedRows)}
-                      >
-                        Download
+                        <TableBatchAction
+                          tabIndex={
+                            getBatchActionProps().shouldShowBatchActions ? 0 : -1
+                          }
+                          renderIcon={Download}
+                          onClick={batchActionClick(selectedRows)}
+                        >
+                          Download
                       </TableBatchAction>
-                    </TableBatchActions>
-                    <TableToolbarContent>
-                      <TableToolbarSearch
-                        expanded={true}
-                        tabIndex={
-                          getBatchActionProps().shouldShowBatchActions ? -1 : 0
-                        }
-                        onChange={onInputChange}
-                      />
-                    </TableToolbarContent>
-                  </TableToolbar>
-                  <Table {...getTableProps()}>
-                    <TableHead>
-                      <TableRow>
-                        <TableSelectAll {...getSelectionProps()} />
-                        {headers.map((header, i) => (
-                          <TableHeader key={i} {...getHeaderProps({ header })}>
-                            {header.header}
-                          </TableHeader>
-                        ))}
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {rows.map((row, i) => (
-                        <TableRow key={i} {...getRowProps({ row })}>
-                          <TableSelectRow {...getSelectionProps({ row })} />
-                          {row.cells.map((cell) => (
-                            <TableCell key={cell.id}>{cell.value}</TableCell>
+                      </TableBatchActions>
+                      <TableToolbarContent>
+                        <TableToolbarSearch
+                          expanded={true}
+                          tabIndex={
+                            getBatchActionProps().shouldShowBatchActions ? -1 : 0
+                          }
+                          onChange={onInputChange}
+                        />
+                      </TableToolbarContent>
+                    </TableToolbar>
+                    <Table {...getTableProps()}>
+                      <TableHead>
+                        <TableRow>
+                          <TableSelectAll {...getSelectionProps()} />
+                          {headers.map((header, i) => (
+                            <TableHeader key={i} {...getHeaderProps({ header })}>
+                              {header.header}
+                            </TableHeader>
                           ))}
                         </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-              )}
+                      </TableHead>
+                      <TableBody>
+                        {rows.map((row, i) => (
+                          <TableRow key={i} {...getRowProps({ row })}>
+                            <TableSelectRow {...getSelectionProps({ row })} />
+                            {row.cells.map((cell) => (
+                              <TableCell key={cell.id}>{cell.value}</TableCell>
+                            ))}
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                )}
             </DataTable>
           </div>
         </div>
