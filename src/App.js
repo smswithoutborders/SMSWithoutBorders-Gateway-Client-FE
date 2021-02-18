@@ -31,6 +31,7 @@ import DashBoard from './content/Dashboard';
 import SMS from './content/SMS';
 import Modem from './content/Modem';
 import NewSMS from './components/NewSMS';
+import BulkSMS from './components/BulkSMS';
 
 const App = () => {
 
@@ -89,6 +90,7 @@ const App = () => {
                 <Route exact path="/sms" component={SMS} />
                 <Route exact path="/sms/:modem" />
                 <Route exact path="/new-sms" component={NewSMS} />
+                <Route exact path="/bulk-sms" component={BulkSMS} />
                 <Route exact path="/modem" component={Modem} />
               </Switch>
             </Content>

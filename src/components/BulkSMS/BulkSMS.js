@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Form, FormGroup, TextInput, TextArea, Button } from 'carbon-components-react';
+import { Form, FormGroup, TextArea, Dropdown, Button } from 'carbon-components-react';
 import { Send32 } from '@carbon/icons-react';
 
 const FormProps = {
@@ -9,11 +9,27 @@ const FormProps = {
     },
 };
 
-const TextInputProps = {
-    id: 'reciever',
-    labelText: 'Recipient',
-    placeholder: "Enter recipient's number",
-};
+const options = [
+    {
+        id: 'option-1',
+        text: 'Enter recipients manually',
+    },
+    {
+        id: 'option-2',
+        text: 'Select recipients from contact list',
+    },
+];
+
+const DropdownProps = {
+    id: "option",
+    titleText: "Recipient List",
+    label: "Please choose an option",
+    items: options,
+    itemToString: (item) => (item ? item.text : ''),
+    onChange: (option) => {
+        console.log(option.selectedItem.id)
+    },
+}
 
 const TextAreaProps = {
     labelText: 'Message',
@@ -23,28 +39,29 @@ const TextAreaProps = {
     rows: 8,
 };
 
-const NewSMS = () => {
+const BulkSMS = () => {
     return (
         <>
             <div className="bx--grid">
                 <div className="bx--row">
                     <div className="dash-header bx--col">
-                        <h2><strong>New</strong> SMS</h2>
-                        <p>compose new messages</p>
+                        <h2><strong>Bulk</strong> SMS</h2>
+                        <p>Compose and send bulk messages</p>
                     </div>
                 </div>
+
                 <div className="bx--row">
                     <div className="bx--col">
                         <Form {...FormProps}>
                             <FormGroup>
-                                <TextInput {...TextInputProps} />
+                                <Dropdown {...DropdownProps} />
                             </FormGroup>
 
                             <FormGroup>
                                 <TextArea {...TextAreaProps} />
                             </FormGroup>
 
-                            <Button kind="primary" renderIcon={Send32}>Send</Button>
+                            <Button type="submit" kind="primary" renderIcon={Send32}>Send</Button>
                         </Form>
                     </div>
                 </div>
@@ -53,4 +70,4 @@ const NewSMS = () => {
     );
 }
 
-export default NewSMS;
+export default BulkSMS;

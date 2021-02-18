@@ -77,7 +77,7 @@ const SMS = () => {
             </div>
           </Link>
 
-          <Link to="#" className="bx--col bx--col-lg-4">
+          <Link to="bulk-sms" className="bx--col bx--col-lg-4">
             <div className="sms-card">
               <BulkSend />
               <p>Bulk SMS</p>
