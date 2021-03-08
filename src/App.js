@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './App.scss';
 import {
   Content,
@@ -24,14 +24,13 @@ import {
   IotPlatform16
 } from '@carbon/icons-react';
 import { Route, Switch, Link } from 'react-router-dom';
-import Login from './content/Login';
 import DashBoard from './content/Dashboard';
 import SMS from './content/SMS';
 import Modem from './content/Modem';
 import NewSMS from './components/NewSMS';
 import BulkSMS from './components/BulkSMS';
 
-const DashView = () => {
+const App = () => {
   return (
     <HeaderContainer
       render={({ isSideNavExpanded, onClickSideNavExpand }) => (
@@ -96,22 +95,5 @@ const DashView = () => {
   );
 };
 
-const App = () => {
-
-  const [isLoggedIn, setisLoggedIn] = useState(false);
-  let view;
-
-  if (isLoggedIn) {
-    view = <DashView />
-  } else {
-    view = <Login />
-  }
-
-  return (
-    <>
-      {view}
-    </>
-  );
-}
 
 export default App;
