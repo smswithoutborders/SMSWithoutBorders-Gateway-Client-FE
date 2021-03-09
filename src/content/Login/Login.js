@@ -1,8 +1,11 @@
 import React, { useRef } from 'react';
 import { Form, TextInput, Button } from 'carbon-components-react';
+import { useHistory } from "react-router-dom";
 import { ArrowRight24 } from '@carbon/icons-react';
 
 const Login = () => {
+
+    let history = useHistory();
 
     const username = useRef(null);
     const password = useRef(null);
@@ -17,6 +20,8 @@ const Login = () => {
 
             console.log(loginData);
             //Todo : actually do something with this info
+            history.push('/dash')
+
         },
     };
 
