@@ -11,7 +11,7 @@ const App = () => {
   if (isLoggedIn) {
     return (<DashBoard />);
   }
-  return (<Login />);
+  return (<Login setIsLoggedIn={setIsLoggedIn} />);
 };
 
 export default App;

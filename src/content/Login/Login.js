@@ -1,28 +1,36 @@
 import React, { useRef } from 'react';
+import PropTypes from 'prop-types';
 import { Form, TextInput, Button } from 'carbon-components-react';
-import { useHistory } from "react-router-dom";
 import { ArrowRight24 } from '@carbon/icons-react';
 
-const Login = () => {
-
-    let history = useHistory();
+const Login = ({ setIsLoggedIn }) => {
 
     const username = useRef(null);
     const password = useRef(null);
 
     const formProps = {
-        onSubmit: (e) => {
+        onSubmit: async (e) => {
             e.preventDefault();
             const loginData = {
                 username: username.current.value,
                 password: password.current.value
             }
-
             console.log(loginData);
-            //Todo : actually do something with this info
-            history.push('/dash')
-
+            const userToken = await loginUser(loginData);
+            console.log(userToken.token);
+            setIsLoggedIn(userToken.token);
         },
+    };
+
+    const loginUser = async (credentials) => {
+        return fetch(process.env.REACT_APP_API_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(credentials)
+        })
+            .then(data => data.json())
     };
 
     return (
@@ -63,5 +71,9 @@ const Login = () => {
         </div>
     );
 };
+
+Login.propTypes = {
+    setIsLoggedIn: PropTypes.func.isRequired
+}
 
 export default Login;
