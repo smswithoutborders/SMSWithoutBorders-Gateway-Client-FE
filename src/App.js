@@ -4,9 +4,15 @@ import './App.scss';
 import Login from './content/Login';
 import DashBoard from './content/Dashboard';
 
+const getToken = () => {
+  const token = sessionStorage.getItem('c-deck-token');
+  return token;
+};
+
 const App = () => {
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const token = getToken();
+  const [isLoggedIn, setIsLoggedIn] = useState(token ? true : false);
 
   if (isLoggedIn) {
     return (<DashBoard />);

@@ -18,7 +18,8 @@ const Login = ({ setIsLoggedIn }) => {
             console.log(loginData);
             const userToken = await loginUser(loginData);
             console.log(userToken.token);
-            setIsLoggedIn(userToken.token);
+            setToken(userToken.token);
+            setIsLoggedIn(true);
         },
     };
 
@@ -31,6 +32,10 @@ const Login = ({ setIsLoggedIn }) => {
             body: JSON.stringify(credentials)
         })
             .then(data => data.json())
+    };
+
+    const setToken = (token) => {
+        sessionStorage.setItem('c-deck-token', token);
     };
 
     return (
