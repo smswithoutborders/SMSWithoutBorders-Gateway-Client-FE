@@ -15,7 +15,7 @@ const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(token ? true : false);
 
   if (isLoggedIn) {
-    return (<DashBoard />);
+    return (<DashBoard setIsLoggedIn={setIsLoggedIn} />);
   }
   return (<Login setIsLoggedIn={setIsLoggedIn} />);
 };

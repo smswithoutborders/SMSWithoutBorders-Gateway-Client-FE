@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import PropTypes from 'prop-types';
 import {
   Content,
   Header,
@@ -13,9 +14,13 @@ import {
   SideNav,
   SideNavItems,
   SideNavLink,
+  HeaderPanel,
+  SwitcherItem,
+  Switcher,
+  SwitcherDivider
 } from 'carbon-components-react';
 import {
-  AppSwitcher20,
+  UserAvatar20,
   Search20,
   Notification20,
   EmailNew32,
@@ -30,7 +35,18 @@ import NewSMS from '../../components/NewSMS';
 import BulkSMS from '../../components/BulkSMS';
 
 
-const DashBoard = () => {
+//setIsLoggedIn is parsed from the app component
+const LogOut = (setIsLoggedIn) => {
+  //log the user out by changing state
+  setIsLoggedIn(false);
+  //remove user token from session storage
+  sessionStorage.removeItem('c-deck-token');
+};
+
+const DashBoard = ({ setIsLoggedIn }) => {
+  //state hook to control left panel view
+  const [isPanelOpen, setIsPanelOpen] = useState(false);
+
   return (
     <>
       <HeaderContainer
@@ -47,8 +63,6 @@ const DashBoard = () => {
                 C | Deck
           </HeaderName>
               <HeaderNavigation aria-label="C | Deck">
-                <HeaderMenuItem href="#">API</HeaderMenuItem>
-                <HeaderMenuItem href="#">Docs</HeaderMenuItem>
                 <HeaderMenuItem href="#">About</HeaderMenuItem>
               </HeaderNavigation>
               <HeaderGlobalBar>
@@ -61,33 +75,48 @@ const DashBoard = () => {
                   <Notification20 />
                 </HeaderGlobalAction>
                 <HeaderGlobalAction
-                  aria-label="App Switcher">
-                  <AppSwitcher20 />
+                  aria-label="User Avatar"
+                  onClick={() => setIsPanelOpen(!isPanelOpen)}>
+                  <UserAvatar20 />
                 </HeaderGlobalAction>
               </HeaderGlobalBar>
               <SideNav aria-label="Side navigation" expanded={isSideNavExpanded}>
                 <SideNavItems>
-                  <SideNavLink large renderIcon={Grid32} element={Link} to="/dashboard">
+                  <SideNavLink large renderIcon={Grid32} element={Link} to="/">
                     Dashboard
-          </SideNavLink>
+                  </SideNavLink>
                   <SideNavLink large renderIcon={EmailNew32} element={Link} to="/sms">
                     SMS
-          </SideNavLink>
+                  </SideNavLink>
                   <SideNavLink large renderIcon={IotPlatform16} element={Link} to="/modem">
                     Modems
-          </SideNavLink>
+                  </SideNavLink>
                 </SideNavItems>
               </SideNav>
+              <HeaderPanel aria-label="Header Panel" expanded={isPanelOpen}>
+                <Switcher aria-label="Switcher Container">
+                  <SwitcherItem aria-label="Link 1" href="#">
+                    Profile
+                  </SwitcherItem>
+                  <SwitcherDivider />
+                  <SwitcherItem
+                    aria-label="logout"
+                    onClick={() => LogOut(setIsLoggedIn)}
+                  >
+                    Logout
+                 </SwitcherItem>
+                </Switcher>
+              </HeaderPanel>
             </Header>
 
             <Content id="main-content" className="bx--col-lg-13 bx--offset-lg-3">
               <Switch>
-                <Route exact path="/dashboard" component={Metrics} />
+                <Route exact path="/" component={Metrics} />
                 <Route exact path="/sms" component={SMS} />
                 <Route exact path="/sms/:modem" />
                 <Route exact path="/new-sms" component={NewSMS} />
                 <Route exact path="/bulk-sms" component={BulkSMS} />
-                <Route exact path="/modem" component={Modem} />
+                <Route exact path="/modetruem" component={Modem} />
               </Switch>
             </Content>
           </>
@@ -96,5 +125,9 @@ const DashBoard = () => {
     </>
   );
 };
+
+DashBoard.propTypes = {
+  setIsLoggedIn: PropTypes.func.isRequired
+}
 
 export default DashBoard;
