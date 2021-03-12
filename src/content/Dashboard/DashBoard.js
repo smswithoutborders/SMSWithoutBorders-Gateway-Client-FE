@@ -31,7 +31,9 @@ import {
   Chat16 as Send,
   UserMultiple16 as BulkSend,
   Catalog16 as Logs,
-  Logout16
+  Logout16,
+  AppSwitcher16 as RailSwitch,
+  Dashboard32
 } from '@carbon/icons-react';
 import { Route, Switch, Link } from 'react-router-dom';
 import Metrics from '../Metrics';
@@ -52,13 +54,14 @@ const LogOut = (setIsLoggedIn) => {
 const DashBoard = ({ setIsLoggedIn }) => {
   //state hook to control left panel view
   const [isPanelOpen, setIsPanelOpen] = useState(false);
+  const [isSideNavRail, setIsSideNavRail] = useState(false);
 
   return (
     <>
       <HeaderContainer
         render={({ isSideNavExpanded, onClickSideNavExpand }) => (
           <>
-            <Header aria-label="SMS without borders">
+            <Header aria-label="C | Deck">
               <SkipToContent />
               <HeaderMenuButton
                 aria-label="Open menu"
@@ -69,6 +72,10 @@ const DashBoard = ({ setIsLoggedIn }) => {
                 C | Deck
           </HeaderName>
               <HeaderNavigation aria-label="C | Deck">
+                <HeaderMenuItem href="#"
+                  onClick={() => setIsSideNavRail(!isSideNavRail)}>
+                  {isSideNavRail ? <RailSwitch /> : <Grid16 />}
+                </HeaderMenuItem>
                 <HeaderMenuItem href="#">About</HeaderMenuItem>
               </HeaderNavigation>
               <HeaderGlobalBar>
@@ -86,9 +93,12 @@ const DashBoard = ({ setIsLoggedIn }) => {
                   {isPanelOpen ? <Close20 /> : <UserAvatar20 />}
                 </HeaderGlobalAction>
               </HeaderGlobalBar>
-              <SideNav aria-label="Side navigation" expanded={isSideNavExpanded}>
+              <SideNav aria-label="Side navigation"
+                expanded={isSideNavExpanded}
+                isRail={isSideNavRail}
+              >
                 <SideNavItems>
-                  <SideNavLink large renderIcon={Grid16} element={Link} to="/">
+                  <SideNavLink large renderIcon={Dashboard32} element={Link} to="/">
                     Dashboard
                   </SideNavLink>
                   <SideNavMenu large renderIcon={Send} title="SMS" >
@@ -117,7 +127,7 @@ const DashBoard = ({ setIsLoggedIn }) => {
               </HeaderPanel>
             </Header>
 
-            <Content id="main-content" className="bx--col-lg-13 bx--offset-lg-3">
+            <Content id="main-content" className={isSideNavRail ? "bx--col-lg-15 bx--offset-lg-1" : "bx--col-lg-13 bx--offset-lg-3"}>
               <Switch>
                 <Route exact path="/" component={Metrics} />
                 <Route exact path="/sms" component={SMS} />
