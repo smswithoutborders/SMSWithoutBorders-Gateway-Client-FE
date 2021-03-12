@@ -12,6 +12,8 @@ import {
   HeaderGlobalAction,
   SkipToContent,
   SideNav,
+  SideNavMenu,
+  SideNavMenuItem,
   SideNavItems,
   SideNavLink,
   HeaderPanel,
@@ -22,10 +24,14 @@ import {
 import {
   UserAvatar20,
   Search20,
+  Close20,
   Notification20,
-  EmailNew32,
-  Grid32,
-  IotPlatform16
+  Grid16,
+  IotPlatform16,
+  Chat16 as Send,
+  UserMultiple16 as BulkSend,
+  Catalog16 as Logs,
+  Logout16
 } from '@carbon/icons-react';
 import { Route, Switch, Link } from 'react-router-dom';
 import Metrics from '../Metrics';
@@ -77,17 +83,19 @@ const DashBoard = ({ setIsLoggedIn }) => {
                 <HeaderGlobalAction
                   aria-label="User Avatar"
                   onClick={() => setIsPanelOpen(!isPanelOpen)}>
-                  <UserAvatar20 />
+                  {isPanelOpen ? <Close20 /> : <UserAvatar20 />}
                 </HeaderGlobalAction>
               </HeaderGlobalBar>
               <SideNav aria-label="Side navigation" expanded={isSideNavExpanded}>
                 <SideNavItems>
-                  <SideNavLink large renderIcon={Grid32} element={Link} to="/">
+                  <SideNavLink large renderIcon={Grid16} element={Link} to="/">
                     Dashboard
                   </SideNavLink>
-                  <SideNavLink large renderIcon={EmailNew32} element={Link} to="/sms">
-                    SMS
-                  </SideNavLink>
+                  <SideNavMenu large renderIcon={Send} title="SMS" >
+                    <SideNavMenuItem element={Link} to="/sms"><Logs className="centered-icon" /> SMS Logs</SideNavMenuItem>
+                    <SideNavMenuItem element={Link} to="/new-sms"><Send className="centered-icon" /> New SMS</SideNavMenuItem>
+                    <SideNavMenuItem element={Link} to="/bulk-sms"><BulkSend className="centered-icon" /> Bulk SMS</SideNavMenuItem>
+                  </SideNavMenu>
                   <SideNavLink large renderIcon={IotPlatform16} element={Link} to="/modem">
                     Modems
                   </SideNavLink>
@@ -103,7 +111,7 @@ const DashBoard = ({ setIsLoggedIn }) => {
                     aria-label="logout"
                     onClick={() => LogOut(setIsLoggedIn)}
                   >
-                    Logout
+                    <Logout16 className="centered-icon" /> Logout
                  </SwitcherItem>
                 </Switcher>
               </HeaderPanel>

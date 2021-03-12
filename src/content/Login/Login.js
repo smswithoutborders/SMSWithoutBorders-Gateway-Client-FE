@@ -72,7 +72,7 @@ const Login = ({ setIsLoggedIn }) => {
                                     description="loading"
                                     withOverlay={false}
                                     small
-                                    className='loading-spinner'
+                                    className="centered-icon"
                                 />
                                 <span> Verifying information</span>
                             </> :

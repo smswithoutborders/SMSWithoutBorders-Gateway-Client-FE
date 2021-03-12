@@ -23,7 +23,7 @@ import { Link } from 'react-router-dom';
 import {
   Delete16 as Delete,
   Download16 as Download,
-  Send32 as Send,
+  Chat32 as Send,
   UserMultiple32 as BulkSend,
   EventSchedule32 as Schedule,
   Catalog32 as Contacts,
