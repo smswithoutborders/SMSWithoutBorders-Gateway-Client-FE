@@ -53,6 +53,7 @@ const Login = ({ setIsLoggedIn }) => {
                                 placeholder="enter username "
                                 id="username"
                                 ref={username}
+                                required
                             />
                             <br />
                             <TextInput.PasswordInput
@@ -61,6 +62,7 @@ const Login = ({ setIsLoggedIn }) => {
                                 placeholder="enter password"
                                 id="password"
                                 ref={password}
+                                required
                             />
                         </FormGroup>
 
