@@ -116,7 +116,7 @@ const DashBoard = ({ setIsLoggedIn }) => {
                 <Route exact path="/sms/:modem" />
                 <Route exact path="/new-sms" component={NewSMS} />
                 <Route exact path="/bulk-sms" component={BulkSMS} />
-                <Route exact path="/modetruem" component={Modem} />
+                <Route exact path="/modem" component={Modem} />
               </Switch>
             </Content>
           </>
