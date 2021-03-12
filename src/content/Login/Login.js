@@ -1,16 +1,18 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Form, TextInput, Button } from 'carbon-components-react';
+import { Form, FormGroup, TextInput, Button, Loading } from 'carbon-components-react';
 import { ArrowRight24 } from '@carbon/icons-react';
 
 const Login = ({ setIsLoggedIn }) => {
 
     const username = useRef(null);
     const password = useRef(null);
+    const [isLoading, setIsLoading] = useState(false);
 
     const formProps = {
         onSubmit: async (e) => {
             e.preventDefault();
+            setIsLoading(!isLoading);
             const loginData = {
                 username: username.current.value,
                 password: password.current.value
@@ -40,33 +42,47 @@ const Login = ({ setIsLoggedIn }) => {
         <div className="bx--grid login-page__container">
             <div className="bx--row">
                 <div className="bx--col-lg-7">
-                    <h1 className="login-page__title"><strong>C </strong> | Deck</h1>
-                    <p>login portal</p>
+                    <h1 className="login-page__title">Log in to <strong>C | Deck</strong></h1>
+                    <p>Please use issued credentials</p>
 
                     <Form {...formProps}>
-                        <TextInput
-                            invalidText="Invalid error message."
-                            labelText="User Name"
-                            placeholder="enter username "
-                            id="username"
-                            ref={username}
-                        />
-                        <TextInput
-                            invalidText="Invalid error message."
-                            labelText="Password"
-                            placeholder="your password here"
-                            id="password"
-                            ref={password}
-                        />
-                        <Button
-                            className="submit-button"
-                            kind="primary"
-                            tabIndex={0}
-                            type="submit"
-                            renderIcon={ArrowRight24}
-                        >
-                            Continue
-                        </Button>
+                        <FormGroup>
+                            <TextInput
+                                invalidText="Invalid error message."
+                                labelText="User Name"
+                                placeholder="enter username "
+                                id="username"
+                                ref={username}
+                            />
+                            <br />
+                            <TextInput.PasswordInput
+                                invalidText="Invalid error message."
+                                labelText="Password"
+                                placeholder="enter password"
+                                id="password"
+                                ref={password}
+                            />
+                        </FormGroup>
+
+                        {isLoading ?
+                            <>
+                                <Loading
+                                    description="loading"
+                                    withOverlay={false}
+                                    small
+                                    className='loading-spinner'
+                                />
+                                <span> Verifying information</span>
+                            </> :
+                            <Button
+                                className="submit-button"
+                                kind="primary"
+                                type="submit"
+                                renderIcon={ArrowRight24}
+                            >
+                                Continue
+                        </Button>}
+
                     </Form>
 
                 </div>

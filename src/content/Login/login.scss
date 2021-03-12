@@ -2,10 +2,11 @@
     background: url("./login_bg.jpg");
     height: 100vh;
     padding: ($spacing-07 * 2) $spacing-07;
-    background-position: center;
+    background-position: center right;
+
     color: $ui-01;
     @include carbon--breakpoint(md) {
-        padding: $spacing-07 * 2;
+        padding: $spacing-07 * 4;
     }
 
     h1 {
@@ -15,19 +16,21 @@
     p {
         margin-top: $layout-01;
         margin-bottom: $layout-04;
+        color: $text-03;
     }
 
     Form {
         label {
             color: $ui-background;
         }
-        input {
-            margin-bottom: 1rem;
-        }
-
         .submit-button {
             max-width: 100%;
             width: 100%;
+        }
+        .loading-spinner {
+            display: inline-block;
+            position: relative;
+            top: 2px;
         }
     }
 }
