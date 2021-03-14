@@ -19,7 +19,9 @@ import {
   HeaderPanel,
   SwitcherItem,
   Switcher,
-  SwitcherDivider
+  SwitcherDivider,
+  Modal,
+  ModalBody
 } from 'carbon-components-react';
 import {
   UserAvatar20,
@@ -55,6 +57,7 @@ const DashBoard = ({ setIsLoggedIn }) => {
   //state hook to control left panel view
   const [isPanelOpen, setIsPanelOpen] = useState(false);
   const [isSideNavRail, setIsSideNavRail] = useState(false);
+  const [isAboutOpen, setIsAboutOpen] = useState(false);
 
   return (
     <>
@@ -72,11 +75,14 @@ const DashBoard = ({ setIsLoggedIn }) => {
                 C | Deck
           </HeaderName>
               <HeaderNavigation aria-label="C | Deck">
-                <HeaderMenuItem href="#"
+                <HeaderMenuItem
                   onClick={() => setIsSideNavRail(!isSideNavRail)}>
                   {isSideNavRail ? <RailSwitch /> : <Grid16 />}
                 </HeaderMenuItem>
-                <HeaderMenuItem href="#">About</HeaderMenuItem>
+                <HeaderMenuItem
+                  onClick={() => setIsAboutOpen(!isAboutOpen)}>
+                  About
+                </HeaderMenuItem>
               </HeaderNavigation>
               <HeaderGlobalBar>
                 <HeaderGlobalAction
@@ -126,6 +132,24 @@ const DashBoard = ({ setIsLoggedIn }) => {
                 </Switcher>
               </HeaderPanel>
             </Header>
+
+            <Modal
+              open={isAboutOpen}
+              modalLabel="About"
+              modalAriaLabel="About C | Deck"
+              passiveModal
+              onRequestClose={() => setIsAboutOpen(!isAboutOpen)}>
+
+              <ModalBody>
+                <Dashboard32 />
+                <h3>Afkanerd <strong>C | Deck</strong></h3>
+                <div className="version-number">
+                  <p>Version number</p>
+                  <p>1.0.0</p>
+                </div>
+              </ModalBody>
+
+            </Modal>
 
             <Content id="main-content" className={isSideNavRail ? "bx--col-lg-15 bx--offset-lg-1" : "bx--col-lg-13 bx--offset-lg-3"}>
               <Switch>
