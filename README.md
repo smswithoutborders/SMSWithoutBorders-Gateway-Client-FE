@@ -1,9 +1,17 @@
 # **C | Deck**
 
 
-## Available Scripts
+## Setup Guide
 
-In the project directory, you can run:
+Quick start guide to get C | Deck running:
+
+### `npm install`
+
+Installs all dependencies
+
+### Set env variables
+
+Create a .env file in project root using the .env.example template
 
 ### `npm start`
 
@@ -14,6 +22,13 @@ Open [http://localhost:8080](http://localhost:8080) to view it in the browser.
 The page will reload if you make edits.
 
 You will also see any lint errors in the console.
+
+
+## Demo login credentials for Dashboard
+
+Username: string
+
+password: string
 
 ### `npm run build`
 
@@ -37,6 +52,9 @@ React Icons
 D3
 
 React Router Dom
+
+
+
 
 
 
