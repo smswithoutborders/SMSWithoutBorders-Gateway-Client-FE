@@ -2,83 +2,83 @@
 const MockData = [
   {
     id: 1,
-    source: "TBRL Bamenda 674125689",
+    sender: "674125689",
     date: "04/01/2021",
     time: "19:00",
     message: "Sample message data. Thi.records",
-    status: "active"
+    isp: "MTN"
   },
   {
     id: 2,
-    source: "TBRL Bamenda 674125689",
+    sender: "698765689",
     date: "04/01/2021",
     time: "17:00",
     message: "Sample message data. Thi.records",
-    status: "active"
+    isp: "Orange"
   },
   {
     id: 3,
-    source: "TBRL Bamenda 674125689",
+    sender: "674125689",
     date: "04/01/2021",
     time: "13:00",
     message: "Sample message data. Thi.records",
-    status: "active"
+    isp: "MTN"
   },
   {
     id: 4,
-    source: "TBRL Bamenda 674125689",
+    sender: "694125690",
     date: "04/01/2021",
     time: "13:10",
     message: "Sample message data. Thi.records",
-    status: "active"
+    isp: "Orange"
   },
   {
     id: 5,
-    source: "TBRL Bamenda 674125689",
+    sender: "665125689",
     date: "04/01/2021",
     time: "14:00",
     message: "Sample message data. Thi.records",
-    status: "active"
+    isp: "Nexttel"
   },
   {
     id: 6,
-    source: "TBRL Bamenda 674125689",
+    sender: "674125689",
     date: "05/01/2021",
     time: "19:00",
     message: "Sample message data. Thi.records",
-    status: "active"
+    isp: "MTN"
   },
   {
     id: 7,
-    source: "TBRL Bamenda 674125689",
+    sender: "674125689",
     date: "05/01/2021",
     time: "17:00",
     message: "Sample message data. Thi.records",
-    status: "active"
+    isp: "MTN"
   },
   {
     id: 8,
-    source: "TBRL Bamenda 674125689",
+    sender: "699125789",
     date: "05/01/2021",
     time: "13:00",
     message: "Sample message data. Thi.records",
-    status: "active"
+    isp: "Orange"
   },
   {
     id: 9,
-    source: "TBRL Bamenda 674125689",
+    sender: "674125689",
     date: "05/01/2021",
     time: "13:10",
     message: "Sample message data. Thi.records",
-    status: "active"
+    isp: "MTN"
   },
   {
     id: 10,
-    source: "TBRL Bamenda 674125689",
+    sender: "654125654",
     date: "05/01/2021",
     time: "14:00",
     message: "Sample message data. Thi.records",
-    status: "active"
+    isp: "Nexttel"
   },
 ];
 

@@ -33,8 +33,12 @@ import MockData from "./MockData";
 
 const headers = [
   {
-    key: "source",
-    header: "Source",
+    key: "sender",
+    header: "Sender",
+  },
+  {
+    key: "isp",
+    header: "ISP",
   },
   {
     key: "message",
@@ -47,11 +51,7 @@ const headers = [
   {
     key: "time",
     header: "Time",
-  },
-  {
-    key: "status",
-    header: "Status",
-  },
+  }
 ];
 
 const batchActionClick = () => {
@@ -115,8 +115,8 @@ const SMS = () => {
                 getTableContainerProps,
               }) => (
                   <TableContainer
-                    title="Current Queue"
-                    description="log of todays transactions across modems"
+                    title="Message Inbox"
+                    description="log of todays messages from all modems"
                     {...getTableContainerProps()}
                   >
                     <TableToolbar {...getToolbarProps()}>
