@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import {
   DataTable,
@@ -16,12 +16,13 @@ import {
   TableToolbar,
   TableToolbarContent,
   TableToolbarSearch,
+  Pagination
 } from "carbon-components-react";
 
 import { Link } from 'react-router-dom';
 
 import {
-  Delete16 as Delete,
+  TrashCan16 as Delete,
   Download16 as Download,
   Chat32 as Send,
   UserMultiple32 as BulkSend,
@@ -58,10 +59,30 @@ const batchActionClick = () => {
   //Todo : Add this handler
 };
 
+
 const SMS = () => {
+
+  const [maxRows, setMaxRows] = useState(10);
+
+  const tableRows = MockData.slice(0, maxRows);
+
+  const paginationProps = {
+    page: 1,
+    totalItems: MockData.length,
+    itemText: (e) => {
+      console.log(e);
+    },
+    pageSize: 10,
+    pageSizes: [10, 20, 30, 40, 50, 100],
+    onChange: (e) => {
+      if (e.pageSize !== maxRows) {
+        setMaxRows(e.pageSize);
+      }
+    },
+  };
+
   return (
     <>
-
       <div className="bx--grid bx--grid--narrow">
         <div className="bx--row">
           <div className="bx--col dash-header">
@@ -100,7 +121,7 @@ const SMS = () => {
         </div>
         <div className="bx--row">
           <div className="bx--col-lg-16">
-            <DataTable rows={MockData} headers={headers}>
+            <DataTable rows={tableRows} headers={headers}>
               {({
                 rows,
                 headers,
@@ -175,6 +196,8 @@ const SMS = () => {
                   </TableContainer>
                 )}
             </DataTable>
+
+            <Pagination {...paginationProps} />
           </div>
         </div>
       </div>
