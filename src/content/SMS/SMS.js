@@ -26,7 +26,6 @@ import { Link } from 'react-router-dom';
 
 import {
   TrashCan16 as Delete,
-  Download16 as Download,
   Chat32 as Send,
   UserMultiple32 as BulkSend,
   EventSchedule32 as Schedule,
@@ -62,8 +61,23 @@ const headers = [
   }
 ];
 
-const batchActionClick = () => {
-  //Todo : Add this handler
+const batchDelete = (selectedRows, setTableRows) => {
+  selectedRows.forEach(row => {
+
+    console.log(row);
+
+    //find items record in the array
+    let obj = MockData.find(obj => obj.id === row.id);
+    console.log(obj);
+
+    //find the index of items record in the array
+    let index = MockData.findIndex(obj => obj.id === row.id);
+    console.log("index", index, "\n", "Mockdata for reference", MockData);
+
+    //remove item from records
+    MockData.splice(index, 1);
+    setTableRows(MockData);
+  })
 };
 
 
@@ -71,8 +85,10 @@ const SMS = () => {
 
   const [maxRows, setMaxRows] = useState(10);
 
-  const tableRows = MockData.slice(0, maxRows);
+  //display only a section of the array at a time
+  const [tableRows, setTableRows] = useState(MockData.slice(0, maxRows));
 
+  //props for table pagination
   const paginationProps = {
     page: 1,
     totalItems: MockData.length,
@@ -155,18 +171,9 @@ const SMS = () => {
                             getBatchActionProps().shouldShowBatchActions ? 0 : -1
                           }
                           renderIcon={Delete}
-                          onClick={batchActionClick(selectedRows)}
+                          onClick={() => batchDelete(selectedRows, setTableRows)}
                         >
                           Delete
-                      </TableBatchAction>
-                        <TableBatchAction
-                          tabIndex={
-                            getBatchActionProps().shouldShowBatchActions ? 0 : -1
-                          }
-                          renderIcon={Download}
-                          onClick={batchActionClick(selectedRows)}
-                        >
-                          Download
                       </TableBatchAction>
                       </TableBatchActions>
                       <TableToolbarContent>
