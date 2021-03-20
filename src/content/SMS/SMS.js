@@ -11,6 +11,9 @@ import {
   TableHead,
   TableHeader,
   TableRow,
+  TableExpandRow,
+  TableExpandedRow,
+  TableExpandHeader,
   TableSelectAll,
   TableSelectRow,
   TableToolbar,
@@ -134,6 +137,7 @@ const SMS = () => {
                 getSelectionProps,
                 getToolbarProps,
                 getBatchActionProps,
+                getExpandHeaderProps,
                 onInputChange,
                 selectedRows,
                 getTableProps,
@@ -178,22 +182,32 @@ const SMS = () => {
                     <Table {...getTableProps()}>
                       <TableHead>
                         <TableRow>
-                          <TableSelectAll {...getSelectionProps()} />
+                          <TableExpandHeader
+                            enableExpando={true}
+                            {...getExpandHeaderProps()}
+                          />
                           {headers.map((header, i) => (
                             <TableHeader key={i} {...getHeaderProps({ header })}>
                               {header.header}
                             </TableHeader>
                           ))}
+                          <TableSelectAll {...getSelectionProps()} />
                         </TableRow>
                       </TableHead>
                       <TableBody>
                         {rows.map((row, i) => (
-                          <TableRow key={i} {...getRowProps({ row })}>
-                            <TableSelectRow {...getSelectionProps({ row })} />
-                            {row.cells.map((cell) => (
-                              <TableCell key={cell.id}>{cell.value}</TableCell>
-                            ))}
-                          </TableRow>
+                          <React.Fragment key={row.id}>
+                            <TableExpandRow key={i} {...getRowProps({ row })}>
+                              {row.cells.map((cell) => (
+                                <TableCell key={cell.id}>{cell.value}</TableCell>
+                              ))}
+                              <TableSelectRow {...getSelectionProps({ row })} />
+                            </TableExpandRow>
+                            <TableExpandedRow colSpan={headers.length + 2}>
+                              <h6>Message meta data goes here</h6>
+                              <div>Description here</div>
+                            </TableExpandedRow>
+                          </React.Fragment>
                         ))}
                       </TableBody>
                     </Table>
