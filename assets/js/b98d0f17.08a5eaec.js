@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[20],{93:function(e){e.exports=JSON.parse('{"title":"Recent posts","items":[{"title":"Welcome","permalink":"/Deku-SMS-Manager/blog/welcome"},{"title":"Hello","permalink":"/Deku-SMS-Manager/blog/hello-world"},{"title":"Hola","permalink":"/Deku-SMS-Manager/blog/hola"}]}')}}]);

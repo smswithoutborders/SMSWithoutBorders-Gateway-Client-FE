@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[11],{83:function(a){a.exports=JSON.parse('{"allTagsPath":"/Deku-SMS-Manager/blog/tags","slug":"docusaurus","name":"docusaurus","count":3,"permalink":"/Deku-SMS-Manager/blog/tags/docusaurus"}')}}]);
