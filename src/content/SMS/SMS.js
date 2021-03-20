@@ -20,7 +20,8 @@ import {
   TableToolbarContent,
   TableToolbarSearch,
   Pagination,
-  DataTableSkeleton
+  DataTableSkeleton,
+  Button
 } from "carbon-components-react";
 
 import { Link } from 'react-router-dom';
@@ -84,6 +85,13 @@ const batchDelete = (selectedRows, setTableRows, setLoading) => {
   })
 };
 
+const refreshTable = (setLoading) => {
+  setLoading(true);
+  setTimeout(() => {
+    setLoading(false);
+  }, 3000);
+}
+
 //props for table pagination
 const paginationProps = (maxRows, setMaxRows) => ({
   page: 1,
@@ -100,8 +108,6 @@ const paginationProps = (maxRows, setMaxRows) => ({
   },
 });
 
-
-
 const SMS = () => {
 
   const [loading, setLoading] = useState(false);
@@ -110,6 +116,7 @@ const SMS = () => {
 
   //display only a section of the array at a time
   const [tableRows, setTableRows] = useState(MockData.slice(0, maxRows));
+
   return (
     <>
       <div className="bx--grid bx--grid--narrow">
@@ -180,23 +187,20 @@ const SMS = () => {
                       <TableToolbar {...getToolbarProps()}>
                         <TableBatchActions {...getBatchActionProps()}>
                           <TableBatchAction
-                            tabIndex={
-                              getBatchActionProps().shouldShowBatchActions ? 0 : -1
-                            }
+                            tabIndex={getBatchActionProps().shouldShowBatchActions ? 0 : -1}
                             renderIcon={Delete}
                             onClick={() => batchDelete(selectedRows, setTableRows, setLoading)}
                           >
                             Delete
-                      </TableBatchAction>
+                        </TableBatchAction>
                         </TableBatchActions>
                         <TableToolbarContent>
                           <TableToolbarSearch
                             expanded={true}
-                            tabIndex={
-                              getBatchActionProps().shouldShowBatchActions ? -1 : 0
-                            }
+                            tabIndex={getBatchActionProps().shouldShowBatchActions ? -1 : 0}
                             onChange={onInputChange}
                           />
+                          <Button onClick={() => refreshTable(setLoading)}>Refresh</Button>
                         </TableToolbarContent>
                       </TableToolbar>
                       <Table {...getTableProps()}>
