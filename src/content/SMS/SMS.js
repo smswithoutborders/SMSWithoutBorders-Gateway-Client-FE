@@ -52,6 +52,10 @@ const headers = [
   {
     key: "time",
     header: "Time",
+  },
+  {
+    key: "modem",
+    header: "Modem",
   }
 ];
 

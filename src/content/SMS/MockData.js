@@ -6,6 +6,7 @@ const MockData = [
     date: "04/01/2021",
     time: "19:00",
     message: "Sample message data. Thi.records",
+    modem: "E303",
     isp: "MTN"
   },
   {
@@ -14,6 +15,7 @@ const MockData = [
     date: "04/01/2021",
     time: "17:00",
     message: "Sample message data. Thi.records",
+    modem: "E3131-AS",
     isp: "Orange"
   },
   {
@@ -22,6 +24,7 @@ const MockData = [
     date: "04/01/2021",
     time: "13:00",
     message: "Sample message data. Thi.records",
+    modem: "SH-120",
     isp: "MTN"
   },
   {
@@ -30,6 +33,7 @@ const MockData = [
     date: "04/01/2021",
     time: "13:10",
     message: "Sample message data. Thi.records",
+    modem: "KE-36",
     isp: "Orange"
   },
   {
@@ -38,6 +42,7 @@ const MockData = [
     date: "04/01/2021",
     time: "14:00",
     message: "Sample message data. Thi.records",
+    modem: "TP-link",
     isp: "Nexttel"
   },
   {
@@ -46,6 +51,7 @@ const MockData = [
     date: "05/01/2021",
     time: "19:00",
     message: "Sample message data. Thi.records",
+    modem: "EG520",
     isp: "MTN"
   },
   {
@@ -54,6 +60,7 @@ const MockData = [
     date: "05/01/2021",
     time: "17:00",
     message: "Sample message data. Thi.records",
+    modem: "AH-510",
     isp: "MTN"
   },
   {
@@ -62,6 +69,7 @@ const MockData = [
     date: "05/01/2021",
     time: "13:00",
     message: "Sample message data. Thi.records",
+    modem: "SH-120",
     isp: "Orange"
   },
   {
@@ -70,6 +78,7 @@ const MockData = [
     date: "05/01/2021",
     time: "13:10",
     message: "Sample message data. Thi.records",
+    modem: "E303",
     isp: "MTN"
   },
   {
@@ -78,6 +87,7 @@ const MockData = [
     date: "05/01/2021",
     time: "14:00",
     message: "Sample message data. Thi.records",
+    modem: "SH-120",
     isp: "Nexttel"
   },
   {
@@ -86,6 +96,7 @@ const MockData = [
     date: "05/01/2021",
     time: "14:00",
     message: "Sample message data. Thi.records",
+    modem: "E3131A",
     isp: "Nexttel"
   },
   {
@@ -94,6 +105,7 @@ const MockData = [
     date: "05/01/2021",
     time: "14:00",
     message: "Sample message data. Thi.records",
+    modem: "E3131A",
     isp: "Nexttel"
   },
   {
@@ -102,6 +114,7 @@ const MockData = [
     date: "05/01/2021",
     time: "14:00",
     message: "Sample message data. Thi.records",
+    modem: "SH-120",
     isp: "Nexttel"
   },
   {
@@ -110,6 +123,7 @@ const MockData = [
     date: "05/01/2021",
     time: "14:00",
     message: "Sample message data. Thi.records",
+    modem: "SH-120",
     isp: "Nexttel"
   },
   {
@@ -118,6 +132,7 @@ const MockData = [
     date: "05/01/2021",
     time: "14:00",
     message: "Sample message data. Thi.records",
+    modem: "SH-120",
     isp: "Nexttel"
   },
 ];
