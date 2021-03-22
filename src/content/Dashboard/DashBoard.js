@@ -47,6 +47,7 @@ import Modem from '../Modem';
 import NewSMS from '../../components/NewSMS';
 import BulkSMS from '../../components/BulkSMS';
 import Profile from '../Profile';
+import Settings from '../Settings';
 
 
 //setIsLoggedIn is parsed from the app component
@@ -176,7 +177,7 @@ const DashBoard = ({ setIsLoggedIn }) => {
                 <Route exact path="/bulk-sms" component={BulkSMS} />
                 <Route exact path="/modem" component={Modem} />
                 <Route exact path="/profile" component={Profile} />
-                <Route exact path="/settings" />
+                <Route exact path="/settings" component={Settings} />
               </Switch>
             </Content>
           </>
