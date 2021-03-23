@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Form, FormGroup, TextInput, Button, Loading } from 'carbon-components-react';
-import { ArrowRight24 } from '@carbon/icons-react';
+import { Login24, Information20 } from '@carbon/icons-react';
 
 const Login = ({ setIsLoggedIn }) => {
 
@@ -43,10 +43,10 @@ const Login = ({ setIsLoggedIn }) => {
             <div className="bx--row">
                 <div className="bx--col-lg-7">
                     <h1 className="login-page__title">Log in to <strong>C | Deck</strong></h1>
-                    <p>Please use issued credentials</p>
+                    <p><Information20 className="login-centered-icon" /> Please use issued credentials</p>
 
                     <Form {...formProps}>
-                        <FormGroup>
+                        <FormGroup legendText="">
                             <TextInput
                                 invalidText="Invalid error message."
                                 labelText="User Name"
@@ -72,7 +72,7 @@ const Login = ({ setIsLoggedIn }) => {
                                     description="loading"
                                     withOverlay={false}
                                     small
-                                    className="centered-icon"
+                                    className="login-centered-icon"
                                 />
                                 <span> Verifying information</span>
                             </> :
@@ -80,7 +80,7 @@ const Login = ({ setIsLoggedIn }) => {
                                 className="submit-button"
                                 kind="primary"
                                 type="submit"
-                                renderIcon={ArrowRight24}
+                                renderIcon={Login24}
                             >
                                 Continue
                         </Button>}

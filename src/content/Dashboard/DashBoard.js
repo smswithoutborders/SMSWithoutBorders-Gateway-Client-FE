@@ -113,9 +113,9 @@ const DashBoard = ({ setIsLoggedIn }) => {
                     Dashboard
                   </SideNavLink>
                   <SideNavMenu large renderIcon={Send} title="SMS" >
-                    <SideNavMenuItem element={Link} to="/sms"><Logs className="centered-icon" /> SMS Logs</SideNavMenuItem>
-                    <SideNavMenuItem element={Link} to="/new-sms"><Send className="centered-icon" /> New SMS</SideNavMenuItem>
-                    <SideNavMenuItem element={Link} to="/bulk-sms"><BulkSend className="centered-icon" /> Bulk SMS</SideNavMenuItem>
+                    <SideNavMenuItem element={Link} to="/sms"><Logs className="dash-centered-icon" /> SMS Logs</SideNavMenuItem>
+                    <SideNavMenuItem element={Link} to="/new-sms"><Send className="dash-centered-icon" /> New SMS</SideNavMenuItem>
+                    <SideNavMenuItem element={Link} to="/bulk-sms"><BulkSend className="dash-centered-icon" /> Bulk SMS</SideNavMenuItem>
                   </SideNavMenu>
                   <SideNavLink large renderIcon={IotPlatform16} element={Link} to="/modem">
                     Modems
@@ -129,7 +129,7 @@ const DashBoard = ({ setIsLoggedIn }) => {
                     element={Link} to="/profile"
                     onClick={() => setIsPanelOpen(!isPanelOpen)}
                   >
-                    <UserAvatar16 className="centered-icon" /> Profile
+                    <UserAvatar16 className="dash-centered-icon" /> Profile
                   </SwitcherItem>
                   <SwitcherDivider />
                   <SwitcherItem
@@ -137,14 +137,14 @@ const DashBoard = ({ setIsLoggedIn }) => {
                     element={Link} to="/settings"
                     onClick={() => setIsPanelOpen(!isPanelOpen)}
                   >
-                    <Settings16 className="centered-icon" /> Settings
+                    <Settings16 className="dash-centered-icon" /> Settings
                   </SwitcherItem>
                   <SwitcherDivider />
                   <SwitcherItem
                     aria-label="logout"
                     onClick={() => LogOut(setIsLoggedIn)}
                   >
-                    <Logout16 className="centered-icon" /> Logout
+                    <Logout16 className="dash-centered-icon" /> Logout
                   </SwitcherItem>
                   <SwitcherDivider />
                 </Switcher>
