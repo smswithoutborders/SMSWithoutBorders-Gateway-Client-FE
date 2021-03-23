@@ -169,7 +169,7 @@ const DashBoard = ({ setIsLoggedIn }) => {
 
             </Modal>
 
-            <Content id="main-content" className={isSideNavRail ? "bx--col-lg-15 bx--offset-lg-1" : "bx--col-lg-13 bx--offset-lg-3"}>
+            <Content id="main-content" className={isSideNavRail ? "bx--col-lg-16 left-margin" : "bx--col-lg-13 bx--offset-lg-3"}>
               <Switch>
                 <Route exact path="/" component={Metrics} />
                 <Route exact path="/sms" component={SMS} />
