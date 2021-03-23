@@ -34,9 +34,11 @@ const Settings = () => {
     return (
         <>
             <div className="bx--grid bx--grid--narrow">
-                <div className="bx--col dash-header">
-                    <h2><strong>System</strong> Settings</h2>
-                    <p>All system settings and configuration</p>
+                <div className="bx--row">
+                    <div className="bx--col dash-header">
+                        <h2><strong>System</strong> Settings</h2>
+                        <p>All system settings and configuration</p>
+                    </div>
                 </div>
 
                 <div className="bx--row">
