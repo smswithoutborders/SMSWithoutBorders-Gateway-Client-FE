@@ -15,6 +15,10 @@ $carbon--theme: $carbon--theme--g10;
 @import "./content/SMS/sms.scss";
 @import "./content/Modem/modems.scss";
 @import "./content/Login/login.scss";
+@import "./content/Profile/profile.scss";
+@import "./content/Settings/settings.scss";
+
+//general settings go here
 
 .bx--side-nav__navigation {
   background-color: $ui-01;
@@ -25,4 +29,16 @@ $carbon--theme: $carbon--theme--g10;
   margin: $layout-05, 0;
   padding: $spacing-06;
   width: 100%;
+}
+.dash-card {
+  padding: $spacing-05;
+  background-color: $ui-01;
+  margin-bottom: $layout-03;
+  border-radius: $spacing-03;
+}
+
+.centered-icon {
+  display: inline-block;
+  position: relative;
+  top: 0.175rem;
 }

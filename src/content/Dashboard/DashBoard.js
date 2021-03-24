@@ -24,7 +24,7 @@ import {
   ModalBody
 } from 'carbon-components-react';
 import {
-  UserAvatar20,
+  UserAvatar16,
   Search20,
   Close20,
   Notification20,
@@ -34,15 +34,20 @@ import {
   UserMultiple16 as BulkSend,
   Catalog16 as Logs,
   Logout16,
-  AppSwitcher16 as RailSwitch,
-  Dashboard32
+  Switcher16 as RailSwitch,
+  Switcher20,
+  Dashboard32,
+  Settings16
 } from '@carbon/icons-react';
+
 import { Route, Switch, Link } from 'react-router-dom';
 import Metrics from '../Metrics';
 import SMS from '../SMS';
 import Modem from '../Modem';
 import NewSMS from '../../components/NewSMS';
 import BulkSMS from '../../components/BulkSMS';
+import Profile from '../Profile';
+import Settings from '../Settings';
 
 
 //setIsLoggedIn is parsed from the app component
@@ -96,7 +101,7 @@ const DashBoard = ({ setIsLoggedIn }) => {
                 <HeaderGlobalAction
                   aria-label="User Avatar"
                   onClick={() => setIsPanelOpen(!isPanelOpen)}>
-                  {isPanelOpen ? <Close20 /> : <UserAvatar20 />}
+                  {isPanelOpen ? <Close20 /> : <Switcher20 />}
                 </HeaderGlobalAction>
               </HeaderGlobalBar>
               <SideNav aria-label="Side navigation"
@@ -108,9 +113,9 @@ const DashBoard = ({ setIsLoggedIn }) => {
                     Dashboard
                   </SideNavLink>
                   <SideNavMenu large renderIcon={Send} title="SMS" >
-                    <SideNavMenuItem element={Link} to="/sms"><Logs className="centered-icon" /> SMS Logs</SideNavMenuItem>
-                    <SideNavMenuItem element={Link} to="/new-sms"><Send className="centered-icon" /> New SMS</SideNavMenuItem>
-                    <SideNavMenuItem element={Link} to="/bulk-sms"><BulkSend className="centered-icon" /> Bulk SMS</SideNavMenuItem>
+                    <SideNavMenuItem element={Link} to="/sms"><Logs className="dash-centered-icon" /> SMS Logs</SideNavMenuItem>
+                    <SideNavMenuItem element={Link} to="/new-sms"><Send className="dash-centered-icon" /> New SMS</SideNavMenuItem>
+                    <SideNavMenuItem element={Link} to="/bulk-sms"><BulkSend className="dash-centered-icon" /> Bulk SMS</SideNavMenuItem>
                   </SideNavMenu>
                   <SideNavLink large renderIcon={IotPlatform16} element={Link} to="/modem">
                     Modems
@@ -119,16 +124,29 @@ const DashBoard = ({ setIsLoggedIn }) => {
               </SideNav>
               <HeaderPanel aria-label="Header Panel" expanded={isPanelOpen}>
                 <Switcher aria-label="Switcher Container">
-                  <SwitcherItem aria-label="Link 1" href="#">
-                    Profile
+                  <SwitcherItem
+                    aria-label="profile"
+                    element={Link} to="/profile"
+                    onClick={() => setIsPanelOpen(!isPanelOpen)}
+                  >
+                    <UserAvatar16 className="dash-centered-icon" /> Profile
+                  </SwitcherItem>
+                  <SwitcherDivider />
+                  <SwitcherItem
+                    aria-label="settings"
+                    element={Link} to="/settings"
+                    onClick={() => setIsPanelOpen(!isPanelOpen)}
+                  >
+                    <Settings16 className="dash-centered-icon" /> Settings
                   </SwitcherItem>
                   <SwitcherDivider />
                   <SwitcherItem
                     aria-label="logout"
                     onClick={() => LogOut(setIsLoggedIn)}
                   >
-                    <Logout16 className="centered-icon" /> Logout
-                 </SwitcherItem>
+                    <Logout16 className="dash-centered-icon" /> Logout
+                  </SwitcherItem>
+                  <SwitcherDivider />
                 </Switcher>
               </HeaderPanel>
             </Header>
@@ -151,14 +169,15 @@ const DashBoard = ({ setIsLoggedIn }) => {
 
             </Modal>
 
-            <Content id="main-content" className={isSideNavRail ? "bx--col-lg-15 bx--offset-lg-1" : "bx--col-lg-13 bx--offset-lg-3"}>
+            <Content id="main-content" className={isSideNavRail ? "bx--col-lg-16 panel-left-margin" : "bx--col-lg-13 bx--offset-lg-3"}>
               <Switch>
                 <Route exact path="/" component={Metrics} />
                 <Route exact path="/sms" component={SMS} />
-                <Route exact path="/sms/:modem" />
                 <Route exact path="/new-sms" component={NewSMS} />
                 <Route exact path="/bulk-sms" component={BulkSMS} />
                 <Route exact path="/modem" component={Modem} />
+                <Route exact path="/profile" component={Profile} />
+                <Route exact path="/settings" component={Settings} />
               </Switch>
             </Content>
           </>
