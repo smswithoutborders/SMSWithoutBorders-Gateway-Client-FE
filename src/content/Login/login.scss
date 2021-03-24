@@ -9,17 +9,17 @@
         padding: $spacing-07 * 4;
     }
 
-    h1 {
+    h2 {
         @include carbon--type-style("productive-heading-06");
     }
 
     p {
         margin-top: $layout-01;
-        margin-bottom: $layout-04;
+        margin-bottom: $layout-01;
         color: $text-03;
     }
 
-    Form {
+    form {
         label {
             color: $ui-background;
         }

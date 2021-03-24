@@ -1,12 +1,13 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Form, FormGroup, TextInput, Button, Loading } from 'carbon-components-react';
 import { Login24, Information20 } from '@carbon/icons-react';
+import { userLogin, setToken } from '../../services/auth.service';
 
 const Login = ({ setIsLoggedIn }) => {
 
-    const username = useRef(null);
-    const password = useRef(null);
+    const [username, setUsername] = useState();
+    const [password, setPassword] = useState();
     const [isLoading, setIsLoading] = useState(false);
 
     const formProps = {
@@ -14,35 +15,22 @@ const Login = ({ setIsLoggedIn }) => {
             e.preventDefault();
             setIsLoading(!isLoading);
             const loginData = {
-                username: username.current.value,
-                password: password.current.value
+                username: username,
+                password: password
             }
-            const userToken = await loginUser(loginData);
+            const userToken = await userLogin(loginData);
             setToken(userToken.token);
             setIsLoggedIn(true);
         },
     };
 
-    const loginUser = async (credentials) => {
-        return fetch(process.env.REACT_APP_API_URL, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(credentials)
-        })
-            .then(data => data.json())
-    };
-
-    const setToken = (token) => {
-        sessionStorage.setItem('c-deck-token', token);
-    };
-
     return (
         <div className="bx--grid login-page__container">
             <div className="bx--row">
-                <div className="bx--col-lg-7">
-                    <h1 className="login-page__title">Log in to <strong>C | Deck</strong></h1>
+                <div className="bx--col-lg-8">
+                    <h2><strong>Deku SMS Manager</strong></h2>
+                    <br />
+                    <h3>Log in</h3>
                     <p><Information20 className="login-centered-icon" /> Please use issued credentials</p>
 
                     <Form {...formProps}>
@@ -52,7 +40,7 @@ const Login = ({ setIsLoggedIn }) => {
                                 labelText="User Name"
                                 placeholder="enter username "
                                 id="username"
-                                ref={username}
+                                onChange={evt => setUsername(evt.target.value)}
                                 required
                             />
                             <br />
@@ -61,7 +49,7 @@ const Login = ({ setIsLoggedIn }) => {
                                 labelText="Password"
                                 placeholder="enter password"
                                 id="password"
-                                ref={password}
+                                onChange={evt => setPassword(evt.target.value)}
                                 required
                             />
                         </FormGroup>

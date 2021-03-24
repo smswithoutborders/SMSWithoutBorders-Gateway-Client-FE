@@ -201,7 +201,7 @@ const Metrics = () => {
 
         <div className="bx--row">
           <div className="bx--col dash-header">
-            <h1><strong>C | Deck</strong> Metrics</h1>
+            <h2><strong>Dashboard</strong> Metrics</h2>
             <p>Summary overview of Deku systems</p>
           </div>
         </div>

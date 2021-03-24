@@ -41,6 +41,7 @@ import {
 } from '@carbon/icons-react';
 
 import { Route, Switch, Link } from 'react-router-dom';
+import { logOut } from "../../services/auth.service";
 import Metrics from '../Metrics';
 import SMS from '../SMS';
 import Modem from '../Modem';
@@ -49,14 +50,6 @@ import BulkSMS from '../../components/BulkSMS';
 import Profile from '../Profile';
 import Settings from '../Settings';
 
-
-//setIsLoggedIn is parsed from the app component
-const LogOut = (setIsLoggedIn) => {
-  //log the user out by changing state
-  setIsLoggedIn(false);
-  //remove user token from session storage
-  sessionStorage.removeItem('c-deck-token');
-};
 
 const DashBoard = ({ setIsLoggedIn }) => {
   //state hook to control left panel view
@@ -69,7 +62,7 @@ const DashBoard = ({ setIsLoggedIn }) => {
       <HeaderContainer
         render={({ isSideNavExpanded, onClickSideNavExpand }) => (
           <>
-            <Header aria-label="C | Deck">
+            <Header aria-label="Header">
               <SkipToContent />
               <HeaderMenuButton
                 aria-label="Open menu"
@@ -77,9 +70,9 @@ const DashBoard = ({ setIsLoggedIn }) => {
                 isActive={isSideNavExpanded}
               />
               <HeaderName href="#" prefix="">
-                C | Deck
-          </HeaderName>
-              <HeaderNavigation aria-label="C | Deck">
+                Deku SMS Manager
+              </HeaderName>
+              <HeaderNavigation aria-label="Main Navigation">
                 <HeaderMenuItem
                   onClick={() => setIsSideNavRail(!isSideNavRail)}>
                   {isSideNavRail ? <RailSwitch /> : <Grid16 />}
@@ -99,7 +92,7 @@ const DashBoard = ({ setIsLoggedIn }) => {
                   <Notification20 />
                 </HeaderGlobalAction>
                 <HeaderGlobalAction
-                  aria-label="User Avatar"
+                  aria-label="Menu"
                   onClick={() => setIsPanelOpen(!isPanelOpen)}>
                   {isPanelOpen ? <Close20 /> : <Switcher20 />}
                 </HeaderGlobalAction>
@@ -119,6 +112,9 @@ const DashBoard = ({ setIsLoggedIn }) => {
                   </SideNavMenu>
                   <SideNavLink large renderIcon={IotPlatform16} element={Link} to="/modem">
                     Modems
+                  </SideNavLink>
+                  <SideNavLink large renderIcon={Settings16} element={Link} to="/settings">
+                    Settings
                   </SideNavLink>
                 </SideNavItems>
               </SideNav>
@@ -142,7 +138,7 @@ const DashBoard = ({ setIsLoggedIn }) => {
                   <SwitcherDivider />
                   <SwitcherItem
                     aria-label="logout"
-                    onClick={() => LogOut(setIsLoggedIn)}
+                    onClick={() => logOut(setIsLoggedIn)}
                   >
                     <Logout16 className="dash-centered-icon" /> Logout
                   </SwitcherItem>
@@ -154,13 +150,17 @@ const DashBoard = ({ setIsLoggedIn }) => {
             <Modal
               open={isAboutOpen}
               modalLabel="About"
-              modalAriaLabel="About C | Deck"
+              modalAriaLabel="About Deku SMS Manager"
               passiveModal
               onRequestClose={() => setIsAboutOpen(!isAboutOpen)}>
 
               <ModalBody>
-                <Dashboard32 />
-                <h3>Afkanerd <strong>C | Deck</strong></h3>
+                <div className="header-group">
+                  <Dashboard32 className="dash-centered-icon" /><span>Afkanerd</span>
+                </div>
+                <br />
+                <h3><strong>Deku SMS Manager</strong></h3>
+                <br />
                 <div className="version-number">
                   <p>Version number</p>
                   <p>1.0.0</p>
