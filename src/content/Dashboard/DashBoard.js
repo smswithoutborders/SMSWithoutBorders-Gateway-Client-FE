@@ -120,6 +120,9 @@ const DashBoard = ({ setIsLoggedIn }) => {
                   <SideNavLink large renderIcon={IotPlatform16} element={Link} to="/modem">
                     Modems
                   </SideNavLink>
+                  <SideNavLink large renderIcon={Settings16} element={Link} to="/settings">
+                    Settings
+                  </SideNavLink>
                 </SideNavItems>
               </SideNav>
               <HeaderPanel aria-label="Header Panel" expanded={isPanelOpen}>
