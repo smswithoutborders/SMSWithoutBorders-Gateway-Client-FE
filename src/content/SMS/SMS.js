@@ -99,20 +99,7 @@ const refreshTable = (setLoading) => {
 }
 
 //props for table pagination
-const paginationProps = (maxRows, setMaxRows) => ({
-  page: 1,
-  totalItems: MockData.length,
-  itemText: (e) => {
-    console.log(e);
-  },
-  pageSize: 10,
-  pageSizes: [10, 20, 30, 40, 50, 100],
-  onChange: (e) => {
-    if (e.pageSize !== maxRows) {
-      setMaxRows(e.pageSize);
-    }
-  },
-});
+
 
 const SMS = () => {
 
@@ -122,24 +109,28 @@ const SMS = () => {
 
   const [maxRows, setMaxRows] = useState(10);
 
-  //display only a section of the array at a time
-  // const [tableRows, setTableRows] = useState(MockData.slice(0, maxRows));
-
-
-  // useEffect(() => {
-  //   getList()
-  //     .then(items => {
-  //       console.log(items);
-  //     })
-  // })
-
   useEffect(() => {
     getMessages()
       .then(items => {
         setMessages(items.messages);
         console.log("items", items.messages);
       });
-  }, [])
+  }, []);
+
+  const paginationProps = () => ({
+    page: 1,
+    totalItems: messages.length,
+    itemText: (e) => {
+      console.log(e);
+    },
+    pageSize: 10,
+    pageSizes: [10, 20, 30, 40, 50, 100],
+    onChange: (e) => {
+      if (e.pageSize !== maxRows) {
+        setMaxRows(e.pageSize);
+      }
+    },
+  });
 
   console.log("messages", messages);
 
@@ -149,7 +140,7 @@ const SMS = () => {
         <div className="bx--row">
           <div className="bx--col dash-header">
             <h2><strong>SMS</strong> Logs</h2>
-            <p>Summary overview of SMS app type</p>
+            <p>Logs of all sent and received messages</p>
           </div>
         </div>
         <div className="bx--row">
@@ -190,7 +181,7 @@ const SMS = () => {
                 rowCount={10}
               />
               :
-              <DataTable rows={messages} headers={headers}>
+              <DataTable rows={messages.slice(0, maxRows)} headers={headers}>
                 {({
                   rows,
                   headers,
@@ -283,7 +274,7 @@ const SMS = () => {
                   )}
               </DataTable>
             }
-            <Pagination {...paginationProps(maxRows, setMaxRows)} />
+            <Pagination {...paginationProps()} />
           </div>
         </div>
       </div>
