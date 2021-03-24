@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+
+import { getList } from "../../services/sms.service"
 
 import {
   DataTable,
@@ -38,7 +40,7 @@ import MockData from "./MockData";
 
 const headers = [
   {
-    key: "sender",
+    key: "phonenumber",
     header: "Sender",
   },
   {
@@ -46,7 +48,11 @@ const headers = [
     header: "ISP",
   },
   {
-    key: "message",
+    key: "type",
+    header: "Type",
+  },
+  {
+    key: "text",
     header: "Message",
   },
   {
@@ -54,16 +60,16 @@ const headers = [
     header: "Date",
   },
   {
-    key: "time",
+    key: "claimed_time",
     header: "Time",
   },
   {
-    key: "modem",
+    key: "claimed_modem_imei",
     header: "Modem",
   }
 ];
 
-const batchDelete = (selectedRows, setTableRows, setLoading) => {
+const batchDelete = (selectedRows, setMessages, setLoading) => {
   selectedRows.forEach(row => {
     console.log(row);
     //find items record in the array
@@ -77,7 +83,7 @@ const batchDelete = (selectedRows, setTableRows, setLoading) => {
     //remove item from records
     MockData.splice(index, 1);
     setLoading(true);
-    setTableRows(MockData);
+    setMessages(MockData);
     //use setimeout so table has time to refresh data
     setTimeout(() => {
       setLoading(false);
@@ -110,12 +116,32 @@ const paginationProps = (maxRows, setMaxRows) => ({
 
 const SMS = () => {
 
+  const [messages, setMessages] = useState([]);
+
   const [loading, setLoading] = useState(false);
 
   const [maxRows, setMaxRows] = useState(10);
 
   //display only a section of the array at a time
-  const [tableRows, setTableRows] = useState(MockData.slice(0, maxRows));
+  // const [tableRows, setTableRows] = useState(MockData.slice(0, maxRows));
+
+
+  // useEffect(() => {
+  //   getList()
+  //     .then(items => {
+  //       console.log(items);
+  //     })
+  // })
+
+  useEffect(() => {
+    getList()
+      .then(items => {
+        setMessages(items.messages);
+        console.log("items", items.messages);
+      });
+  }, [])
+
+  console.log("messages", messages);
 
   return (
     <>
@@ -164,7 +190,7 @@ const SMS = () => {
                 rowCount={10}
               />
               :
-              <DataTable rows={tableRows} headers={headers}>
+              <DataTable rows={messages} headers={headers}>
                 {({
                   rows,
                   headers,
@@ -189,7 +215,7 @@ const SMS = () => {
                           <TableBatchAction
                             tabIndex={getBatchActionProps().shouldShowBatchActions ? 0 : -1}
                             renderIcon={Delete}
-                            onClick={() => batchDelete(selectedRows, setTableRows, setLoading)}
+                            onClick={() => batchDelete(selectedRows, setMessages, setLoading)}
                           >
                             Delete
                         </TableBatchAction>
@@ -228,8 +254,20 @@ const SMS = () => {
                                 <TableSelectRow {...getSelectionProps({ row })} />
                               </TableExpandRow>
                               <TableExpandedRow colSpan={headers.length + 2}>
-                                <h6>Message meta data goes here</h6>
-                                <div>Description here</div>
+                                <div className="bx--grid bx--grid--condensed">
+                                  <div className="bx--row">
+                                    <div className="bx--col-lg-2">
+                                      {headers.map((header) => (
+                                        <h6>{header.header}</h6>
+                                      ))}
+                                    </div>
+                                    <div className="bx--col-lg-10">
+                                      {row.cells.map((cell) => (
+                                        <p>{cell.value}</p>
+                                      ))}
+                                    </div>
+                                  </div>
+                                </div>
                               </TableExpandedRow>
                             </React.Fragment>
                           ))}

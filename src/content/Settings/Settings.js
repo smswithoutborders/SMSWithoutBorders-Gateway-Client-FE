@@ -2,9 +2,6 @@ import React, { useState } from 'react';
 
 import { TextInput, Button, Loading } from 'carbon-components-react';
 
-
-
-
 const Settings = () => {
 
     const [isEditing, setIsEditing] = useState(false);
