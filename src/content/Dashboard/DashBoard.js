@@ -41,6 +41,7 @@ import {
 } from '@carbon/icons-react';
 
 import { Route, Switch, Link } from 'react-router-dom';
+import { logOut } from "../../services/auth.service";
 import Metrics from '../Metrics';
 import SMS from '../SMS';
 import Modem from '../Modem';
@@ -49,14 +50,6 @@ import BulkSMS from '../../components/BulkSMS';
 import Profile from '../Profile';
 import Settings from '../Settings';
 
-
-//setIsLoggedIn is parsed from the app component
-const LogOut = (setIsLoggedIn) => {
-  //log the user out by changing state
-  setIsLoggedIn(false);
-  //remove user token from session storage
-  sessionStorage.removeItem('c-deck-token');
-};
 
 const DashBoard = ({ setIsLoggedIn }) => {
   //state hook to control left panel view
@@ -145,7 +138,7 @@ const DashBoard = ({ setIsLoggedIn }) => {
                   <SwitcherDivider />
                   <SwitcherItem
                     aria-label="logout"
-                    onClick={() => LogOut(setIsLoggedIn)}
+                    onClick={() => logOut(setIsLoggedIn)}
                   >
                     <Logout16 className="dash-centered-icon" /> Logout
                   </SwitcherItem>
