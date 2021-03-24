@@ -69,7 +69,7 @@ const DashBoard = ({ setIsLoggedIn }) => {
       <HeaderContainer
         render={({ isSideNavExpanded, onClickSideNavExpand }) => (
           <>
-            <Header aria-label="C | Deck">
+            <Header aria-label="Header">
               <SkipToContent />
               <HeaderMenuButton
                 aria-label="Open menu"
@@ -77,9 +77,9 @@ const DashBoard = ({ setIsLoggedIn }) => {
                 isActive={isSideNavExpanded}
               />
               <HeaderName href="#" prefix="">
-                C | Deck
-          </HeaderName>
-              <HeaderNavigation aria-label="C | Deck">
+                Deku SMS Manager
+              </HeaderName>
+              <HeaderNavigation aria-label="Main Navigation">
                 <HeaderMenuItem
                   onClick={() => setIsSideNavRail(!isSideNavRail)}>
                   {isSideNavRail ? <RailSwitch /> : <Grid16 />}
@@ -99,7 +99,7 @@ const DashBoard = ({ setIsLoggedIn }) => {
                   <Notification20 />
                 </HeaderGlobalAction>
                 <HeaderGlobalAction
-                  aria-label="User Avatar"
+                  aria-label="Menu"
                   onClick={() => setIsPanelOpen(!isPanelOpen)}>
                   {isPanelOpen ? <Close20 /> : <Switcher20 />}
                 </HeaderGlobalAction>
@@ -157,13 +157,17 @@ const DashBoard = ({ setIsLoggedIn }) => {
             <Modal
               open={isAboutOpen}
               modalLabel="About"
-              modalAriaLabel="About C | Deck"
+              modalAriaLabel="About Deku SMS Manager"
               passiveModal
               onRequestClose={() => setIsAboutOpen(!isAboutOpen)}>
 
               <ModalBody>
-                <Dashboard32 />
-                <h3>Afkanerd <strong>C | Deck</strong></h3>
+                <div className="header-group">
+                  <Dashboard32 className="dash-centered-icon" /><span>Afkanerd</span>
+                </div>
+                <br />
+                <h3><strong>Deku SMS Manager</strong></h3>
+                <br />
                 <div className="version-number">
                   <p>Version number</p>
                   <p>1.0.0</p>
