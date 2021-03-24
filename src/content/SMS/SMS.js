@@ -36,8 +36,6 @@ import {
   Catalog32 as Contacts,
 } from "@carbon/icons-react";
 
-import MockData from "./MockData";
-
 const headers = [
   {
     key: "phonenumber",
@@ -69,37 +67,6 @@ const headers = [
   }
 ];
 
-const batchDelete = (selectedRows, setMessages, setLoading) => {
-  selectedRows.forEach(row => {
-    console.log(row);
-    //find items record in the array
-    let obj = MockData.find(obj => obj.id === row.id);
-    console.log(obj);
-
-    //find the index of items record in the array
-    let index = MockData.findIndex(obj => obj.id === row.id);
-    console.log("index", index, "\n", "Mockdata for reference", MockData);
-
-    //remove item from records
-    MockData.splice(index, 1);
-    setLoading(true);
-    setMessages(MockData);
-    //use setimeout so table has time to refresh data
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
-  })
-};
-
-const refreshTable = (setLoading) => {
-  setLoading(true);
-  setTimeout(() => {
-    setLoading(false);
-  }, 3000);
-}
-
-//props for table pagination
-
 
 const SMS = () => {
 
@@ -113,10 +80,10 @@ const SMS = () => {
     getMessages()
       .then(items => {
         setMessages(items.messages);
-        console.log("items", items.messages);
       });
   }, []);
 
+  //props for table pagination
   const paginationProps = () => ({
     page: 1,
     totalItems: messages.length,
@@ -132,7 +99,38 @@ const SMS = () => {
     },
   });
 
-  console.log("messages", messages);
+  const batchDelete = (selectedRows) => {
+    selectedRows.forEach(row => {
+      console.log(row);
+      //find items record in the array
+      let obj = messages.find(obj => obj.id === row.id);
+      console.log(obj);
+
+      //find the index of items record in the array
+      let index = messages.findIndex(obj => obj.id === row.id);
+      console.log("index", index, "\n", "messages for reference", messages);
+
+      //remove item from records
+      messages.splice(index, 1);
+      setLoading(true);
+      setMessages(messages);
+      //use setimeout so table has time to refresh data
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
+    })
+  };
+
+  const refreshTable = () => {
+    setLoading(true);
+    getMessages()
+      .then(items => {
+        setMessages(items.messages);
+      });
+    setTimeout(() => {
+      setLoading(false);
+    }, 3000);
+  }
 
   return (
     <>
@@ -198,7 +196,7 @@ const SMS = () => {
                 }) => (
                     <TableContainer
                       title="Message Inbox"
-                      description="log of todays messages from all modems"
+                      description="Messages from all modems"
                       {...getTableContainerProps()}
                     >
                       <TableToolbar {...getToolbarProps()}>
@@ -206,7 +204,7 @@ const SMS = () => {
                           <TableBatchAction
                             tabIndex={getBatchActionProps().shouldShowBatchActions ? 0 : -1}
                             renderIcon={Delete}
-                            onClick={() => batchDelete(selectedRows, setMessages, setLoading)}
+                            onClick={() => batchDelete(selectedRows)}
                           >
                             Delete
                         </TableBatchAction>
@@ -217,7 +215,7 @@ const SMS = () => {
                             tabIndex={getBatchActionProps().shouldShowBatchActions ? -1 : 0}
                             onChange={onInputChange}
                           />
-                          <Button onClick={() => refreshTable(setLoading)}>Refresh</Button>
+                          <Button onClick={() => refreshTable()}>Refresh</Button>
                         </TableToolbarContent>
                       </TableToolbar>
                       <Table {...getTableProps()}>
@@ -249,18 +247,18 @@ const SMS = () => {
                                   <div className="bx--row">
                                     <div className="bx--col-lg-2">
                                       {headers.map((header) => (
-                                        <>
+                                        <React.Fragment key={header.key}>
                                           <h6>{header.header}</h6>
                                           <br />
-                                        </>
+                                        </React.Fragment>
                                       ))}
                                     </div>
                                     <div className="bx--col-lg-14">
                                       {row.cells.map((cell) => (
-                                        <>
+                                        <React.Fragment key={cell.id}>
                                           <h6>{cell.value ? cell.value : "------"}</h6>
                                           <br />
-                                        </>
+                                        </React.Fragment>
                                       ))}
                                     </div>
                                   </div>
