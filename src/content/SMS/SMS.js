@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { getList } from "../../services/sms.service"
+import { getMessages } from "../../services/sms.service"
 
 import {
   DataTable,
@@ -134,7 +134,7 @@ const SMS = () => {
   // })
 
   useEffect(() => {
-    getList()
+    getMessages()
       .then(items => {
         setMessages(items.messages);
         console.log("items", items.messages);
@@ -249,7 +249,7 @@ const SMS = () => {
                             <React.Fragment key={row.id}>
                               <TableExpandRow key={i} {...getRowProps({ row })}>
                                 {row.cells.map((cell) => (
-                                  <TableCell key={cell.id}>{cell.value}</TableCell>
+                                  <TableCell key={cell.id}>{cell.value ? cell.value : "------"}</TableCell>
                                 ))}
                                 <TableSelectRow {...getSelectionProps({ row })} />
                               </TableExpandRow>
@@ -258,12 +258,18 @@ const SMS = () => {
                                   <div className="bx--row">
                                     <div className="bx--col-lg-2">
                                       {headers.map((header) => (
-                                        <h6>{header.header}</h6>
+                                        <>
+                                          <h6>{header.header}</h6>
+                                          <br />
+                                        </>
                                       ))}
                                     </div>
-                                    <div className="bx--col-lg-10">
+                                    <div className="bx--col-lg-14">
                                       {row.cells.map((cell) => (
-                                        <p>{cell.value}</p>
+                                        <>
+                                          <h6>{cell.value ? cell.value : "------"}</h6>
+                                          <br />
+                                        </>
                                       ))}
                                     </div>
                                   </div>
