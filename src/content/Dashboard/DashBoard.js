@@ -45,8 +45,8 @@ import { logOut } from "../../services/auth.service";
 import Metrics from '../Metrics';
 import SMS from '../SMS';
 import Modem from '../Modem';
-import NewSMS from '../../components/NewSMS';
-import BulkSMS from '../../components/BulkSMS';
+import NewSMS from '../NewSMS';
+import BulkSMS from '../BulkSMS';
 import Profile from '../Profile';
 import Settings from '../Settings';
 
