@@ -1,6 +1,8 @@
 
+let AUTH_URL = process.env.REACT_APP_API_URL;
+
 export const userLogin = async (credentials) => {
-    return fetch(process.env.REACT_APP_API_URL, {
+    return fetch(AUTH_URL, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
