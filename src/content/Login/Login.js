@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Form, FormGroup, TextInput, Button, Loading } from 'carbon-components-react';
 import { Login24, Information20 } from '@carbon/icons-react';
-import { userLogin, setToken } from '../../services/auth.service';
+import { setToken } from '../../services/auth.service';
 
 const Login = ({ setIsLoggedIn }) => {
 
@@ -14,13 +14,29 @@ const Login = ({ setIsLoggedIn }) => {
         onSubmit: async (e) => {
             e.preventDefault();
             setIsLoading(!isLoading);
+
             const loginData = {
                 username: username,
                 password: password
             }
-            const userToken = await userLogin(loginData);
-            setToken(userToken.token);
-            setIsLoggedIn(true);
+            console.log(loginData);
+
+            if (username !== "admin" || password !== "admin") {
+                setTimeout(function () {
+                    setIsLoading(isLoading);
+                    alert("wrong credentials used");
+                }, 3000);
+
+            } else {
+
+                // const userToken = await userLogin(loginData);
+                // setToken(userToken.token);
+
+                setTimeout(function () {
+                    setToken("sdfgdkjg-sdfg-sfsdfs-sfdsf");
+                    setIsLoggedIn(true);
+                }, 3000);
+            }
         },
     };
 
