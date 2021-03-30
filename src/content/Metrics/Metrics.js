@@ -1,6 +1,7 @@
 import React from "react";
 
 import DashHeader from '../../components/DashHeader';
+import { DashCard } from '../../components/Card'
 import {
   GroupedBarChart,
   LineChart,
@@ -210,29 +211,29 @@ const Metrics = () => {
         </div>
         <div className="bx--row">
           <div className="bx--col-lg-6">
-            <div className="dash-card">
+            <DashCard>
               <DonutChart data={DonutData} options={DonutOptions} />
-            </div>
+            </DashCard>
           </div>
 
           <div className="bx--col-lg-10">
-            <div className="dash-card">
+            <DashCard>
               <LineChart data={LineData} options={LineOptions} />
-            </div>
+            </DashCard>
           </div>
         </div>
 
         <div className="bx--row">
           <div className="bx--col-lg-6">
-            <div className="dash-card">
+            <DashCard>
               <GaugeChart data={gaugeData} options={gaugeOptions} />
-            </div>
+            </DashCard>
           </div>
 
           <div className="bx--col-lg-10">
-            <div className="dash-card">
+            <DashCard>
               <GroupedBarChart data={GroupData} options={GroupOptions} />
-            </div>
+            </DashCard>
           </div>
         </div>
       </div>
