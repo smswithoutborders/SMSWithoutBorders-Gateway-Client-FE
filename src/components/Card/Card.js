@@ -12,7 +12,7 @@ const DashCard = ({ children }) => {
 }
 
 DashCard.propTypes = {
-    children: PropTypes.element
+    children: PropTypes.node
 }
 
 const ModemCard = (props) => {
@@ -34,7 +34,7 @@ const ModemCard = (props) => {
 }
 
 ModemCard.propTypes = {
-    icon: PropTypes.element,
+    icon: PropTypes.node,
     modemType: PropTypes.string,
     IMEI: PropTypes.string
 
