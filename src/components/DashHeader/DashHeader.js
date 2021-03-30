@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const DashHeader = (props) => {
     return (
@@ -7,6 +8,13 @@ const DashHeader = (props) => {
             <p>{props.description}</p>
         </div>
     );
+}
+
+DashHeader.propTypes = {
+    className: PropTypes.string,
+    title: PropTypes.string,
+    subtitle: PropTypes.string,
+    description: PropTypes.string
 }
 
 export default DashHeader;
