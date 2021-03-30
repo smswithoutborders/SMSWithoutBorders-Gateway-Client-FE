@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { Button } from 'carbon-components-react';
 
@@ -8,6 +9,10 @@ const DashCard = ({ children }) => {
             {children}
         </div>
     );
+}
+
+DashCard.propTypes = {
+    children: PropTypes.element
 }
 
 const ModemCard = (props) => {
@@ -26,6 +31,13 @@ const ModemCard = (props) => {
             </div>
         </div>
     );
+}
+
+ModemCard.propTypes = {
+    icon: PropTypes.element,
+    modemType: PropTypes.string,
+    IMEI: PropTypes.string
+
 }
 
 export { DashCard, ModemCard };
