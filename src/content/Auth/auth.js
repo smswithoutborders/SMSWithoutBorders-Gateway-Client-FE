@@ -1,8 +1,19 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Form, FormGroup, TextInput, Button, Loading, Link } from 'carbon-components-react';
+import { Form, FormGroup, TextInput, Button, Loading, Link, InlineNotification } from 'carbon-components-react';
 import { Login24, Information20 } from '@carbon/icons-react';
-import { setToken } from '../../services/auth.service';
+import { setToken, registerUser } from '../../services/auth.service';
+
+let notificationProps = {
+    kind: "info",
+    lowContrast: true,
+    role: 'alert',
+    title: 'Alert',
+    subtitle: 'This is something you should know about .',
+    iconDescription: 'Notification',
+    statusIconDescription: 'Notification status icon',
+    hideCloseButton: false
+};
 
 const Login = ({ setIsLoggedIn }) => {
 
@@ -106,47 +117,99 @@ const SignUp = ({ setRegistered }) => {
 
     const [phone, setPhone] = useState();
     const [password, setPassword] = useState();
-    const [isLoading, setIsLoading] = useState(false);
+    const [alert, setAlert] = useState(
+        {
+            loading: false,
+            notify: false
+        }
+    );
 
     const formProps = {
         onSubmit: async (e) => {
             e.preventDefault();
-            setIsLoading(!isLoading);
+            setAlert({ loading: true, notify: false });
+            registerUser(phone, password)
+                .then(response => {
+                    if (response.status === 200) {
+                        notificationProps.kind = "success";
+                        notificationProps.title = "Success";
+                        notificationProps.subtitle = phone + " account created";
+                        setAlert({ loading: false, notify: true });
+                        setTimeout(() => {
+                            setRegistered(true);
+                        }, 3000);
+                    }
+                })
+                .catch(error => {
+                    if (error.response) {
+                        /*
+                         * The request was made and the server responded with a
+                         * status code that falls out of the range of 2xx
+                         */
+                        switch (error.response.status) {
+                            case 400:
+                                notificationProps.kind = "error";
+                                notificationProps.title = "Something went wrong";
+                                notificationProps.subtitle = "Its not you its Us. Please try again";
+                                setAlert({ loading: false, notify: true });
+                                break;
 
-            const loginData = {
-                phone: phone,
-                password: password
-            }
-            console.log(loginData);
+                            case 409:
+                                notificationProps.kind = "error";
+                                notificationProps.title = "Something went wrong";
+                                notificationProps.subtitle = "An account with this number already exists. Please register with another number";
+                                setAlert({ loading: false, notify: true });
+                                break;
 
-            if (phone !== "admin" || password !== "admin") {
-                setTimeout(function () {
-                    setIsLoading(isLoading);
-                    alert("wrong credentials used");
-                }, 3000);
+                            case 500:
+                                notificationProps.kind = "error";
+                                notificationProps.title = "Something went wrong";
+                                notificationProps.subtitle = "Its not you its Us. We are working to resolve this";
+                                setAlert({ loading: false, notify: true });
+                                break;
 
-            } else {
+                            default:
+                                setAlert({ loading: false, notify: true });
+                        }
 
-                // const userToken = await userLogin(loginData);
-                // setToken(userToken.token);
-
-                setTimeout(function () {
-                    setToken("sdfgdkjg-sdfg-sfsdfs-sfdsf");
-                    setRegistered(true);
-                }, 3000);
-            }
+                    } else if (error.request) {
+                        /*
+                         * The request was made but no response was received, `error.request`
+                         * is an instance of XMLHttpRequest in the browser and an instance
+                         * of http.ClientRequest in Node.js
+                         */
+                        notificationProps.kind = "error";
+                        notificationProps.title = "Network error";
+                        notificationProps.subtitle = "Please check your network and try again";
+                        setAlert({ loading: false, notify: true });
+                    } else {
+                        // Something happened in setting up the request and triggered an Error
+                        notificationProps.kind = "error";
+                        notificationProps.title = "Network error";
+                        notificationProps.subtitle = "Please check your network and try again";
+                        setAlert({ loading: false, notify: true });
+                    }
+                });
         },
     };
 
     return (
         <div className="bx--grid login-page__container">
             <div className="bx--row">
+
                 <div className="bx--col-lg-8">
+                    {alert.notify ?
+                        <InlineNotification {...notificationProps} />
+                        : ""
+                    }
+                    <br />
                     <h1>Sign Up</h1>
+                    <br />
                     <p>
                         <Information20 className="login-centered-icon" /> Already have an account?
                         <Link onClick={() => setRegistered(true)}> Log In</Link>
                     </p>
+                    <br />
 
                     <Form {...formProps}>
                         <FormGroup legendText="">
@@ -169,7 +232,7 @@ const SignUp = ({ setRegistered }) => {
                             />
                         </FormGroup>
 
-                        {isLoading ?
+                        {alert.loading ?
                             <>
                                 <Loading
                                     description="loading"

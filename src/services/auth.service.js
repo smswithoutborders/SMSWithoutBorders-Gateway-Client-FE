@@ -7,7 +7,7 @@ export const registerUser = (phonenumber , password) => {
         phone_number: phonenumber,
         password: password
     })
-    .then(response => response.data)
+    .then(response => response)
 }
 
 export const userLogin = async (credentials) => {
