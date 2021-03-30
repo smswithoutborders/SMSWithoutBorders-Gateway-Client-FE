@@ -101,4 +101,4 @@ Login.propTypes = {
     setIsLoggedIn: PropTypes.func.isRequired
 }
 
-export default Login;
+export { Login };
