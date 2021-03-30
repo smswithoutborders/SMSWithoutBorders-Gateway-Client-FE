@@ -1,24 +1,22 @@
 import axios from 'axios';
 let AUTH_URL = process.env.REACT_APP_API_URL;
 
-export const registerUser = (phonenumber , password) => {
+export const registerUser = (phonenumber, password) => {
     return axios.post(AUTH_URL + "/users/profiles/register",
-    {
-        phone_number: phonenumber,
-        password: password
-    })
-    .then(response => response)
+        {
+            phone_number: phonenumber,
+            password: password
+        })
+        .then(response => response)
 }
 
-export const userLogin = async (credentials) => {
-    return fetch(AUTH_URL, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(credentials)
-    })
-        .then(data => data.json())
+export const userLogin = async (phonenumber, password) => {
+    return axios.post(AUTH_URL + "/users/profiles/login",
+        {
+            phone_number: phonenumber,
+            password: password
+        })
+        .then(response => response)
 };
 
 export const getToken = () => {
