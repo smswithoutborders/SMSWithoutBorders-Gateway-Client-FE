@@ -1,2 +1,2 @@
-import { DashCard } from './Card';
-export { DashCard };
+import { DashCard, ModemCard } from './Card';
+export { DashCard, ModemCard };
