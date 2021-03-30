@@ -6,6 +6,8 @@ import { Button } from 'carbon-components-react';
 
 import MockData from "./MockData";
 
+import DashHeader from '../../components/DashHeader';
+
 const ModemList = (props) => {
     const modems = props.modems;
     const modemsList = modems.map((modem) => {
@@ -57,10 +59,12 @@ const Modems = () => {
             <div className="bx--grid bx--grid--narrow">
 
                 <div className="bx--row">
-                    <div className="bx--col dash-header">
-                        <h2><strong>Modem</strong> Nodes</h2>
-                        <p>All nodes currently registered</p>
-                    </div>
+                    <DashHeader
+                        title="Modem"
+                        subtitle="Nodes"
+                        description="All modems currently connected"
+                        className="bx--col"
+                    />
                 </div>
                 <div className="bx--row">
                     <ModemList modems={MockData} />

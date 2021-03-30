@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 
 import { TextInput, Button, Loading } from 'carbon-components-react';
 
+import DashHeader from '../../components/DashHeader';
+
 const Settings = () => {
 
     const [isEditing, setIsEditing] = useState(false);
@@ -32,10 +34,12 @@ const Settings = () => {
         <>
             <div className="bx--grid bx--grid--narrow">
                 <div className="bx--row">
-                    <div className="bx--col dash-header">
-                        <h2><strong>System</strong> Settings</h2>
-                        <p>All system settings and configuration</p>
-                    </div>
+                    <DashHeader
+                        title="System"
+                        subtitle="Settings"
+                        description="All system settings and configuration"
+                        className="bx--col"
+                    />
                 </div>
 
                 <div className="bx--row">

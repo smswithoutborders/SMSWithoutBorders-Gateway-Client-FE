@@ -18,8 +18,10 @@ $carbon--theme: $carbon--theme--g10;
 @import "./content/Profile/profile.scss";
 @import "./content/Settings/settings.scss";
 
-//general settings go here
 
+@import "./components/DashHeader/dash_header.scss";
+
+//general settings go here
 .bx--side-nav__navigation {
   background-color: $ui-01;
 }
@@ -30,6 +32,7 @@ $carbon--theme: $carbon--theme--g10;
   padding: $spacing-06;
   width: 100%;
 }
+
 .dash-card {
   padding: $spacing-05;
   background-color: $ui-01;

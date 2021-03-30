@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 
-import { getMessages } from "../../services/sms.service"
+import { getMessages } from "../../services/sms.service";
+import DashHeader from '../../components/DashHeader';
 
 import {
   DataTable,
@@ -136,10 +137,12 @@ const SMS = () => {
     <>
       <div className="bx--grid bx--grid--narrow">
         <div className="bx--row">
-          <div className="bx--col dash-header">
-            <h2><strong>SMS</strong> Logs</h2>
-            <p>Logs of all sent and received messages</p>
-          </div>
+          <DashHeader
+            title="SMs"
+            subtitle="Logs"
+            description="Logs of all sent and received messages"
+            className="bx--col"
+          />
         </div>
         <div className="bx--row">
           <Link to="new-sms" className="bx--col bx--col-lg-4">

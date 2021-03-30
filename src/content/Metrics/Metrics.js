@@ -1,5 +1,6 @@
 import React from "react";
 
+import DashHeader from '../../components/DashHeader';
 import {
   GroupedBarChart,
   LineChart,
@@ -200,10 +201,12 @@ const Metrics = () => {
       <div className="bx--grid bx--grid--narrow">
 
         <div className="bx--row">
-          <div className="bx--col dash-header">
-            <h2><strong>Dashboard</strong> Metrics</h2>
-            <p>Summary overview of Deku systems</p>
-          </div>
+          <DashHeader
+            title="Dashboard"
+            subtitle="Metrics"
+            description="Summary overview of Deku systems"
+            className="bx--col"
+          />
         </div>
         <div className="bx--row">
           <div className="bx--col-lg-6">
