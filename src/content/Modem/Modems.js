@@ -2,11 +2,10 @@ import React from 'react';
 
 import { SiHuawei, SiVodafone } from "react-icons/si";
 
-import { Button } from 'carbon-components-react';
-
 import MockData from "./MockData";
 
 import DashHeader from '../../components/DashHeader';
+import { ModemCard } from '../../components/Card';
 
 const ModemList = (props) => {
     const modems = props.modems;
@@ -27,20 +26,12 @@ const ModemList = (props) => {
         }
 
         return (
-            <div className="bx--col-lg-4">
-                <div className="modem-card">
-                    <div className="modem-card__header">
-                        {icon}
-                        <h3>{modem.model}</h3>
-                    </div>
-                    <div className="modem-card__body">
-                        <p>{modem.IMEI}</p>
-                    </div>
-                    <div className="modem-card__footer">
-                        <Button kind="secondary">Details</Button>
-                        <Button kind="primary">Logs</Button>
-                    </div>
-                </div>
+            <div className="bx--col-lg-4" key={modem.id}>
+                <ModemCard
+                    icon={icon}
+                    modemType={modem.model}
+                    IMEI={modem.IMEI}
+                />
             </div>
         )
     }
