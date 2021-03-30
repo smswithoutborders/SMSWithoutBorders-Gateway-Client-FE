@@ -1,5 +1,14 @@
-
+import axios from 'axios';
 let AUTH_URL = process.env.REACT_APP_API_URL;
+
+export const registerUser = (phonenumber , password) => {
+    return axios.post(AUTH_URL + "/users/profiles/register",
+    {
+        phone_number: phonenumber,
+        password: password
+    })
+    .then(response => response.data)
+}
 
 export const userLogin = async (credentials) => {
     return fetch(AUTH_URL, {
@@ -10,6 +19,11 @@ export const userLogin = async (credentials) => {
         body: JSON.stringify(credentials)
     })
         .then(data => data.json())
+};
+
+export const getToken = () => {
+    const token = sessionStorage.getItem('c-deck-token');
+    return token;
 };
 
 export const setToken = (token) => {
