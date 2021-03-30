@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './App.scss';
 
-import { Login } from './content/Auth';
+import Login from './content/Auth';
 import DashBoard from './content/Dashboard';
 
 const getToken = () => {

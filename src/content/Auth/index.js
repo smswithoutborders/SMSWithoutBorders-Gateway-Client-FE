@@ -1,2 +1,2 @@
-import { Login } from './auth';
-export { Login };
+import Login from './auth';
+export default Login;
