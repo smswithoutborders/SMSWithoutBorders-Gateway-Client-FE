@@ -40,7 +40,7 @@ const Login = ({ setIsLoggedIn }) => {
                         setAlert({ loading: false, notify: true });
                         setTimeout(() => {
                             //use placeholder token value for now
-                            setToken("placeholder-subject-to-change");
+                            setToken(response.data.auth_key);
                             setIsLoggedIn(true);
                         }, 3000);
                     }

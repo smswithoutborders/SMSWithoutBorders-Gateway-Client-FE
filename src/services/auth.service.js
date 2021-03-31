@@ -20,12 +20,12 @@ export const userLogin = async (phonenumber, password) => {
 };
 
 export const getToken = () => {
-    const token = sessionStorage.getItem('c-deck-token');
+    const token = sessionStorage.getItem('Deku-Auth_key');
     return token;
 };
 
 export const setToken = (token) => {
-    sessionStorage.setItem('c-deck-token', token);
+    sessionStorage.setItem('Deku-Auth_key', token);
 };
 
 export const removeToken = () => {
