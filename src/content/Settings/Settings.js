@@ -3,31 +3,35 @@ import React, { useState } from 'react';
 import { TextInput, Button, Loading } from 'carbon-components-react';
 
 import DashHeader from '../../components/DashHeader';
+import { DashCard } from '../../components/Card';
 
 const Settings = () => {
 
-    const [isEditing, setIsEditing] = useState(false);
-    const [URL, setURL] = useState(process.env.REACT_APP_DEKU_API_URL);
-    const [isLoading, setIsLoading] = useState(false);
+
+    const [API, setAPI] = useState(process.env.REACT_APP_API_URL);
+    // const [Deku, setDeku] = useState(process.env.REACT_APP_DEKU_API_URL);
+    const [updateAPI, setUpdateAPI] = useState(
+        {
+            loading: false,
+            editing: false
+        }
+    );
 
     const editUrl = () => {
-
         //if isEditing is true then we want to save instead
-        if (isEditing) {
+        if (updateAPI.editing) {
             updateUrl();
         } else {
-            setIsEditing(!isEditing);
+            setUpdateAPI({ loading: false, editing: true });
         }
     };
 
     const updateUrl = () => {
-        console.log(URL)
-        setIsLoading(true);
-
+        console.log("update url hit");
+        setUpdateAPI({ loading: true, editing: true });
         setTimeout(() => {
-            setIsEditing(!isEditing);
-            setIsLoading(false);
-        }, 1000);
+            setUpdateAPI({ loading: false, editing: false });
+        }, 3000);
     }
 
     return (
@@ -44,23 +48,23 @@ const Settings = () => {
 
                 <div className="bx--row">
                     <div className="bx--col">
-                        <div className="dash-card">
-                            <h4><strong>DEKU API URL</strong></h4>
+                        <DashCard>
+                            <h4><strong>API URL</strong></h4>
                             <br />
-                            {isEditing ?
+                            {updateAPI.editing ?
                                 <TextInput
                                     id="api-url-input"
-                                    defaultValue={URL}
-                                    warn={isLoading}
+                                    defaultValue={API}
+                                    warn={updateAPI.editing}
                                     warnText="This will change the currently set value"
                                     labelText="Edit URL"
-                                    onChange={evt => setURL(evt.target.value)}
+                                    onChange={evt => setAPI(evt.target.value)}
                                 />
                                 :
-                                <p>{URL}</p>
+                                <p>{API}</p>
                             }
                             <br />
-                            {isLoading ?
+                            {updateAPI.loading ?
                                 <>
                                     <Loading
                                         description="loading"
@@ -76,10 +80,10 @@ const Settings = () => {
                                     kind="secondary"
                                     onClick={() => editUrl()}
                                 >
-                                    {isEditing ? "Save" : "Edit"}
+                                    {updateAPI.editing ? "Save" : "Edit"}
                                 </Button>
                             }
-                        </div>
+                        </DashCard>
                     </div>
                 </div>
             </div>
