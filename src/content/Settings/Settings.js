@@ -9,7 +9,7 @@ const Settings = () => {
 
 
     const [API, setAPI] = useState(process.env.REACT_APP_API_URL);
-    // const [Deku, setDeku] = useState(process.env.REACT_APP_DEKU_API_URL);
+    const [Deku, setDeku] = useState(process.env.REACT_APP_DEKU_API_URL);
     const [updateAPI, setUpdateAPI] = useState(
         {
             loading: false,
@@ -17,20 +17,27 @@ const Settings = () => {
         }
     );
 
-    const editUrl = () => {
+    const [updateDeku, setUpdateDeku] = useState(
+        {
+            loading: false,
+            editing: false
+        }
+    );
+
+    const editUrl = (urlState, setUrlState) => {
         //if isEditing is true then we want to save instead
-        if (updateAPI.editing) {
-            updateUrl();
+        if (urlState.editing) {
+            updateUrl(setUrlState);
         } else {
-            setUpdateAPI({ loading: false, editing: true });
+            setUrlState({ loading: false, editing: true });
         }
     };
 
-    const updateUrl = () => {
+    const updateUrl = (setUrlState) => {
         console.log("update url hit");
-        setUpdateAPI({ loading: true, editing: true });
+        setUrlState({ loading: true, editing: true });
         setTimeout(() => {
-            setUpdateAPI({ loading: false, editing: false });
+            setUrlState({ loading: false, editing: false });
         }, 3000);
     }
 
@@ -78,9 +85,50 @@ const Settings = () => {
                                 <Button
                                     size="sm"
                                     kind="secondary"
-                                    onClick={() => editUrl()}
+                                    onClick={() => editUrl(updateAPI, setUpdateAPI)}
                                 >
                                     {updateAPI.editing ? "Save" : "Edit"}
+                                </Button>
+                            }
+                        </DashCard>
+                    </div>
+                </div>
+
+                <div className="bx--row">
+                    <div className="bx--col">
+                        <DashCard>
+                            <h4><strong>Deku API URL</strong></h4>
+                            <br />
+                            {updateDeku.editing ?
+                                <TextInput
+                                    id="deku-url-input"
+                                    defaultValue={Deku}
+                                    warn={updateDeku.editing}
+                                    warnText="This will change the currently set value"
+                                    labelText="Edit URL"
+                                    onChange={evt => setDeku(evt.target.value)}
+                                />
+                                :
+                                <p>{Deku}</p>
+                            }
+                            <br />
+                            {updateDeku.loading ?
+                                <>
+                                    <Loading
+                                        description="loading"
+                                        withOverlay={false}
+                                        small
+                                        className="centered-icon"
+                                    />
+                                    <span> saving</span>
+                                </>
+                                :
+                                <Button
+                                    size="sm"
+                                    kind="secondary"
+                                    onClick={() => editUrl(updateDeku, setUpdateDeku)}
+                                >
+                                    {updateDeku.editing ? "Save" : "Edit"}
                                 </Button>
                             }
                         </DashCard>
