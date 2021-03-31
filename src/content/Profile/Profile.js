@@ -1,14 +1,17 @@
 import React from 'react';
+import DashHeader from '../../components/DashHeader';
 
 const Profile = () => {
     return (
         <>
             <div className="bx--grid bx--grid--narrow">
                 <div className="bx--row">
-                    <div className="bx--col dash-header">
-                        <h2><strong>User</strong> Profile</h2>
-                        <p>Your account details </p>
-                    </div>
+                    <DashHeader
+                        title="User"
+                        subtitle="Profile"
+                        description="Here are your account details"
+                        className="bx--col"
+                    />
                 </div>
             </div>
         </>

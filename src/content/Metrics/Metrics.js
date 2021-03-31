@@ -1,5 +1,7 @@
 import React from "react";
 
+import DashHeader from '../../components/DashHeader';
+import { DashCard } from '../../components/Card'
 import {
   GroupedBarChart,
   LineChart,
@@ -200,36 +202,38 @@ const Metrics = () => {
       <div className="bx--grid bx--grid--narrow">
 
         <div className="bx--row">
-          <div className="bx--col dash-header">
-            <h2><strong>Dashboard</strong> Metrics</h2>
-            <p>Summary overview of Deku systems</p>
-          </div>
+          <DashHeader
+            title="Dashboard"
+            subtitle="Metrics"
+            description="Summary overview of Deku systems"
+            className="bx--col"
+          />
         </div>
         <div className="bx--row">
           <div className="bx--col-lg-6">
-            <div className="dash-card">
+            <DashCard>
               <DonutChart data={DonutData} options={DonutOptions} />
-            </div>
+            </DashCard>
           </div>
 
           <div className="bx--col-lg-10">
-            <div className="dash-card">
+            <DashCard>
               <LineChart data={LineData} options={LineOptions} />
-            </div>
+            </DashCard>
           </div>
         </div>
 
         <div className="bx--row">
           <div className="bx--col-lg-6">
-            <div className="dash-card">
+            <DashCard>
               <GaugeChart data={gaugeData} options={gaugeOptions} />
-            </div>
+            </DashCard>
           </div>
 
           <div className="bx--col-lg-10">
-            <div className="dash-card">
+            <DashCard>
               <GroupedBarChart data={GroupData} options={GroupOptions} />
-            </div>
+            </DashCard>
           </div>
         </div>
       </div>

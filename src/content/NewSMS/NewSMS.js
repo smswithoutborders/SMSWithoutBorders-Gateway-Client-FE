@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Form, FormGroup, TextInput, TextArea, Button, InlineNotification, Loading } from 'carbon-components-react';
 import { Send32 } from '@carbon/icons-react';
 
+import DashHeader from '../../components/DashHeader';
 import { sendMessage } from '../../services/sms.service';
 
 const TextInputProps = {
@@ -100,10 +101,13 @@ const NewSMS = () => {
         <>
             <div className="bx--grid">
                 <div className="bx--row">
-                    <div className="dash-header bx--col">
-                        <h2><strong>New</strong> SMS</h2>
-                        <p>compose new messages</p>
-                    </div>
+                    <DashHeader
+                        title="New"
+                        subtitle="SMS"
+                        description="Compose and send messages"
+                        className="bx--col"
+                    />
+
                     {alert.notify ?
                         <div className="bx--col">
                             <InlineNotification {...notificationProps} />

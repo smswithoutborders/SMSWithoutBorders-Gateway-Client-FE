@@ -1,16 +1,11 @@
 import React, { useState } from 'react';
 import './App.scss';
 
-import Login from './content/Login';
+import Login from './content/Auth';
 import DashBoard from './content/Dashboard';
-
-const getToken = () => {
-  const token = sessionStorage.getItem('c-deck-token');
-  return token;
-};
+import { getToken } from './services/auth.service';
 
 const App = () => {
-
   const token = getToken();
   const [isLoggedIn, setIsLoggedIn] = useState(token ? true : false);
 
