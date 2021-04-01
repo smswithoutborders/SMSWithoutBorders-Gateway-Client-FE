@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 
 import { TextInput, Button, Loading } from 'carbon-components-react';
 
-import DashHeader from '../../components/DashHeader';
+import { DashHeader } from '../../components/DashHeader';
+
 import { DashCard } from '../../components/Card';
 
 const Settings = () => {

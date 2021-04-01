@@ -4,7 +4,7 @@ import { SiHuawei, SiVodafone } from "react-icons/si";
 
 import MockData from "./MockData";
 
-import DashHeader from '../../components/DashHeader';
+import { DashHeader } from '../../components/DashHeader';
 import { ModemCard } from '../../components/Card';
 
 const ModemList = (props) => {
