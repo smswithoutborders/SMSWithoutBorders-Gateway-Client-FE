@@ -24,7 +24,9 @@ import {
   TableToolbarSearch,
   Pagination,
   DataTableSkeleton,
-  Button
+  Button,
+  ContentSwitcher,
+  Switch
 } from "carbon-components-react";
 
 import { Link } from 'react-router-dom';
@@ -71,23 +73,32 @@ const headers = [
 
 const SMS = () => {
 
-  const [messages, setMessages] = useState([]);
+  const [receivedMessages, setReceivedMessages] = useState([]);
+  const [logs, setLogs] = useState([]);
+  const [sentMessages, setSentMessages] = useState([]);
 
-  const [loading, setLoading] = useState(false);
+  const [alert, setAlert] = useState(
+    {
+      loading: false,
+      notify: false
+    }
+  );
 
   const [maxRows, setMaxRows] = useState(10);
+
+  const [tableView, setTableView] = useState();
 
   useEffect(() => {
     getMessages()
       .then(items => {
-        setMessages(items.messages);
+        setReceivedMessages(items.messages);
       });
   }, []);
 
   //props for table pagination
   const paginationProps = () => ({
     page: 1,
-    totalItems: messages.length,
+    totalItems: receivedMessages.length,
     itemText: (e) => {
       console.log(e);
     },
@@ -104,41 +115,56 @@ const SMS = () => {
     selectedRows.forEach(row => {
       console.log(row);
       //find items record in the array
-      let obj = messages.find(obj => obj.id === row.id);
+      let obj = receivedMessages.find(obj => obj.id === row.id);
       console.log(obj);
 
       //find the index of items record in the array
-      let index = messages.findIndex(obj => obj.id === row.id);
-      console.log("index", index, "\n", "messages for reference", messages);
+      let index = receivedMessages.findIndex(obj => obj.id === row.id);
+      console.log("index", index, "\n", "messages for reference", receivedMessages);
 
       //remove item from records
-      messages.splice(index, 1);
-      setLoading(true);
-      setMessages(messages);
+      receivedMessages.splice(index, 1);
+      setAlert({ loading: true });
+
+      setReceivedMessages(receivedMessages);
       //use setimeout so table has time to refresh data
       setTimeout(() => {
-        setLoading(false);
+        setAlert({ loading: false });
       }, 1000);
     })
   };
 
   const refreshTable = () => {
-    setLoading(true);
+    setAlert({ loading: true });
     getMessages()
       .then(items => {
-        setMessages(items.messages);
+        setReceivedMessages(items.messages);
       });
     setTimeout(() => {
-      setLoading(false);
+      setAlert({ loading: false });
     }, 3000);
   }
 
+
+  const toggleView = (view) => {
+    console.log(view);
+    switch (view) {
+      case "logs":
+        break;
+      case "received":
+        break;
+      case "sent":
+        break;
+      default:
+        console.log("undefined case");
+    }
+  }
   return (
     <>
       <div className="bx--grid bx--grid--narrow">
         <div className="bx--row">
           <DashHeader
-            title="SMs"
+            title="SMS"
             subtitle="Logs"
             description="Logs of all sent and received messages"
             className="bx--col"
@@ -175,14 +201,29 @@ const SMS = () => {
         </div>
         <div className="bx--row">
           <div className="bx--col-lg-16">
-            {loading
+            <ContentSwitcher selectedIndex={0}>
+              <Switch
+                name="logs"
+                text="Logs"
+                onClick={evt => toggleView(evt.name)} />
+              <Switch
+                name="received"
+                text="Received"
+                onClick={evt => toggleView(evt.name)} />
+              <Switch
+                name="sent"
+                text="Sent"
+                onClick={evt => toggleView(evt.name)} />
+            </ContentSwitcher>
+            <br />
+            {alert.loading
               ?
               <DataTableSkeleton
                 headers={headers}
                 rowCount={10}
               />
               :
-              <DataTable rows={messages.slice(0, maxRows)} headers={headers}>
+              <DataTable rows={receivedMessages.slice(0, maxRows)} headers={headers}>
                 {({
                   rows,
                   headers,
