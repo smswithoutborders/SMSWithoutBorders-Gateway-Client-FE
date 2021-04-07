@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from 'prop-types';
 import {
   Content,
@@ -25,7 +25,6 @@ import {
 } from 'carbon-components-react';
 import {
   UserAvatar16,
-  Search20,
   Close20,
   Notification20,
   Grid16,
@@ -37,11 +36,13 @@ import {
   Switcher16 as RailSwitch,
   Switcher20,
   Dashboard32,
-  Settings16
+  Settings16,
+  CircleFilled20
 } from '@carbon/icons-react';
 
 import { Route, Switch, Link } from 'react-router-dom';
 import { logOut } from "../../services/auth.service";
+import { getServiceState } from "../../services/settings.service";
 import Metrics from '../Metrics';
 import SMS from '../SMS';
 import Modem from '../Modem';
@@ -56,6 +57,26 @@ const DashBoard = ({ setIsLoggedIn }) => {
   const [isPanelOpen, setIsPanelOpen] = useState(false);
   const [isSideNavRail, setIsSideNavRail] = useState(false);
   const [isAboutOpen, setIsAboutOpen] = useState(false);
+  const [serviceState, setServiceState] = useState();
+  let color = serviceState === "active" ? "green" : "red";
+
+
+  useEffect(() => {
+    getServiceState()
+      .then(response => {
+        setServiceState(response.state);
+      })
+      .catch((error) => {
+        // Error 😨
+        if (error.response) {
+          setServiceState("inactive");
+        } else if (error.request) {
+          setServiceState("failed");
+        } else {
+          setServiceState("failed");
+        }
+      });
+  }, []);
 
   return (
     <>
@@ -84,8 +105,10 @@ const DashBoard = ({ setIsLoggedIn }) => {
               </HeaderNavigation>
               <HeaderGlobalBar>
                 <HeaderGlobalAction
-                  aria-label="Search">
-                  <Search20 />
+                  aria-label={"Deku Service " + serviceState}>
+                  <CircleFilled20
+                    style={{ color: color }}
+                  />
                 </HeaderGlobalAction>
                 <HeaderGlobalAction
                   aria-label="Notifications">

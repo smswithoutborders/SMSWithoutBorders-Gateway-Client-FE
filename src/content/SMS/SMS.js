@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
-import { getMessages } from "../../services/sms.service";
-import DashHeader from '../../components/DashHeader';
+import { getMessages, getLogs } from "../../services/sms.service";
+import { DashHeader } from '../../components/DashHeader';
 
 import {
   DataTable,
@@ -24,7 +24,9 @@ import {
   TableToolbarSearch,
   Pagination,
   DataTableSkeleton,
-  Button
+  Button,
+  ContentSwitcher,
+  Switch
 } from "carbon-components-react";
 
 import { Link } from 'react-router-dom';
@@ -37,7 +39,7 @@ import {
   Catalog32 as Contacts,
 } from "@carbon/icons-react";
 
-const headers = [
+const receivedTableHeaders = [
   {
     key: "phonenumber",
     header: "Sender",
@@ -68,26 +70,89 @@ const headers = [
   }
 ];
 
+const logTableHeaders = [
+  {
+    key: "id",
+    header: "Id",
+  },
+  {
+    key: "other_id",
+    header: "Other Id",
+  },
+  {
+    key: "message",
+    header: "Message",
+  },
+  {
+    key: "messageID",
+    header: "Message Id",
+  },
+  {
+    key: "date",
+    header: "date",
+  },
+  {
+    key: "mdate",
+    header: "Updated",
+  },
+  {
+    key: "status",
+    header: "Status",
+  }
+];
+
 
 const SMS = () => {
 
-  const [messages, setMessages] = useState([]);
+  const [receivedMessages, setReceivedMessages] = useState([]);
+  const [logs, setLogs] = useState(
+    {
+      logs: [],
+      size: 0
+    });
 
-  const [loading, setLoading] = useState(false);
+  const [alert, setAlert] = useState(
+    {
+      loading: false,
+      notify: false
+    }
+  );
 
   const [maxRows, setMaxRows] = useState(10);
 
+  const [tableView, setTableView] = useState(
+    {
+      title: "",
+      description: "",
+      rows: [],
+      headers: [],
+    });
+
   useEffect(() => {
+    // show table loading while fetching messages
+    setAlert({ loading: true });
     getMessages()
-      .then(items => {
-        setMessages(items.messages);
+      .then(response => {
+        setReceivedMessages(response.messages);
       });
+    getLogs()
+      .then(response => {
+        setLogs({ logs: response.logs, size: response.size });
+        setTableView({
+          title: "Logs",
+          description: "All messages logged by the system",
+          rows: response.logs,
+          headers: logTableHeaders
+        });
+      });
+    //at this point all request would have completed so stop loading animation
+    setAlert({ loading: false });
   }, []);
 
   //props for table pagination
   const paginationProps = () => ({
     page: 1,
-    totalItems: messages.length,
+    totalItems: receivedMessages.length,
     itemText: (e) => {
       console.log(e);
     },
@@ -104,41 +169,68 @@ const SMS = () => {
     selectedRows.forEach(row => {
       console.log(row);
       //find items record in the array
-      let obj = messages.find(obj => obj.id === row.id);
+      let obj = receivedMessages.find(obj => obj.id === row.id);
       console.log(obj);
 
       //find the index of items record in the array
-      let index = messages.findIndex(obj => obj.id === row.id);
-      console.log("index", index, "\n", "messages for reference", messages);
+      let index = receivedMessages.findIndex(obj => obj.id === row.id);
+      console.log("index", index, "\n", "messages for reference", receivedMessages);
 
       //remove item from records
-      messages.splice(index, 1);
-      setLoading(true);
-      setMessages(messages);
+      receivedMessages.splice(index, 1);
+      setAlert({ loading: true });
+
+      setReceivedMessages(receivedMessages);
       //use setimeout so table has time to refresh data
       setTimeout(() => {
-        setLoading(false);
+        setAlert({ loading: false });
       }, 1000);
     })
   };
 
   const refreshTable = () => {
-    setLoading(true);
+    setAlert({ loading: true });
     getMessages()
       .then(items => {
-        setMessages(items.messages);
+        setReceivedMessages(items.messages);
       });
     setTimeout(() => {
-      setLoading(false);
+      setAlert({ loading: false });
     }, 3000);
   }
 
+  const toggleView = (view) => {
+    switch (view) {
+      case "logs":
+        setAlert({ loading: true });
+        setTableView({
+          title: "Logs",
+          description: "All messages logged by the system",
+          rows: logs.logs,
+          headers: logTableHeaders
+        });
+        setAlert({ loading: false });
+        break;
+      case "received":
+        setAlert({ loading: true });
+        setTableView({
+          title: "Received Messages",
+          description: "SMS inbox, all received messages",
+          rows: receivedMessages,
+          headers: receivedTableHeaders
+        });
+        setAlert({ loading: false });
+        break;
+      default:
+        console.log("undefined case");
+    }
+  }
   return (
     <>
       <div className="bx--grid bx--grid--narrow">
         <div className="bx--row">
           <DashHeader
-            title="SMs"
+            title="SMS"
             subtitle="Logs"
             description="Logs of all sent and received messages"
             className="bx--col"
@@ -175,14 +267,33 @@ const SMS = () => {
         </div>
         <div className="bx--row">
           <div className="bx--col-lg-16">
-            {loading
+            <ContentSwitcher
+              selectedIndex={0}
+              onChange={evt => {
+                toggleView(evt.name)
+              }}
+            >
+              <Switch
+                name="logs"
+                text="Logs"
+              />
+              <Switch
+                name="received"
+                text="Received"
+              />
+            </ContentSwitcher>
+            <br />
+            {alert.loading
               ?
               <DataTableSkeleton
-                headers={headers}
+                headers={receivedTableHeaders}
                 rowCount={10}
               />
               :
-              <DataTable rows={messages.slice(0, maxRows)} headers={headers}>
+              <DataTable
+                rows={tableView.rows.slice(0, maxRows)}
+                headers={tableView.headers}
+              >
                 {({
                   rows,
                   headers,
@@ -198,8 +309,8 @@ const SMS = () => {
                   getTableContainerProps,
                 }) => (
                     <TableContainer
-                      title="Message Inbox"
-                      description="Messages from all modems"
+                      title={tableView.title}
+                      description={tableView.description}
                       {...getTableContainerProps()}
                     >
                       <TableToolbar {...getToolbarProps()}>

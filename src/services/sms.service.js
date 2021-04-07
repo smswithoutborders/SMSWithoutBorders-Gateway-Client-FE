@@ -16,3 +16,8 @@ export const sendMessage = (receiver, message) => {
         })
         .then(response => response.data)
 }
+
+export const getLogs = () => {
+    return axios.get(DEKU_API_URL + "/logs")
+    .then(response => response.data)
+}

@@ -1,2 +1,2 @@
-import DashHeader from './DashHeader';
-export default DashHeader;
+import { DashHeader } from './DashHeader';
+export { DashHeader };

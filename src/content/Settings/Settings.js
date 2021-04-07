@@ -1,15 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { TextInput, Button, Loading } from 'carbon-components-react';
 
-import DashHeader from '../../components/DashHeader';
+import { DashHeader } from '../../components/DashHeader';
+
 import { DashCard } from '../../components/Card';
+import { CircleFilled20 as Indicator } from '@carbon/icons-react';
+
+import { getServiceState } from '../../services/settings.service';
 
 const Settings = () => {
 
 
     const [API, setAPI] = useState(process.env.REACT_APP_API_URL);
     const [Deku, setDeku] = useState(process.env.REACT_APP_DEKU_API_URL);
+    const [serviceState, setServiceState] = useState();
     const [updateAPI, setUpdateAPI] = useState(
         {
             loading: false,
@@ -41,6 +46,37 @@ const Settings = () => {
         }, 3000);
     }
 
+    let color = serviceState === "active" ? "green" : "red";
+
+    useEffect(() => {
+        getServiceState()
+            .then(response => {
+                setServiceState(response.state);
+            })
+            .catch((error) => {
+                // Error 😨
+                if (error.response) {
+                    /*
+                     * The request was made and the server responded with a
+                     * status code that falls out of the range of 2xx
+                     */
+                    setServiceState("inactive");
+
+                } else if (error.request) {
+                    /*
+                     * The request was made but no response was received, `error.request`
+                     * is an instance of XMLHttpRequest in the browser and an instance
+                     * of http.ClientRequest in Node.js
+                     */
+                    setServiceState("failed");
+                } else {
+                    // Something happened in setting up the request and triggered an Error
+                    setServiceState("failed");
+                }
+            });
+    }, []);
+
+
     return (
         <>
             <div className="bx--grid bx--grid--narrow">
@@ -51,6 +87,22 @@ const Settings = () => {
                         description="All system settings and configuration"
                         className="bx--col"
                     />
+                </div>
+
+                <div className="bx--row">
+                    <div className="bx--col">
+                        <DashCard>
+                            <h4><strong>DEKU Services</strong></h4>
+                            <br />
+                            <p>
+                                <Indicator
+                                    style={{ color: color }}
+                                    className="centered-icon"
+                                />
+                                <span> {serviceState}</span>
+                            </p>
+                        </DashCard>
+                    </div>
                 </div>
 
                 <div className="bx--row">

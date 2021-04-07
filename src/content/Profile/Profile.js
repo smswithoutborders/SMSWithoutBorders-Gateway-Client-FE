@@ -1,5 +1,6 @@
 import React from 'react';
-import DashHeader from '../../components/DashHeader';
+import { DashHeader } from '../../components/DashHeader';
+
 
 const Profile = () => {
     return (

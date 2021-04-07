@@ -1,6 +1,6 @@
 import React from "react";
 
-import DashHeader from '../../components/DashHeader';
+import { DashHeader } from '../../components/DashHeader';
 import { DashCard } from '../../components/Card'
 import {
   GroupedBarChart,
