@@ -91,7 +91,7 @@ const DashBoard = ({ setIsLoggedIn }) => {
                 isActive={isSideNavExpanded}
               />
               <HeaderName href="#" prefix="">
-                Deku SMS Manager
+                SMSwithoutborders
               </HeaderName>
               <HeaderNavigation aria-label="Main Navigation">
                 <HeaderMenuItem
@@ -173,7 +173,7 @@ const DashBoard = ({ setIsLoggedIn }) => {
             <Modal
               open={isAboutOpen}
               modalLabel="About"
-              modalAriaLabel="About Deku SMS Manager"
+              modalAriaLabel="About"
               passiveModal
               onRequestClose={() => setIsAboutOpen(!isAboutOpen)}>
 
@@ -182,7 +182,7 @@ const DashBoard = ({ setIsLoggedIn }) => {
                   <Dashboard32 className="dash-centered-icon" /><span>Afkanerd</span>
                 </div>
                 <br />
-                <h3><strong>Deku SMS Manager</strong></h3>
+                <h3><strong>SMSwithoutborders</strong></h3>
                 <br />
                 <div className="version-number">
                   <p>Version number</p>
