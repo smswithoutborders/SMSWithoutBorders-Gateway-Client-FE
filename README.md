@@ -1,4 +1,4 @@
-# **Deku SMS Manager**
+# **SMSwithoutborders Admin**
 
 
 ## Setup Guide
