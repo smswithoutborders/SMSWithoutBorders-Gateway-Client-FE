@@ -1,19 +1,14 @@
 import React, { useState, useEffect } from 'react';
-
 import { TextInput, Button, Loading } from 'carbon-components-react';
-
 import { DashHeader } from '../../components/DashHeader';
-
 import { DashCard } from '../../components/Card';
 import { CircleFilled20 as Indicator } from '@carbon/icons-react';
-
 import { getServiceState } from '../../services/settings.service';
 
 const Settings = () => {
 
-
     const [API, setAPI] = useState(process.env.REACT_APP_API_URL);
-    const [Deku, setDeku] = useState(process.env.REACT_APP_DEKU_API_URL);
+    const [Deku, setDeku] = useState(process.env.REACT_APP_GATEWAY_API_URL);
     const [serviceState, setServiceState] = useState();
     const [updateAPI, setUpdateAPI] = useState(
         {
