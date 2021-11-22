@@ -39,7 +39,7 @@ The build is minified and the filenames include the hashes.
 - password: admin
 ## Built With
 
-- [Carbon Design Systems](https://carbondesignsystems.com)
+- [Carbon Design System](https://carbondesignsystem.com)
 
 - [Carbon Components](https://github.com/carbon-design-system/carbon)
 
