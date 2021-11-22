@@ -1,3 +1,5 @@
+// combined styles
+@use "sass:math";
 @import "carbon-components/scss/globals/scss/vendor/@carbon/type/scss/font-family.scss";
 @import "carbon-components/scss/globals/scss/vendor/@carbon/layout/scss/breakpoint.scss";
 @import "carbon-components/scss/globals/scss/typography.scss";
@@ -9,30 +11,102 @@
 $carbon--theme: $carbon--theme--g10;
 @include carbon--theme();
 
-// import here so they inherit the theme g10
-@import "../content/Dashboard/dashboard.scss";
-@import "../content/Metrics/metrics.scss";
-@import "../content/SMS/sms.scss";
-@import "../content/Modem/modems.scss";
-@import "../content/Profile/profile.scss";
-@import "../content/Settings/settings.scss";
-@import "../components/DashHeader/dash_header.scss";
-@import "../components/Card/card.scss";
-
 //general settings go here
 .bx--side-nav__navigation {
   background-color: $ui-01;
 }
 
-#main-content {
+.main-content {
   height: 100%;
-  margin: $layout-05, 0;
+  margin: $layout-03, 0;
+  margin-top: $layout-04;
   padding: $spacing-06;
   width: 100%;
+}
+
+.dash-header {
+  margin-bottom: $layout-03;
+}
+
+.dash-centered-icon {
+  display: inline-block;
+  position: relative;
+  top: 0.2rem;
+  margin-right: math.div($layout-01, 2);
 }
 
 .centered-icon {
   display: inline-block;
   position: relative;
   top: 0.175rem;
+}
+
+.dash-card {
+  padding: $spacing-05;
+  background-color: $ui-01;
+  margin-bottom: $layout-03;
+  border-radius: $spacing-03;
+}
+
+.modem-card {
+  background-color: $ui-01;
+  padding: $spacing-06;
+  border-radius: $spacing-03;
+  margin-bottom: $layout-03;
+  &:hover {
+    cursor: pointer;
+    @include layer("pop-out");
+  }
+  h3 {
+    @include carbon--type-style("productive-heading-03");
+  }
+  .modem-card__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $layout-03;
+  }
+  .modem-card__body {
+    text-align: center;
+  }
+
+  .modem-card__footer {
+    .bx--btn-set {
+      max-width: 100%;
+      width: 100%;
+    }
+    display: flex;
+    justify-content: space-around;
+    margin-top: $layout-03;
+    button {
+      width: 50%;
+    }
+  }
+}
+
+.sms-card {
+  padding: $spacing-05;
+  background-color: $ui-01;
+  margin-bottom: $layout-03;
+  border-radius: $spacing-03;
+
+  &:hover {
+    cursor: pointer;
+    @include layer("pop-out");
+  }
+  p {
+    margin-top: math.div($layout-01, 2);
+    display: none;
+  }
+
+  @include carbon--breakpoint(md) {
+    p {
+      display: block;
+    }
+  }
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
 }
