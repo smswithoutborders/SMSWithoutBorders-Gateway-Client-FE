@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { TextInput, Button, Loading } from 'carbon-components-react';
-import { DashHeader } from '../../components/DashHeader';
-import { DashCard } from '../../components/Card';
+import { DashHeader,DashCard } from '../components';
 import { CircleFilled20 as Indicator } from '@carbon/icons-react';
-import { getServiceState } from '../../services/settings.service';
+import { getServiceState } from '../services/settings.service';
 
 const Settings = () => {
 

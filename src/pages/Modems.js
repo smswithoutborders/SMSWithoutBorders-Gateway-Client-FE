@@ -1,47 +1,47 @@
 import React from 'react';
+import { DashHeader, ModemCard } from '../components';
 
-import { SiHuawei, SiVodafone } from "react-icons/si";
+const MockData = [
+    {
+        index: 1,
+        brand: "Huawei",
+        model: "E303",
+        imei: "805485056577889"
+    },
+    {
+        index: 2,
+        brand: "Vodafone",
+        model: "SH-120",
+        imei: "805487072577895"
+    },
+    {
+        index: 3,
+        brand: "Huawei",
+        model: "E3131s",
+        imei: "805487048577894"
+    },
+    {
+        index: 4,
+        brand: "Vodafone",
+        model: "KE-36",
+        imei: "805487056577784"
+    },
 
-import MockData from "./MockData";
+];
 
-import { DashHeader } from '../../components/DashHeader';
-import { ModemCard } from '../../components/Card';
-
-const ModemList = (props) => {
-    const modems = props.modems;
+const ModemList = ({ modems }) => {
     const modemsList = modems.map((modem) => {
-
-        let icon = "none";
-        switch (modem.brand) {
-            case "Huawei":
-                icon = <SiHuawei size={35} className="icon" />
-
-                break;
-            case "Vodafone":
-                icon = <SiVodafone size={35} className="icon" />
-
-                break;
-            default:
-                icon = "none";
-        }
-
         return (
             <div className="bx--col-lg-4" key={modem.id}>
-                <ModemCard
-                    icon={icon}
-                    modemType={modem.model}
-                    IMEI={modem.IMEI}
-                />
+                <ModemCard imei={modem.imei} />
             </div>
         )
-    }
-    );
+    });
     return (
         <>
             {modemsList}
         </>
     );
-
 };
 
 const Modems = () => {

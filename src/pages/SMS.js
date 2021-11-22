@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
-import { getMessages, getLogs } from "../../services/sms.service";
-import { DashHeader } from '../../components/DashHeader';
+import { getMessages, getLogs } from "../services/sms.service";
+import { DashHeader } from '../components';
 
 import {
   DataTable,

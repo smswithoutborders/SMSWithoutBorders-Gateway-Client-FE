@@ -1,7 +1,5 @@
 import React from "react";
-
-import { DashHeader } from '../../components/DashHeader';
-import { DashCard } from '../../components/Card'
+import { DashHeader, DashCard } from '../components';
 import {
   GroupedBarChart,
   LineChart,
@@ -198,46 +196,44 @@ const GroupData = [
 
 const Metrics = () => {
   return (
-    <>
-      <div className="bx--grid bx--grid--narrow">
+    <div className="bx--grid">
 
-        <div className="bx--row">
-          <DashHeader
-            title="Dashboard"
-            subtitle="Metrics"
-            description="Summary overview of Deku systems"
-            className="bx--col"
-          />
-        </div>
-        <div className="bx--row">
-          <div className="bx--col-lg-6">
-            <DashCard>
-              <DonutChart data={DonutData} options={DonutOptions} />
-            </DashCard>
-          </div>
-
-          <div className="bx--col-lg-10">
-            <DashCard>
-              <LineChart data={LineData} options={LineOptions} />
-            </DashCard>
-          </div>
+      <div className="bx--row">
+        <DashHeader
+          title="Dashboard"
+          subtitle="Metrics"
+          description="Summary overview of Deku systems"
+          className="bx--col"
+        />
+      </div>
+      <div className="bx--row">
+        <div className="bx--col-lg-6">
+          <DashCard>
+            <DonutChart data={DonutData} options={DonutOptions} />
+          </DashCard>
         </div>
 
-        <div className="bx--row">
-          <div className="bx--col-lg-6">
-            <DashCard>
-              <GaugeChart data={gaugeData} options={gaugeOptions} />
-            </DashCard>
-          </div>
-
-          <div className="bx--col-lg-10">
-            <DashCard>
-              <GroupedBarChart data={GroupData} options={GroupOptions} />
-            </DashCard>
-          </div>
+        <div className="bx--col-lg-10">
+          <DashCard>
+            <LineChart data={LineData} options={LineOptions} />
+          </DashCard>
         </div>
       </div>
-    </>
+
+      <div className="bx--row">
+        <div className="bx--col-lg-6">
+          <DashCard>
+            <GaugeChart data={gaugeData} options={gaugeOptions} />
+          </DashCard>
+        </div>
+
+        <div className="bx--col-lg-10">
+          <DashCard>
+            <GroupedBarChart data={GroupData} options={GroupOptions} />
+          </DashCard>
+        </div>
+      </div>
+    </div>
   );
 };
 

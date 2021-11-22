@@ -1,10 +1,17 @@
 import React, { useState } from 'react';
-
-import { Form, FormGroup, TextInput, TextArea, Button, InlineNotification, Loading } from 'carbon-components-react';
+import {
+    Form,
+    FormGroup,
+    TextInput,
+    TextArea,
+    Button,
+    InlineNotification,
+    Loading
+} from 'carbon-components-react';
 import { Send32 } from '@carbon/icons-react';
 
-import { DashHeader } from '../../components/DashHeader';
-import { sendMessage } from '../../services/sms.service';
+import { DashHeader } from '../components';
+import { sendMessage } from '../services/sms.service';
 
 const TextInputProps = {
     id: 'reciever',
