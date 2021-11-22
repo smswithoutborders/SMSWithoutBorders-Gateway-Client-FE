@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import { GiWifiRouter } from 'react-icons/gi';
 import { Button } from 'carbon-components-react';
 
-const DashCard = ({ children }) => {
+export const DashCard = ({ children }) => {
     return (
         <div className="dash-card">
             {children}
@@ -15,15 +15,15 @@ DashCard.propTypes = {
     children: PropTypes.node
 }
 
-const ModemCard = (props) => {
+export const ModemCard = (props) => {
     return (
         <div className="modem-card">
             <div className="modem-card__header">
-                {props.icon}
-                <h3>{props.modemType}</h3>
+                <GiWifiRouter size={35} className="icon" />
+                <p>modem</p>
             </div>
             <div className="modem-card__body">
-                <p>{props.IMEI}</p>
+                <p>{props.imei}</p>
             </div>
             <div className="modem-card__footer">
                 <Button kind="secondary">Details</Button>
@@ -34,10 +34,5 @@ const ModemCard = (props) => {
 }
 
 ModemCard.propTypes = {
-    icon: PropTypes.node,
-    modemType: PropTypes.string,
-    IMEI: PropTypes.string
-
+    imei: PropTypes.string
 }
-
-export { DashCard, ModemCard };
