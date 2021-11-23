@@ -5,17 +5,19 @@ import {
     TextInput,
     TextArea,
     Button,
-    InlineNotification,
-    Loading
+    Loading,
+    Select,
+    SelectItem
 } from 'carbon-components-react';
 import { Send32 } from '@carbon/icons-react';
-
 import { DashHeader } from '../components';
 import { sendMessage } from '../services/api.service';
+import { useAppContext } from 'store';
+import toast from 'react-hot-toast';
 
 const TextInputProps = {
     id: 'reciever',
-    labelText: 'Recipient',
+    labelText: 'Phone Number',
     placeholder: "Enter recipient's number",
 };
 
@@ -27,140 +29,113 @@ const TextAreaProps = {
     rows: 8,
 };
 
-let notificationProps = {
-    kind: "info",
-    lowContrast: true,
-    role: 'alert',
-    title: 'Success',
-    subtitle: 'Message sent.',
-    iconDescription: 'Notification',
-    statusIconDescription: 'Notification status icon',
-    hideCloseButton: false
+const selectProps = {
+    inline: false,
+    invalid: false,
+    invalidText: 'Please select a sending device',
+    labelText: "Modem",
+    helperText: 'This device will be used to send the message'
 };
 
 
 const NewSMS = () => {
     const [receiver, setReceiver] = useState();
     const [message, setMessage] = useState();
-    const [alert, setAlert] = useState(
-        {
-            loading: false,
-            notify: false
-        }
-    );
+    const [device, setDevice] = useState();
+    const [loading, setLoading] = useState(false);
+    const { modems } = useAppContext();
 
     const handleSend = (evt) => {
         evt.preventDefault();
-        setAlert({ loading: true, notify: false });
-        sendMessage(receiver, message)
-            .then(response => {
-                switch (response.status) {
-                    case 200:
-                        notificationProps.kind = "success";
-                        setAlert({ loading: false, notify: true });
-                        break;
-
-                    case 400:
-                        notificationProps.kind = "error";
-                        notificationProps.title = "An error occured";
-                        notificationProps.subtitle = response.message;
-                        setAlert({ loading: false, notify: true });
-                        break;
-
-                    default:
-                        setAlert({ loading: false, notify: true });
-                }
+        setLoading(true);
+        sendMessage(device, receiver, message)
+            .then(() => {
+                toast.success("message sent")
             })
             .catch((error) => {
-                // Error 😨
                 if (error.response) {
-                    /*
-                     * The request was made and the server responded with a
-                     * status code that falls out of the range of 2xx
-                     */
-                    notificationProps.kind = "error";
-                    notificationProps.title = error.response.message;
-                    notificationProps.subtitle = "could not send message";
-                    setAlert({ loading: false, notify: true });
-
-                } else if (error.request) {
-                    /*
-                     * The request was made but no response was received, `error.request`
-                     * is an instance of XMLHttpRequest in the browser and an instance
-                     * of http.ClientRequest in Node.js
-                     */
-                    notificationProps.kind = "error";
-                    notificationProps.title = "Network error";
-                    notificationProps.subtitle = "could not send message";
-                    setAlert({ loading: false, notify: true });
+                    toast.error("failed to send message ensure the receiver number is correct and a device is selected");
                 } else {
-                    // Something happened in setting up the request and triggered an Error
-                    notificationProps.kind = "error";
-                    notificationProps.title = "Network error";
-                    notificationProps.subtitle = "could not send message";
-                    setAlert({ loading: false, notify: true });
+                    toast.error("Your Gateway may be disconnected");
                 }
+                setLoading(false);
             });
     };
 
     return (
-        <>
-            <div className="bx--grid">
-                <div className="bx--row">
-                    <DashHeader
-                        title="New"
-                        subtitle="SMS"
-                        description="Compose and send messages"
-                        className="bx--col"
-                    />
+        <div className="bx--grid">
+            <div className="bx--row">
+                <DashHeader
+                    title="New"
+                    subtitle="SMS"
+                    description="Compose and send messages"
+                    className="bx--col"
+                />
+            </div>
+            <div className="bx--row">
+                <div className="bx--col">
+                    <Form onSubmit={(evt) => handleSend(evt)}>
+                        <FormGroup legendText="">
+                            <TextInput {...TextInputProps}
+                                onBlur={(evt) => setReceiver(evt.target.value)}
+                                required
+                            />
+                        </FormGroup>
 
-                    {alert.notify ?
-                        <div className="bx--col">
-                            <InlineNotification {...notificationProps} />
-                        </div>
-                        : ""
-                    }
-                </div>
-                <div className="bx--row">
-                    <div className="bx--col">
-                        <Form onSubmit={(evt) => handleSend(evt)}>
-                            <FormGroup legendText="">
-                                <TextInput {...TextInputProps}
-                                    onBlur={(evt) => setReceiver(evt.target.value)}
-                                    required
+                        <FormGroup legendText="">
+                            <TextArea {...TextAreaProps}
+                                onBlur={(evt) => setMessage(evt.target.value)}
+                                required
+                            />
+                        </FormGroup>
+
+                        <FormGroup legendText="">
+                            <Select
+                                {...selectProps}
+                                id="select-1"
+                                defaultValue="placeholder-item"
+                                onChange={(evt) => setDevice(evt.target.value)}
+                                invalid={!device}
+                            >
+                                <SelectItem
+                                    disabled
+                                    hidden
+                                    value="placeholder-item"
+                                    text="select a device"
                                 />
-                            </FormGroup>
-
-                            <FormGroup legendText="">
-                                <TextArea {...TextAreaProps}
-                                    onBlur={(evt) => setMessage(evt.target.value)}
-                                    required
-                                />
-                            </FormGroup>
-
-                            {alert.loading ?
-                                <>
-                                    <Loading
-                                        description="loading"
-                                        withOverlay={false}
-                                        small
-                                        className="centered-icon"
+                                {modems?.map((modem) => (
+                                    <SelectItem
+                                        key={modem.index}
+                                        value={modem.index}
+                                        text={`${modem.manufacturer} ${modem.model} - ${modem.operator_name}(${modem.operator_code})`}
                                     />
-                                    <span> sending</span>
-                                </>
-                                :
-                                <Button type="submit"
-                                    kind="primary"
-                                    renderIcon={Send32}
-                                >
-                                    Send
-                                </Button>
-                            }
-                        </Form>
-                    </div>
+                                ))}
+                            </Select>
+                        </FormGroup>
+
+                        {loading ? (
+                            <>
+                                <Loading
+                                    description="loading"
+                                    withOverlay={false}
+                                    small
+                                    className="centered-icon"
+                                />
+                                <span> sending</span>
+                            </>
+                        ) : (
+                            <Button type="submit"
+                                kind="primary"
+                                renderIcon={Send32}
+                                disabled={!device}
+                            >
+                                Send
+                            </Button>
+                        )}
+                    </Form>
                 </div>
             </div>
-        </>
+        </div>
     );
 }
 
