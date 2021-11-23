@@ -109,3 +109,20 @@ a {
   text-decoration: none;
   color: inherit;
 }
+
+
+// 404
+.not-found-container {
+  padding: $spacing-06;
+
+  h1{
+    @include carbon--type-style("display-04");
+    font-size: carbon--type-scale(12);
+  }
+
+  p {
+    @include carbon--type-style("body-long-02");
+    font-size: carbon--type-scale(5);
+    margin: $layout-01 0 $layout-01 0;
+  }
+}

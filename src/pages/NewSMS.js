@@ -11,7 +11,7 @@ import {
 import { Send32 } from '@carbon/icons-react';
 
 import { DashHeader } from '../components';
-import { sendMessage } from '../services/sms.service';
+import { sendMessage } from '../services/api.service';
 
 const TextInputProps = {
     id: 'reciever',

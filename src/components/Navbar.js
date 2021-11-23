@@ -20,7 +20,6 @@ import {
   IotPlatform16,
   Chat16 as Send,
   UserMultiple16 as BulkSend,
-  Catalog16 as Logs,
   Dashboard32,
   Settings16,
   CircleFilled20,
@@ -68,12 +67,6 @@ const Navbar = () => {
               </HeaderMenuItem>
               <HeaderMenuItem
                 element={Link}
-                to="/sms"
-              >
-                SMS
-              </HeaderMenuItem>
-              <HeaderMenuItem
-                element={Link}
                 to="/new-sms"
               >
                 New SMS
@@ -105,12 +98,7 @@ const Navbar = () => {
                 <SideNavLink large renderIcon={Dashboard32} element={Link} to="/">
                   Dashboard
                 </SideNavLink>
-                <SideNavMenu large renderIcon={Send} title="SMS" >
-                  <SideNavMenuItem
-                    element={Link}
-                    to="/sms">
-                    <Logs className="dash-centered-icon" /> SMS Logs
-                  </SideNavMenuItem>
+                <SideNavMenu large renderIcon={Send} title="Logs">
                   <SideNavMenuItem
                     element={Link}
                     to="/new-sms"

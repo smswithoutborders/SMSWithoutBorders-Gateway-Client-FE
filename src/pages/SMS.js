@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-
-import { getMessages, getLogs } from "../services/sms.service";
+import { getMessages } from "../services/api.service";
 import { DashHeader } from '../components';
+import { useParams, useNavigate } from "react-router-dom";
 
 import {
   DataTable,
@@ -24,135 +24,88 @@ import {
   TableToolbarSearch,
   Pagination,
   DataTableSkeleton,
-  Button,
-  ContentSwitcher,
-  Switch
+  Button
 } from "carbon-components-react";
 
-import { Link } from 'react-router-dom';
+import { TrashCan16 as Delete, } from "@carbon/icons-react";
+import toast from "react-hot-toast";
 
-import {
-  TrashCan16 as Delete,
-  Chat32 as Send,
-  UserMultiple32 as BulkSend,
-  EventSchedule32 as Schedule,
-  Catalog32 as Contacts,
-} from "@carbon/icons-react";
-
-const receivedTableHeaders = [
+const tableHeaders = [
   {
-    key: "phonenumber",
+    key: "index",
+    header: "Index",
+  },
+  {
+    key: "number",
     header: "Sender",
   },
   {
-    key: "isp",
-    header: "ISP",
-  },
-  {
-    key: "type",
-    header: "Type",
-  },
-  {
     key: "text",
-    header: "Message",
+    header: "Text",
   },
   {
-    key: "date",
-    header: "Date",
+    key: "timestamp",
+    header: "Timestamp",
   },
-  {
-    key: "claimed_time",
-    header: "Time",
-  },
-  {
-    key: "claimed_modem_imei",
-    header: "Modem",
-  }
 ];
-
-const logTableHeaders = [
-  {
-    key: "id",
-    header: "Id",
-  },
-  {
-    key: "other_id",
-    header: "Other Id",
-  },
-  {
-    key: "message",
-    header: "Message",
-  },
-  {
-    key: "messageID",
-    header: "Message Id",
-  },
-  {
-    key: "date",
-    header: "date",
-  },
-  {
-    key: "mdate",
-    header: "Updated",
-  },
-  {
-    key: "status",
-    header: "Status",
-  }
-];
-
 
 const SMS = () => {
 
-  const [receivedMessages, setReceivedMessages] = useState([]);
-  const [logs, setLogs] = useState(
-    {
-      logs: [],
-      size: 0
-    });
-
-  const [alert, setAlert] = useState(
-    {
-      loading: false,
-      notify: false
-    }
-  );
-
+  const [messages, setMessages] = useState([]);
   const [maxRows, setMaxRows] = useState(10);
+  const [loading, setLoading] = useState(false);
 
-  const [tableView, setTableView] = useState(
-    {
-      title: "",
-      description: "",
-      rows: [],
-      headers: [],
-    });
+  const { index } = useParams();
+  const navigate = useNavigate();
+
+  if (!index) {
+    toast.error("No modem selected");
+    navigate(-1);
+  }
+
 
   useEffect(() => {
-    // show table loading while fetching messages
-    setAlert({ loading: true });
-    getMessages()
-      .then(response => {
-        setReceivedMessages(response.messages);
-      });
-    getLogs()
-      .then(response => {
-        setLogs({ logs: response.logs, size: response.size });
-        setTableView({
-          title: "Logs",
-          description: "All messages logged by the system",
-          rows: response.logs,
-          headers: logTableHeaders
-        });
-      });
-    //at this point all request would have completed so stop loading animation
-    setAlert({ loading: false });
+    handleGetMessages()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  function handleGetMessages() {
+    setLoading(true)
+    getMessages(index)
+      .then(response => {
+        let orderedMsgs = structureMessages(response.data);
+        setMessages(orderedMsgs);
+        setLoading(false);
+      })
+      .catch((error) => {
+        if (error.response) {
+          toast.error("Could not fetch connected modems, check your Gateway connection");
+        } else {
+          toast.error("Your Gateway may be disconnected");
+        }
+        setLoading(false);
+      });
+  }
+
+  function structureMessages(messages) {
+    let ordered = []
+    messages.forEach(message => {
+      ordered.push({
+        id: message.index,
+        index: message.index,
+        number: message.number,
+        text: message.text,
+        timestamp: new Date(message.timestamp).toLocaleString()
+      })
+    })
+    return ordered;
+  }
+
 
   //props for table pagination
   const paginationProps = () => ({
     page: 1,
-    totalItems: receivedMessages.length,
+    totalItems: messages.length,
     itemText: (e) => {
       console.log(e);
     },
@@ -169,228 +122,145 @@ const SMS = () => {
     selectedRows.forEach(row => {
       console.log(row);
       //find items record in the array
-      let obj = receivedMessages.find(obj => obj.id === row.id);
+      let obj = messages.find(obj => obj.id === row.id);
       console.log(obj);
 
       //find the index of items record in the array
-      let index = receivedMessages.findIndex(obj => obj.id === row.id);
-      console.log("index", index, "\n", "messages for reference", receivedMessages);
+      let index = messages.findIndex(obj => obj.id === row.id);
+      console.log("index", index, "\n", "messages for reference", messages);
 
       //remove item from records
-      receivedMessages.splice(index, 1);
-      setAlert({ loading: true });
+      messages.splice(index, 1);
+      setLoading(true);
 
-      setReceivedMessages(receivedMessages);
+
+      setMessages(messages);
       //use setimeout so table has time to refresh data
       setTimeout(() => {
-        setAlert({ loading: false });
+        setLoading(false);
       }, 1000);
     })
   };
 
-  const refreshTable = () => {
-    setAlert({ loading: true });
-    getMessages()
-      .then(items => {
-        setReceivedMessages(items.messages);
-      });
-    setTimeout(() => {
-      setAlert({ loading: false });
-    }, 3000);
-  }
-
-  const toggleView = (view) => {
-    switch (view) {
-      case "logs":
-        setAlert({ loading: true });
-        setTableView({
-          title: "Logs",
-          description: "All messages logged by the system",
-          rows: logs.logs,
-          headers: logTableHeaders
-        });
-        setAlert({ loading: false });
-        break;
-      case "received":
-        setAlert({ loading: true });
-        setTableView({
-          title: "Received Messages",
-          description: "SMS inbox, all received messages",
-          rows: receivedMessages,
-          headers: receivedTableHeaders
-        });
-        setAlert({ loading: false });
-        break;
-      default:
-        console.log("undefined case");
-    }
-  }
   return (
-    <>
-      <div className="bx--grid bx--grid--narrow">
-        <div className="bx--row">
-          <DashHeader
-            title="SMS"
-            subtitle="Logs"
-            description="Logs of all sent and received messages"
-            className="bx--col"
-          />
-        </div>
-        <div className="bx--row">
-          <Link to="new-sms" className="bx--col bx--col-lg-4">
-            <div className="sms-card">
-              <Send />
-              <p>New SMS</p>
-            </div>
-          </Link>
-
-          <Link to="bulk-sms" className="bx--col bx--col-lg-4">
-            <div className="sms-card">
-              <BulkSend />
-              <p>Bulk SMS</p>
-            </div>
-          </Link>
-
-          <Link to="#" className="bx--col bx--col-lg-4">
-            <div className="sms-card">
-              <Schedule />
-              <p> New Schedule</p>
-            </div>
-          </Link>
-
-          <Link to="#" className="bx--col bx--col-lg-4">
-            <div className="sms-card">
-              <Contacts />
-              <p>Contacts List</p>
-            </div>
-          </Link>
-        </div>
-        <div className="bx--row">
-          <div className="bx--col-lg-16">
-            <ContentSwitcher
-              selectedIndex={0}
-              onChange={evt => {
-                toggleView(evt.name)
-              }}
+    <div className="bx--grid bx--grid--narrow">
+      <div className="bx--row">
+        <DashHeader
+          title="SMS"
+          subtitle="Logs"
+          description="Logs of all sent and received messages"
+          className="bx--col"
+        />
+      </div>
+      <div className="bx--row">
+        <div className="bx--col-lg-16">
+          {loading
+            ?
+            <DataTableSkeleton
+              headers={tableHeaders}
+              rowCount={10}
+            />
+            :
+            <DataTable
+              rows={messages.slice(0, maxRows)}
+              headers={tableHeaders}
             >
-              <Switch
-                name="logs"
-                text="Logs"
-              />
-              <Switch
-                name="received"
-                text="Received"
-              />
-            </ContentSwitcher>
-            <br />
-            {alert.loading
-              ?
-              <DataTableSkeleton
-                headers={receivedTableHeaders}
-                rowCount={10}
-              />
-              :
-              <DataTable
-                rows={tableView.rows.slice(0, maxRows)}
-                headers={tableView.headers}
-              >
-                {({
-                  rows,
-                  headers,
-                  getHeaderProps,
-                  getRowProps,
-                  getSelectionProps,
-                  getToolbarProps,
-                  getBatchActionProps,
-                  getExpandHeaderProps,
-                  onInputChange,
-                  selectedRows,
-                  getTableProps,
-                  getTableContainerProps,
-                }) => (
-                    <TableContainer
-                      title={tableView.title}
-                      description={tableView.description}
-                      {...getTableContainerProps()}
-                    >
-                      <TableToolbar {...getToolbarProps()}>
-                        <TableBatchActions {...getBatchActionProps()}>
-                          <TableBatchAction
-                            tabIndex={getBatchActionProps().shouldShowBatchActions ? 0 : -1}
-                            renderIcon={Delete}
-                            onClick={() => batchDelete(selectedRows)}
-                          >
-                            Delete
-                        </TableBatchAction>
-                        </TableBatchActions>
-                        <TableToolbarContent>
-                          <TableToolbarSearch
-                            expanded={true}
-                            tabIndex={getBatchActionProps().shouldShowBatchActions ? -1 : 0}
-                            onChange={onInputChange}
-                          />
-                          <Button onClick={() => refreshTable()}>Refresh</Button>
-                        </TableToolbarContent>
-                      </TableToolbar>
-                      <Table {...getTableProps()}>
-                        <TableHead>
-                          <TableRow>
-                            <TableExpandHeader
-                              enableExpando={true}
-                              {...getExpandHeaderProps()}
-                            />
-                            {headers.map((header, i) => (
-                              <TableHeader key={i} {...getHeaderProps({ header })}>
-                                {header.header}
-                              </TableHeader>
+              {({
+                rows,
+                headers,
+                getHeaderProps,
+                getRowProps,
+                getSelectionProps,
+                getToolbarProps,
+                getBatchActionProps,
+                getExpandHeaderProps,
+                onInputChange,
+                selectedRows,
+                getTableProps,
+                getTableContainerProps,
+              }) => (
+                <TableContainer
+                  title="Messages"
+                  description="SMS inbox, all received messages"
+                  {...getTableContainerProps()}
+                >
+                  <TableToolbar {...getToolbarProps()}>
+                    <TableBatchActions {...getBatchActionProps()}>
+                      <TableBatchAction
+                        tabIndex={getBatchActionProps().shouldShowBatchActions ? 0 : -1}
+                        renderIcon={Delete}
+                        onClick={() => batchDelete(selectedRows)}
+                      >
+                        Delete
+                      </TableBatchAction>
+                    </TableBatchActions>
+                    <TableToolbarContent>
+                      <TableToolbarSearch
+                        expanded={true}
+                        tabIndex={getBatchActionProps().shouldShowBatchActions ? -1 : 0}
+                        onChange={onInputChange}
+                      />
+                      <Button onClick={() => handleGetMessages()}>Refresh</Button>
+                    </TableToolbarContent>
+                  </TableToolbar>
+                  <Table {...getTableProps()}>
+                    <TableHead>
+                      <TableRow>
+                        <TableExpandHeader
+                          enableExpando={true}
+                          {...getExpandHeaderProps()}
+                        />
+                        {headers.map((header, i) => (
+                          <TableHeader key={i} {...getHeaderProps({ header })}>
+                            {header.header}
+                          </TableHeader>
+                        ))}
+                        <TableSelectAll {...getSelectionProps()} />
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {rows.map((row, i) => (
+                        <React.Fragment key={row.id}>
+                          <TableExpandRow key={i} {...getRowProps({ row })}>
+                            {row.cells.map((cell) => (
+                              <TableCell key={cell.id}>{cell.value ? cell.value : "------"}</TableCell>
                             ))}
-                            <TableSelectAll {...getSelectionProps()} />
-                          </TableRow>
-                        </TableHead>
-                        <TableBody>
-                          {rows.map((row, i) => (
-                            <React.Fragment key={row.id}>
-                              <TableExpandRow key={i} {...getRowProps({ row })}>
-                                {row.cells.map((cell) => (
-                                  <TableCell key={cell.id}>{cell.value ? cell.value : "------"}</TableCell>
-                                ))}
-                                <TableSelectRow {...getSelectionProps({ row })} />
-                              </TableExpandRow>
-                              <TableExpandedRow colSpan={headers.length + 2}>
-                                <div className="bx--grid bx--grid--condensed">
-                                  <div className="bx--row">
-                                    <div className="bx--col-lg-2">
-                                      {headers.map((header) => (
-                                        <React.Fragment key={header.key}>
-                                          <h6>{header.header}</h6>
-                                          <br />
-                                        </React.Fragment>
-                                      ))}
-                                    </div>
-                                    <div className="bx--col-lg-14">
-                                      {row.cells.map((cell) => (
-                                        <React.Fragment key={cell.id}>
-                                          <h6>{cell.value ? cell.value : "------"}</h6>
-                                          <br />
-                                        </React.Fragment>
-                                      ))}
-                                    </div>
-                                  </div>
+                            <TableSelectRow {...getSelectionProps({ row })} />
+                          </TableExpandRow>
+                          <TableExpandedRow colSpan={headers.length + 2}>
+                            <div className="bx--grid bx--grid--condensed">
+                              <div className="bx--row">
+                                <div className="bx--col-lg-2">
+                                  {headers.map((header) => (
+                                    <React.Fragment key={header.key}>
+                                      <h6>{header.header}</h6>
+                                      <br />
+                                    </React.Fragment>
+                                  ))}
                                 </div>
-                              </TableExpandedRow>
-                            </React.Fragment>
-                          ))}
-                        </TableBody>
-                      </Table>
-                    </TableContainer>
-                  )}
-              </DataTable>
-            }
-            <Pagination {...paginationProps()} />
-          </div>
+                                <div className="bx--col-lg-14">
+                                  {row.cells.map((cell) => (
+                                    <React.Fragment key={cell.index}>
+                                      <h6>{cell.value ? cell.value : "------"}</h6>
+                                      <br />
+                                    </React.Fragment>
+                                  ))}
+                                </div>
+                              </div>
+                            </div>
+                          </TableExpandedRow>
+                        </React.Fragment>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              )}
+            </DataTable>
+          }
+          <Pagination {...paginationProps()} />
         </div>
       </div>
-    </>
+    </div>
   );
 };
 export default SMS;
