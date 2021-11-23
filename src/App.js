@@ -9,7 +9,13 @@ import { Navbar } from "components";
 const App = () => {
   return (
     <AppProvider>
-      <Toaster position="bottom-right" reverseOrder={false} />
+      <Toaster
+        position="bottom-right"
+        reverseOrder={false}
+        toastOptions={{
+          duration: 5000
+        }}
+      />
       <BrowserRouter>
         <Navbar />
         <div className="bx--col-lg-16 main-content">
