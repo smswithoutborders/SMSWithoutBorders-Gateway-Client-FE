@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { TextInput, Button, Loading } from 'carbon-components-react';
-import { DashHeader,DashCard } from '../components';
+import { DashHeader, DashCard } from '../components';
 import { CircleFilled20 as Indicator } from '@carbon/icons-react';
-import { getServiceState } from '../services/settings.service';
+import { useAppContext } from 'store';
 
 const Settings = () => {
-
+    const { serviceState } = useAppContext();
     const [API, setAPI] = useState(process.env.REACT_APP_API_URL);
     const [Deku, setDeku] = useState(process.env.REACT_APP_GATEWAY_API_URL);
-    const [serviceState, setServiceState] = useState();
     const [updateAPI, setUpdateAPI] = useState(
         {
             loading: false,
@@ -40,36 +39,7 @@ const Settings = () => {
         }, 3000);
     }
 
-    let color = serviceState === "active" ? "green" : "red";
-
-    useEffect(() => {
-        getServiceState()
-            .then(response => {
-                setServiceState(response.state);
-            })
-            .catch((error) => {
-                // Error 😨
-                if (error.response) {
-                    /*
-                     * The request was made and the server responded with a
-                     * status code that falls out of the range of 2xx
-                     */
-                    setServiceState("inactive");
-
-                } else if (error.request) {
-                    /*
-                     * The request was made but no response was received, `error.request`
-                     * is an instance of XMLHttpRequest in the browser and an instance
-                     * of http.ClientRequest in Node.js
-                     */
-                    setServiceState("failed");
-                } else {
-                    // Something happened in setting up the request and triggered an Error
-                    setServiceState("failed");
-                }
-            });
-    }, []);
-
+    let color = serviceState === "active" ? "#198038" : "#da1e28";
 
     return (
         <>
@@ -86,7 +56,7 @@ const Settings = () => {
                 <div className="bx--row">
                     <div className="bx--col">
                         <DashCard>
-                            <h4><strong>DEKU Services</strong></h4>
+                            <h4><strong>Gateway Connection Status</strong></h4>
                             <br />
                             <p>
                                 <Indicator
