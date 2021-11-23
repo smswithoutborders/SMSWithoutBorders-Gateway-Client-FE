@@ -20,7 +20,16 @@ const Modems = () => {
                 {modems?.length ? (
                     modems.map((modem) => (
                         <div className="bx--col-lg-4" key={modem.index}>
-                            <ModemCard imei={modem.imei} />
+                            <ModemCard
+                                imei={modem.imei}
+                                manufacturer={modem.manufacturer}
+                                model={modem.model}
+                                index={modem.index}
+                                operatorCode={modem.operator_code}
+                                operatorName={modem.operator_name}
+                                powerState={modem.power_state}
+                                state={modem.state}
+                            />
                         </div>
                     ))
                 ) : (
