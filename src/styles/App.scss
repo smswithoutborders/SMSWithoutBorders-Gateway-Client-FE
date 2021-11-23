@@ -110,12 +110,11 @@ a {
   color: inherit;
 }
 
-
 // 404
 .not-found-container {
   padding: $spacing-06;
 
-  h1{
+  h1 {
     @include carbon--type-style("display-04");
     font-size: carbon--type-scale(12);
   }
@@ -124,5 +123,23 @@ a {
     @include carbon--type-style("body-long-02");
     font-size: carbon--type-scale(5);
     margin: $layout-01 0 $layout-01 0;
+  }
+}
+
+.about-modal {
+  .header-group {
+    display: flex;
+    align-items: center;
+  }
+  .logo {
+    height:45px;
+    width:45px;
+    margin-right: 4px;
+    vertical-align: middle;
+  }
+  h3 {
+    font-weight: bold;
+    display: inline;
+    vertical-align: middle;
   }
 }

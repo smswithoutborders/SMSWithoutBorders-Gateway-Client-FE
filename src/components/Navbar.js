@@ -28,9 +28,9 @@ import {
 } from '@carbon/icons-react';
 
 import { useAppContext } from "store";
-
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import Logo from "../images/logo-icon-light.png";
 
 const Navbar = () => {
   const [isAboutOpen, setIsAboutOpen] = useState(false);
@@ -49,7 +49,14 @@ const Navbar = () => {
               isActive={isSideNavExpanded}
             />
             <HeaderName href="#" prefix="">
-              SMSwithoutborders
+              <img
+                src={Logo}
+                alt="SMSwithoutborders logo"
+                height={20}
+                width={20}
+              />
+              &nbsp;
+              <span> SMSwithoutborders</span>
             </HeaderName>
             <HeaderNavigation aria-label="Main Navigation">
               <HeaderMenuItem
@@ -138,15 +145,15 @@ const Navbar = () => {
             passiveModal
             onRequestClose={() => setIsAboutOpen(!isAboutOpen)}
           >
-            <ModalBody>
-              <div className="header-group">
-                <Dashboard32 className="dash-centered-icon" />
-                <span>Afkanerd</span>
+            <ModalBody className="about-modal">
+              <div classname="header-group">
+                <img
+                  src={Logo}
+                  alt="SMSwithoutborders logo"
+                  className="logo"
+                />
+                <h3>SMSwithoutborders</h3>
               </div>
-              <br />
-              <h3>
-                <strong>SMSwithoutborders</strong>
-              </h3>
               <br />
               <div className="version-number">
                 <p>Version number</p>
