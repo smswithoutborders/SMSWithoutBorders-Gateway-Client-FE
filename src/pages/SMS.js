@@ -106,9 +106,7 @@ const SMS = () => {
   const paginationProps = () => ({
     page: 1,
     totalItems: messages.length,
-    itemText: (e) => {
-      console.log(e);
-    },
+    itemText: (e) => {},
     pageSize: 10,
     pageSizes: [10, 20, 30, 40, 50, 100],
     onChange: (e) => {
@@ -120,20 +118,11 @@ const SMS = () => {
 
   const batchDelete = (selectedRows) => {
     selectedRows.forEach(row => {
-      console.log(row);
-      //find items record in the array
-      let obj = messages.find(obj => obj.id === row.id);
-      console.log(obj);
-
       //find the index of items record in the array
       let index = messages.findIndex(obj => obj.id === row.id);
-      console.log("index", index, "\n", "messages for reference", messages);
-
       //remove item from records
       messages.splice(index, 1);
       setLoading(true);
-
-
       setMessages(messages);
       //use setimeout so table has time to refresh data
       setTimeout(() => {
