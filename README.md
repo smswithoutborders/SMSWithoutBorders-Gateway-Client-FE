@@ -9,7 +9,7 @@ Quick start guide to get the dashboard *running*:
 Installs all dependencies
 ### Set env variables
 
-The .env file in project root contains all modifiable system variables.
+Copy example.env to .env file in project root contains all modifiable system variables.
 
 ```
 SASS_PATH="node_modules"
