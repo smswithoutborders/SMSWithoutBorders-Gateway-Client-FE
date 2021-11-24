@@ -11,9 +11,9 @@ import { getModems } from "../services/api.service";
 
 const AppContext = createContext();
 const useAppContext = () => useContext(AppContext);
+const MODEM_POLL_INTERVAL = process.env.REACT_APP_MODEM_POLL_INTERVAL;
 
 const AppProvider = ({ children }) => {
-
     const [loading, setLoading] = useState(false);
     const [serviceState, setServiceState] = useState('inactive');
     const [modems, setModems] = useState([]);
@@ -22,6 +22,9 @@ const AppProvider = ({ children }) => {
         setLoading(true);
         getModems()
             .then((response) => {
+                if (!response.data.length) {
+                    toast.error("No modems found. Please connect them and restart your gateway")
+                }
                 setModems(response.data);
                 setServiceState('active');
                 setLoading(false);
@@ -41,7 +44,7 @@ const AppProvider = ({ children }) => {
         const interval = setInterval(() => {
             getConnectedModems();
             toast.success("refreshed modems list");
-        }, (1000 * 60 * 5));
+        }, MODEM_POLL_INTERVAL);
         return () => clearInterval(interval);
     }, []);
 

@@ -10,6 +10,13 @@ Installs all dependencies
 ### Set env variables
 
 The .env file in project root contains all modifiable system variables.
+
+```
+SASS_PATH="node_modules"
+REACT_APP_GATEWAY_API_URL="http://localhost:5000"
+REACT_APP_MODEM_POLL_INTERVAL=50000
+PORT=18500
+```
 ### `yarn start`
 
 Runs the app in the development mode.
