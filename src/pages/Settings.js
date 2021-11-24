@@ -6,16 +6,8 @@ import { useAppContext } from 'store';
 
 const Settings = () => {
     const { serviceState } = useAppContext();
-    const [API, setAPI] = useState(process.env.REACT_APP_API_URL);
-    const [Deku, setDeku] = useState(process.env.REACT_APP_GATEWAY_API_URL);
-    const [updateAPI, setUpdateAPI] = useState(
-        {
-            loading: false,
-            editing: false
-        }
-    );
-
-    const [updateDeku, setUpdateDeku] = useState(
+    const [gateway, setGateway] = useState(process.env.REACT_APP_GATEWAY_API_URL);
+    const [updateGateway, setUpdateGateway] = useState(
         {
             loading: false,
             editing: false
@@ -72,63 +64,22 @@ const Settings = () => {
                 <div className="bx--row">
                     <div className="bx--col">
                         <DashCard>
-                            <h4><strong>API URL</strong></h4>
+                            <h4><strong>Gateway API URL</strong></h4>
                             <br />
-                            {updateAPI.editing ?
-                                <TextInput
-                                    id="api-url-input"
-                                    defaultValue={API}
-                                    warn={updateAPI.editing}
-                                    warnText="This will change the currently set value"
-                                    labelText="Edit URL"
-                                    onChange={evt => setAPI(evt.target.value)}
-                                />
-                                :
-                                <p>{API}</p>
-                            }
-                            <br />
-                            {updateAPI.loading ?
-                                <>
-                                    <Loading
-                                        description="loading"
-                                        withOverlay={false}
-                                        small
-                                        className="centered-icon"
-                                    />
-                                    <span> saving</span>
-                                </>
-                                :
-                                <Button
-                                    size="sm"
-                                    kind="secondary"
-                                    onClick={() => editUrl(updateAPI, setUpdateAPI)}
-                                >
-                                    {updateAPI.editing ? "Save" : "Edit"}
-                                </Button>
-                            }
-                        </DashCard>
-                    </div>
-                </div>
-
-                <div className="bx--row">
-                    <div className="bx--col">
-                        <DashCard>
-                            <h4><strong>Deku API URL</strong></h4>
-                            <br />
-                            {updateDeku.editing ?
+                            {updateGateway.editing ?
                                 <TextInput
                                     id="deku-url-input"
-                                    defaultValue={Deku}
-                                    warn={updateDeku.editing}
+                                    defaultValue={gateway}
+                                    warn={updateGateway.editing}
                                     warnText="This will change the currently set value"
                                     labelText="Edit URL"
-                                    onChange={evt => setDeku(evt.target.value)}
+                                    onChange={evt => setGateway(evt.target.value)}
                                 />
                                 :
-                                <p>{Deku}</p>
+                                <p>{gateway}</p>
                             }
                             <br />
-                            {updateDeku.loading ?
+                            {updateGateway.loading ?
                                 <>
                                     <Loading
                                         description="loading"
@@ -142,9 +93,9 @@ const Settings = () => {
                                 <Button
                                     size="sm"
                                     kind="secondary"
-                                    onClick={() => editUrl(updateDeku, setUpdateDeku)}
+                                    onClick={() => editUrl(updateGateway, setUpdateGateway)}
                                 >
-                                    {updateDeku.editing ? "Save" : "Edit"}
+                                    {updateGateway.editing ? "Save" : "Edit"}
                                 </Button>
                             }
                         </DashCard>
