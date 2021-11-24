@@ -7,7 +7,7 @@ import React,
 } from "react";
 import toast from "react-hot-toast";
 import { Loading } from "carbon-components-react";
-import { getModems } from "../services/api.service";
+import { getModems, getStatus } from "../services/api.service";
 
 const AppContext = createContext();
 const useAppContext = () => useContext(AppContext);
@@ -27,7 +27,6 @@ const AppProvider = ({ children }) => {
                     toast.error("No modems found. Please connect them and restart your gateway")
                 }
                 setModems(response.data);
-                setServiceState('active');
                 setLoading(false);
             })
             .catch((error) => {
@@ -40,11 +39,26 @@ const AppProvider = ({ children }) => {
             });
     }
 
+    function getApiStatus() {
+        setLoading(true);
+        getStatus()
+            .then((response) => {
+                setServiceState(response.data);
+                setLoading(false);
+            })
+            .catch(() => {
+                toast.error("Your Gateway may be disconnected check if its running");
+                setLoading(false);
+            });
+    }
+
+
     function handleSetDefaultModem(index) {
         setDefaultModem(index);
     }
 
     useEffect(() => {
+        getApiStatus();
         getConnectedModems();
         const interval = setInterval(() => {
             getConnectedModems();

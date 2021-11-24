@@ -2,6 +2,10 @@ import axios from 'axios';
 
 axios.defaults.baseURL = process.env.REACT_APP_GATEWAY_API_URL;
 
+export function getStatus() {
+    return axios.get("/system/state")
+}
+
 export function getModems() {
     return axios.get("/modems")
 }
