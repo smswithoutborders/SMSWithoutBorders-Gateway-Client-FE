@@ -32,7 +32,7 @@ const TextAreaProps = {
 const selectProps = {
     inline: false,
     invalid: false,
-    invalidText: 'Please select a sending device',
+    invalidText: 'Please select a sending device, make sure you have at least one set as default',
     labelText: "Modem",
     helperText: 'This device will be used to send the message'
 };
@@ -41,9 +41,10 @@ const selectProps = {
 const NewSMS = () => {
     const [receiver, setReceiver] = useState();
     const [message, setMessage] = useState();
-    const [device, setDevice] = useState();
     const [loading, setLoading] = useState(false);
-    const { modems } = useAppContext();
+    const { modems, defaultModem } = useAppContext();
+    const [device, setDevice] = useState(defaultModem);
+
 
     const handleSend = (evt) => {
         evt.preventDefault();
@@ -93,7 +94,7 @@ const NewSMS = () => {
                             <Select
                                 {...selectProps}
                                 id="select-1"
-                                defaultValue="placeholder-item"
+                                defaultValue={device || "placeholder-item"}
                                 onChange={(evt) => setDevice(evt.target.value)}
                                 invalid={!device}
                             >
@@ -107,7 +108,10 @@ const NewSMS = () => {
                                     <SelectItem
                                         key={modem.index}
                                         value={modem.index}
-                                        text={`${modem.manufacturer} ${modem.model} - ${modem.operator_name}(${modem.operator_code})`}
+                                        text={`${modem.manufacturer} ${modem.model} -
+                                         ${modem.operator_name || "Operator N/A"}
+                                         (${modem.operator_code || "Operator Code N/A"})
+                                         `}
                                     />
                                 ))}
                             </Select>
