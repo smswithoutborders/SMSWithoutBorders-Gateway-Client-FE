@@ -17,6 +17,7 @@ const AppProvider = ({ children }) => {
     const [loading, setLoading] = useState(false);
     const [serviceState, setServiceState] = useState('inactive');
     const [modems, setModems] = useState([]);
+    const [defaultModem, setDefaultModem] = useState({})
 
     function getConnectedModems() {
         setLoading(true);
@@ -39,6 +40,10 @@ const AppProvider = ({ children }) => {
             });
     }
 
+    function handleSetDefaultModem(index) {
+        setDefaultModem(index);
+    }
+
     useEffect(() => {
         getConnectedModems();
         const interval = setInterval(() => {
@@ -52,6 +57,8 @@ const AppProvider = ({ children }) => {
         loading,
         modems,
         serviceState,
+        defaultModem,
+        handleSetDefaultModem,
         getConnectedModems
     }
 

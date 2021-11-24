@@ -67,6 +67,10 @@ $carbon--theme: $carbon--theme--g10;
   }
   .modem-card__body {
     text-align: center;
+    p {
+      margin-top: math.div($layout-01, 2);
+      margin-bottom: math.div($layout-01, 2);
+    }
   }
 
   .modem-card__footer {
@@ -76,7 +80,7 @@ $carbon--theme: $carbon--theme--g10;
     }
     display: flex;
     justify-content: space-around;
-    margin-top: $layout-03;
+    margin-top: $layout-02;
     button {
       width: 50%;
     }
@@ -132,8 +136,8 @@ a {
     align-items: center;
   }
   .logo {
-    height:45px;
-    width:45px;
+    height: 45px;
+    width: 45px;
     margin-right: 4px;
     vertical-align: middle;
   }
