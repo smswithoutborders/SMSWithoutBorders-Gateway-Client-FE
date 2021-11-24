@@ -37,10 +37,8 @@ const AppProvider = ({ children }) => {
     }
 
     useEffect(() => {
-        if (!modems.length) {
-            getConnectedModems();
-        }
-    }, [modems]);
+        getConnectedModems();
+    }, []);
 
     const sharedState = {
         loading,

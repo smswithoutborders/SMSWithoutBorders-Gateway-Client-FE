@@ -146,7 +146,7 @@ const Navbar = () => {
             onRequestClose={() => setIsAboutOpen(!isAboutOpen)}
           >
             <ModalBody className="about-modal">
-              <div classname="header-group">
+              <div className="header-group">
                 <img
                   src={Logo}
                   alt="SMSwithoutborders logo"
