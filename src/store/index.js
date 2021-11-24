@@ -38,6 +38,11 @@ const AppProvider = ({ children }) => {
 
     useEffect(() => {
         getConnectedModems();
+        const interval = setInterval(() => {
+            getConnectedModems();
+            toast.success("refreshed modems list");
+        }, (1000 * 60 * 5));
+        return () => clearInterval(interval);
     }, []);
 
     const sharedState = {
