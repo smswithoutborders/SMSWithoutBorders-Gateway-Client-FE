@@ -11,7 +11,6 @@ import { getModems, getStatus } from "../services/api.service";
 
 const AppContext = createContext();
 const useAppContext = () => useContext(AppContext);
-const MODEM_POLL_INTERVAL = process.env.REACT_APP_MODEM_POLL_INTERVAL;
 
 const AppProvider = ({ children }) => {
     const [loading, setLoading] = useState(false);
@@ -39,6 +38,23 @@ const AppProvider = ({ children }) => {
             });
     }
 
+    function refreshModems() {
+        getModems()
+            .then((response) => {
+                if (!response.data.length) {
+                    toast.error("No modems found. Please connect them and restart your gateway")
+                }
+                setModems(response.data);
+            })
+            .catch((error) => {
+                if (error.response) {
+                    toast.error("Could not fetch connected modems, check your Gateway connection");
+                } else {
+                    toast.error("Your Gateway may be disconnected");
+                }
+            });
+    }
+
     function getApiStatus() {
         setLoading(true);
         getStatus()
@@ -52,7 +68,6 @@ const AppProvider = ({ children }) => {
             });
     }
 
-
     function handleSetDefaultModem(index) {
         setDefaultModem(index);
     }
@@ -60,12 +75,14 @@ const AppProvider = ({ children }) => {
     useEffect(() => {
         getApiStatus();
         getConnectedModems();
-        const interval = setInterval(() => {
-            getConnectedModems();
-            toast.success("refreshed modems list");
-        }, MODEM_POLL_INTERVAL);
-        return () => clearInterval(interval);
     }, []);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            refreshModems();
+        }, 3000);
+        return () => clearInterval(interval);
+    })
 
     const sharedState = {
         loading,
