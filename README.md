@@ -4,33 +4,47 @@
 
 Quick start guide to get the dashboard *running*:
 
-### `yarn install`
+### Install dependencies
 
-Installs all dependencies
+```
+yarn install
+```
 ### Set env variables
 
-Copy example.env to .env file in project root contains all modifiable system variables.
+Create a .env file from the example.env template
 
 ```
-SASS_PATH="node_modules"
-REACT_APP_GATEWAY_API_URL="http://localhost:5000"
-PORT=18500
+cp example.env .env
 ```
-### `yarn start`
 
-Runs the app in the development mode.
+.env file contains all modifiable system variables. Below are the defaults
 
-Open [http://localhost:18500](http://localhost:18500) to view it in the browser.
+```
+SASS_PATH="node_modules" /* used by the internal sass compiler */
+REACT_APP_GATEWAY_API_URL="http://localhost:5000" /* address for your local gateway */
+PORT=18500  /* local development port */
+```
+### Start development server
+
+```
+yarn start
+```
+
+Open [http://localhost:18500](http://localhost:18500) to view dashboard in the browser.
 
 The page will reload if you make changes.
 
 You will also see any lint errors in the console.
 
-### `yarn build`
+### Build for production
 
-Builds the app for production
+```
+yarn build
+```
 
-## Built With
+## Open source tools used
+
+Here are some of the tools and libraries we use for development
 
 - [Carbon Design System](https://carbondesignsystem.com)
 
@@ -38,9 +52,9 @@ Builds the app for production
 
 - [Carbon Charts](https://github.com/carbon-design-system/carbon-charts)
 
-- [Carbon Icons](https://github.com/carbon-design-system/carbon-*icons*)
+- [Carbon Icons](https://github.com/carbon-design-system/carbon-icons)
 
-- [React Icons](https://react-icons.github.io)
+- [React Icons](https://react-icons.github.io/react-icons)
 
 - [React Router](https://reactrouter.com)
 
