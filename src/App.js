@@ -22,7 +22,7 @@ const App = () => {
           <Routes>
             <Route exact path="/" element={<Metrics />} />
             <Route exact path="/logs/:index" element={<SMS />} />
-            <Route exact path="/new-sms" element={<NewSMS />} />
+            <Route exact path="/send/:index" element={<NewSMS />} />
             <Route exact path="/modems" element={<Modems />} />
             <Route exact path="/settings" element={<Settings />} />
             <Route path="*" element={<NotFound />} />

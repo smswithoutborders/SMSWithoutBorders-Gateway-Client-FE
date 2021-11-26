@@ -49,7 +49,7 @@ $carbon--theme: $carbon--theme--g10;
 
 .modem-card {
   background-color: $ui-01;
-  padding: $spacing-06;
+  padding: $spacing-05;
   border-radius: $spacing-03;
   margin-bottom: $layout-03;
   &:hover {
@@ -80,7 +80,7 @@ $carbon--theme: $carbon--theme--g10;
     }
     display: flex;
     justify-content: space-around;
-    margin-top: $layout-02;
+    margin-top: $layout-01;
     button {
       width: 50%;
     }

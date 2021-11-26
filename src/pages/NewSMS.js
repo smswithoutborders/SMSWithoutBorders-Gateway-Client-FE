@@ -6,13 +6,11 @@ import {
     TextArea,
     Button,
     Loading,
-    Select,
-    SelectItem
 } from 'carbon-components-react';
 import { Send32 } from '@carbon/icons-react';
 import { DashHeader } from '../components';
 import { sendMessage } from '../services/api.service';
-import { useAppContext } from 'store';
+import { useParams, useNavigate } from "react-router-dom";
 import toast from 'react-hot-toast';
 
 const TextInputProps = {
@@ -29,27 +27,24 @@ const TextAreaProps = {
     rows: 8,
 };
 
-const selectProps = {
-    inline: false,
-    invalid: false,
-    invalidText: 'Please select a sending device, make sure you have at least one set as default',
-    labelText: "Modem",
-    helperText: 'This device will be used to send the message'
-};
 
 
 const NewSMS = () => {
     const [receiver, setReceiver] = useState();
     const [message, setMessage] = useState();
     const [loading, setLoading] = useState(false);
-    const { modems, defaultModem } = useAppContext();
-    const [device, setDevice] = useState(defaultModem);
-
-
+    const { index } = useParams();
+    const navigate = useNavigate();
+  
+    if (!index) {
+      toast.error("No modem selected");
+      navigate(-1);
+    }
+  
     const handleSend = (evt) => {
         evt.preventDefault();
         setLoading(true);
-        sendMessage(device, receiver, message)
+        sendMessage(index, receiver, message)
             .then(() => {
                 toast.success("message sent")
             })
@@ -90,33 +85,6 @@ const NewSMS = () => {
                             />
                         </FormGroup>
 
-                        <FormGroup legendText="">
-                            <Select
-                                {...selectProps}
-                                id="select-1"
-                                defaultValue={device || "placeholder-item"}
-                                onChange={(evt) => setDevice(evt.target.value)}
-                                invalid={!device}
-                            >
-                                <SelectItem
-                                    disabled
-                                    hidden
-                                    value="placeholder-item"
-                                    text="select a device"
-                                />
-                                {modems?.map((modem) => (
-                                    <SelectItem
-                                        key={modem.index}
-                                        value={modem.index}
-                                        text={`${modem.manufacturer} ${modem.model} -
-                                         ${modem.operator_name || "Operator N/A"}
-                                         (${modem.operator_code || "Operator Code N/A"})
-                                         `}
-                                    />
-                                ))}
-                            </Select>
-                        </FormGroup>
-
                         {loading ? (
                             <>
                                 <Loading
@@ -131,7 +99,7 @@ const NewSMS = () => {
                             <Button type="submit"
                                 kind="primary"
                                 renderIcon={Send32}
-                                disabled={!device}
+                                disabled={!index}
                             >
                                 Send
                             </Button>

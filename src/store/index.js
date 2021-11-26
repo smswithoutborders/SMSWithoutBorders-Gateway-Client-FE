@@ -16,7 +16,6 @@ const AppProvider = ({ children }) => {
     const [loading, setLoading] = useState(false);
     const [serviceState, setServiceState] = useState('inactive');
     const [modems, setModems] = useState([]);
-    const [defaultModem, setDefaultModem] = useState()
 
     function getConnectedModems() {
         setLoading(true);
@@ -68,10 +67,6 @@ const AppProvider = ({ children }) => {
             });
     }
 
-    function handleSetDefaultModem(index) {
-        setDefaultModem(index);
-    }
-
     useEffect(() => {
         getApiStatus();
         getConnectedModems();
@@ -88,8 +83,6 @@ const AppProvider = ({ children }) => {
         loading,
         modems,
         serviceState,
-        defaultModem,
-        handleSetDefaultModem,
         getConnectedModems
     }
 
@@ -100,5 +93,7 @@ const AppProvider = ({ children }) => {
     )
 }
 
-
-export { AppProvider, useAppContext }
+export {
+    AppProvider,
+    useAppContext
+}

@@ -6,14 +6,11 @@ import { Button } from 'carbon-components-react';
 const Modems = () => {
     const {
         modems,
-        defaultModem,
         getConnectedModems,
-        handleSetDefaultModem
     } = useAppContext();
 
     return (
-        <div className="bx--grid bx--grid--narrow">
-
+        <div className="bx--grid">
             <div className="bx--row">
                 <DashHeader
                     title="Modem"
@@ -35,8 +32,6 @@ const Modems = () => {
                                 operatorName={modem.operator_name}
                                 powerState={modem.power_state}
                                 state={modem.state}
-                                isDefault={defaultModem === modem.index}
-                                setAsDefault={handleSetDefaultModem}
                             />
                         </div>
                     ))
