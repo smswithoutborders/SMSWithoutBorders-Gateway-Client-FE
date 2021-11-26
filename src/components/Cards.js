@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { GiWifiRouter } from 'react-icons/gi';
 import { SiHuawei } from 'react-icons/si';
-import { Button, Tag } from 'carbon-components-react';
+import { Button } from 'carbon-components-react';
 import { useNavigate } from "react-router-dom";
+import { Send16 } from "@carbon/icons-react"
 
 export const DashCard = ({ children }) => {
     return (
@@ -29,9 +30,7 @@ export const ModemCard = (props) => {
         operatorCode,
         operatorName,
         powerState,
-        state,
-        isDefault,
-        setAsDefault
+        state
     } = props
 
     const navigate = useNavigate();
@@ -50,16 +49,13 @@ export const ModemCard = (props) => {
                 <div className="modem-card__body">
                     <p>{operatorName}</p>
                     <p>{imei}</p>
-                    {isDefault ? (
-                        <Tag type="green">default device</Tag>
-                    ) : (
-                        <Button
-                            kind="ghost"
-                            onClick={() => setAsDefault(index)}
-                        >
-                            set as default
-                        </Button>
-                    )}
+                    <Button
+                        kind="ghost"
+                        renderIcon={Send16}
+                        onClick={() => navigate(`/send/${index}`)}
+                    >
+                        send sms
+                    </Button>
                 </div>
             ) : (
                 <div className="modem-card__body" style={{ textAlign: "left" }}>
@@ -99,7 +95,5 @@ ModemCard.propTypes = {
     operatorCode: PropTypes.string.isRequired,
     operatorName: PropTypes.string.isRequired,
     powerState: PropTypes.string.isRequired,
-    state: PropTypes.string.isRequired,
-    isDefault: PropTypes.bool.isRequired,
-    setAsDefault: PropTypes.func.isRequired
+    state: PropTypes.string.isRequired
 }
