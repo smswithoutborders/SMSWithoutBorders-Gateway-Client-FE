@@ -72,12 +72,6 @@ const Navbar = () => {
               >
                 Modems
               </HeaderMenuItem>
-              <HeaderMenuItem
-                element={Link}
-                to="/new-sms"
-              >
-                New SMS
-              </HeaderMenuItem>
             </HeaderNavigation>
             <HeaderGlobalBar>
               <HeaderGlobalAction aria-label={"Gateway Service " + serviceState}>
@@ -106,12 +100,6 @@ const Navbar = () => {
                   Dashboard
                 </SideNavLink>
                 <SideNavMenu large renderIcon={Send} title="Logs">
-                  <SideNavMenuItem
-                    element={Link}
-                    to="/new-sms"
-                  >
-                    <Send className="dash-centered-icon" /> New SMS
-                  </SideNavMenuItem>
                   <SideNavMenuItem
                     element={Link}
                     to="/bulk-sms"

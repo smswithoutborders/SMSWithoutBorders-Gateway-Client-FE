@@ -106,7 +106,7 @@ const SMS = () => {
   const paginationProps = () => ({
     page: 1,
     totalItems: messages.length,
-    itemText: (e) => {},
+    itemText: (e) => { },
     pageSize: 10,
     pageSizes: [10, 20, 30, 40, 50, 100],
     onChange: (e) => {
@@ -229,7 +229,7 @@ const SMS = () => {
                                 </div>
                                 <div className="bx--col-lg-14">
                                   {row.cells.map((cell) => (
-                                    <React.Fragment key={cell.index}>
+                                    <React.Fragment key={cell.id}>
                                       <h6>{cell.value ? cell.value : "------"}</h6>
                                       <br />
                                     </React.Fragment>
