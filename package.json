@@ -1,46 +1,24 @@
 {
-  "name": "smswithoutborders",
+  "name": "smswithoutborders-gateway-client-fe",
   "version": "0.1.0",
   "private": true,
-  "dependencies": {
-    "@carbon/charts": "^0.52.2",
-    "@carbon/charts-react": "^0.52.2",
-    "axios": "^0.24.0",
-    "carbon-components": "^10.48.0",
-    "carbon-components-react": "^7.48.1",
-    "carbon-icons": "^7.0.7",
-    "d3": "^7.1.1",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-hot-toast": "^2.1.1",
-    "react-icons": "^4.3.1",
-    "react-router-dom": "^6.0.2",
-    "react-scripts": "^4.0.3",
-    "sass": "^1.43.4"
-  },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "dev": "next dev -p ${PORT-18500}",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+  "dependencies": {
+    "next": "12.3.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "devDependencies": {}
+  "devDependencies": {
+    "@types/node": "18.8.3",
+    "@types/react": "18.0.21",
+    "@types/react-dom": "18.0.6",
+    "eslint": "8.24.0",
+    "eslint-config-next": "12.3.1",
+    "typescript": "4.8.4"
+  }
 }
