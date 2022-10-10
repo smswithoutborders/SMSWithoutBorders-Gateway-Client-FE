@@ -6,3 +6,8 @@ export async function getStatus() {
   const { data } = await axios.get("/system/state");
   return data;
 }
+
+export async function getModems() {
+  const { data } = await axios.get("/modems");
+  return data;
+}
