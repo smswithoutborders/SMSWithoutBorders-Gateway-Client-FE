@@ -1,8 +1,21 @@
 import { Fragment } from "react";
 import type { NextPage } from "next";
 import Head from "next/head";
+import { useQuery } from "@tanstack/react-query";
+import { getStatus } from "../utils/api";
+import Spinner from "../components/Spinner";
+import ErrorAlert from "../components/ErrorAlert";
 
 const Home: NextPage = () => {
+  const {
+    data: status,
+    isLoading,
+    isError,
+    refetch,
+  } = useQuery(["status"], getStatus);
+
+  if (isLoading) return <Spinner />;
+  if (isError) return <ErrorAlert callBack={refetch} />;
   return (
     <Fragment>
       <Head>
@@ -16,7 +29,7 @@ const Home: NextPage = () => {
           <div className="card-body">
             <h2 className="card-title">Gateway status</h2>
             <span className="my-4 text-4xl font-bold text-center text-success">
-              ONLINE
+              {status ?? "N/A"}
             </span>
           </div>
         </div>
