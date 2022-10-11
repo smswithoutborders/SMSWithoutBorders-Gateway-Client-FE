@@ -1,7 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
+import { Fragment } from "react";
 import Link from "next/link";
+import { useQuery } from "@tanstack/react-query";
+import { getState } from "../utils/api";
+import { BsArrowUp, BsArrowDown } from "react-icons/bs";
 
 const Navbar = () => {
+  const { data: state = {} } = useQuery(["state"], getState);
   return (
     <div className="shadow navbar bg-base-100">
       <div className="navbar-start">
@@ -36,20 +41,17 @@ const Navbar = () => {
                 <a>Modems</a>
               </Link>
             </li>
-            <li>
-              <Link href="/messaging">
-                <a>Messaging</a>
-              </Link>
-            </li>
           </ul>
         </div>
         <div className="flex items-center space-x-2">
           <div className="avatar">
-            <div className="rounded-full w-7">
+            <div className="w-6 rounded-full md:w-7">
               <img src="/assets/icons/logo-icon-light.png" alt="logo" />
             </div>
           </div>
-          <a className="text-xl font-bold normal-case">SMSWithoutBorders</a>
+          <a className="text-base font-bold normal-case md:text-xl">
+            SMSWithoutBorders
+          </a>
         </div>
       </div>
       <div className="hidden navbar-center lg:flex">
@@ -64,23 +66,34 @@ const Navbar = () => {
               <a>Modems</a>
             </Link>
           </li>
-          <li>
-            <Link href="/messaging">
-              <a>Messaging</a>
-            </Link>
-          </li>
         </ul>
       </div>
-      <div className="flex space-x-2 navbar-end item-center">
-        <input
-          type="radio"
-          aria-label="status indicator"
-          className="checked:bg-green-500 radio radio-sm"
-          checked
-        />
-        <label htmlFor="gateway-status" className="hidden md:block">
-          online
-        </label>
+      <div className="flex mr-2 space-x-2 navbar-end">
+        {Object.keys(state).map((item, idx) => (
+          <Fragment key={idx}>
+            {item === "inbound" ? (
+              <div className="flex items-center">
+                <BsArrowDown
+                  title={state[item]}
+                  className={
+                    state[item] === "active" ? "text-success" : "text-error"
+                  }
+                />
+                <span className="tracking-widest uppercase">In</span>
+              </div>
+            ) : (
+              <div className="flex items-center">
+                <BsArrowUp
+                  title={state[item]}
+                  className={
+                    state[item] === "active" ? "text-success" : "text-error"
+                  }
+                />
+                <span className="tracking-widest uppercase">Out</span>
+              </div>
+            )}
+          </Fragment>
+        ))}
       </div>
     </div>
   );
