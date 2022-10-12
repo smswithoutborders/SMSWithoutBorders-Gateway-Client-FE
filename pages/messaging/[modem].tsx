@@ -2,8 +2,8 @@ import { FormEvent, Fragment, SyntheticEvent, useState } from "react";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import Head from "next/head";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { getMessages, sendMessage } from "../../utils/api";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { getMessages, sendMessage, deleteMessage } from "../../utils/api";
 import Spinner from "../../components/Spinner";
 import ErrorAlert from "../../components/ErrorAlert";
 import { BiMessageX } from "react-icons/bi";
@@ -20,30 +20,56 @@ type InboxMessage = {
 
 const Messaging: NextPage = () => {
   const router = useRouter();
+  const queryClient = useQueryClient();
   // modem is the modem index passed in
   const { modem } = router.query;
   const [open, setOpen] = useState<boolean>(false);
 
+  // fetch sms inbox
   const {
     data: messages = [],
     isLoading,
     isError,
     refetch,
+    remove,
   } = useQuery(["messages", modem], () => getMessages(modem));
 
-  // sending sms
+  // send messages
   const { mutate: handleSendMessage, isLoading: sending } = useMutation(
     (evt: any) => {
       evt.preventDefault();
       const formData = new FormData(evt.target);
       const data = Object.fromEntries(formData) as NewSMS;
-      return sendMessage(data, modem);
+      return sendMessage(modem, data);
     },
     {
-      onSuccess: () => toast.success("Message sent successfully"),
+      onSuccess: () => {
+        toast.success("Message sent successfully");
+        queryClient.invalidateQueries(["messages", modem]);
+      },
       onError: () => toast.error("Failed to send message, please try again"),
     }
   );
+
+  // delete messages
+  const { mutate: handleDeleteMessage, isLoading: deleting } = useMutation(
+    (id: number) => {
+      return deleteMessage(modem, id);
+    },
+    {
+      onSuccess: () => {
+        toast.success("Message deleted successfully");
+        queryClient.invalidateQueries(["messages", modem]);
+      },
+      onError: () => toast.error("Failed to delete message, please try again"),
+    }
+  );
+
+  // refresh messages
+  function handleRefresh() {
+    remove();
+    refetch();
+  }
 
   if (isLoading) return <Spinner />;
   if (isError) return <ErrorAlert callBack={refetch} />;
@@ -55,16 +81,26 @@ const Messaging: NextPage = () => {
       </Head>
 
       <section className="container max-w-full prose">
-        <div className="flex items-center justify-between">
+        <div className="flex  items-center md:justify-between flex-wrap space-y-8 md:space-y-0">
           <h1 className="my-0">Messaging</h1>
-          <button
-            className="btn btn-sm md:btn-md btn-primary modal-button"
-            onClick={() => setOpen(true)}
-          >
-            New message
-          </button>
+
+          <div className="flex items-center space-x-2">
+            <button
+              className="btn btn-ghost btn-active modal-button"
+              onClick={() => handleRefresh()}
+            >
+              refresh
+            </button>
+            <button
+              className="btn btn-primary modal-button"
+              onClick={() => setOpen(true)}
+            >
+              New message
+            </button>
+          </div>
         </div>
 
+        {/* Got no new messages */}
         {!messages.length && (
           <div className="mx-auto prose text-center border rounded-md py-8">
             <BiMessageX className="inline" size={56} />
@@ -75,6 +111,7 @@ const Messaging: NextPage = () => {
           </div>
         )}
 
+        {/* Got messages , lets see them */}
         {!open && messages.length && (
           <div className="overflow-x-auto">
             <table className="table-auto">
@@ -85,6 +122,7 @@ const Messaging: NextPage = () => {
                   <th className="p-4">Text</th>
                   <th className="p-4">Timestamp</th>
                   <th className="p-4">Type</th>
+                  <th className="p-4">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -95,6 +133,14 @@ const Messaging: NextPage = () => {
                     <td className="p-4">{message.text}</td>
                     <td className="p-4">{message.timestamp}</td>
                     <td className="p-4">{message.type}</td>
+                    <td className="p-4">
+                      <button
+                        className="btn btn-ghost text-red-500 btn-sm"
+                        onClick={() => handleDeleteMessage(message.id)}
+                      >
+                        delete
+                      </button>
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -102,6 +148,7 @@ const Messaging: NextPage = () => {
           </div>
         )}
 
+        {/* want to send a new message, lets compose it */}
         {open && (
           <div className="max-w-screen-md p-8 mx-auto prose">
             <form onSubmit={(evt) => handleSendMessage(evt)}>

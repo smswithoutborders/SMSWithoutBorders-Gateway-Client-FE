@@ -23,7 +23,14 @@ const Modems: NextPage = () => {
     isLoading,
     isError,
     refetch,
+    remove,
   } = useQuery(["modems"], getModems);
+
+  // refresh
+  function handleRefresh() {
+    remove();
+    refetch();
+  }
 
   if (isLoading) return <Spinner />;
   if (isError) return <ErrorAlert callBack={refetch} />;
@@ -40,7 +47,7 @@ const Modems: NextPage = () => {
           <div className="mx-auto prose text-center border rounded-md py-8">
             <MdUsbOff className="inline" size={56} />
             <p>No available modems</p>
-            <button className="btn btn-primary" onClick={() => refetch()}>
+            <button className="btn btn-primary" onClick={() => handleRefresh()}>
               refresh
             </button>
           </div>
@@ -59,7 +66,7 @@ const Modems: NextPage = () => {
               <p className="hidden md:block">{modem.imei}</p>
             </div>
             <button
-              className="ml-auto btn btn-sm md:btn-md btn-primary"
+              className="ml-auto btn btn-primary"
               onClick={() => router.push(`/messaging/${modem.index}`)}
             >
               messaging

@@ -17,7 +17,12 @@ export async function getMessages(modem: any) {
   return data;
 }
 
-export async function sendMessage(message: NewSMS, modem: any) {
+export async function sendMessage(modem: any, message: NewSMS) {
   const { data } = await axios.post(`/modems/${modem}/sms`, message);
+  return data;
+}
+
+export async function deleteMessage(modem: any, id: number) {
+  const { data } = await axios.delete(`/modems/${modem}/sms/${id}`);
   return data;
 }
