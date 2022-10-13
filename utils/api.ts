@@ -31,3 +31,10 @@ export async function getSettings() {
   const { data } = await axios.get("/system/configs");
   return data;
 }
+
+export async function updateSetting({ key, value, section }: any) {
+  const { data } = await axios.post(`/system/configs/sections/${section}`, {
+    [key]: value,
+  });
+  return data;
+}

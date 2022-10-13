@@ -7,13 +7,7 @@ import { getSettings } from "../utils/api";
 import { FaCogs } from "react-icons/fa";
 import Spinner from "../components/Spinner";
 import ErrorAlert from "../components/ErrorAlert";
-
-type Setting = {
-  imei: number;
-  index: string;
-  operator_code: number;
-  operator_name: string;
-};
+import SettingsList from "../components/SettingsList";
 
 const Settings: NextPage = () => {
   const router = useRouter();
@@ -53,25 +47,7 @@ const Settings: NextPage = () => {
           </div>
         )}
 
-        {Object.keys(settings).map((item: string, idx: number) => (
-          <div
-            key={idx}
-            className="max-w-full p-4 mx-auto mb-4 prose border rounded-lg shadow md:p-8"
-          >
-            <h2>{item}</h2>
-            {Object.keys(settings[item]).map((key: string, idx: number) => (
-              <div key={idx} className="flex items-center justify-between">
-                <div>
-                  <h3 className="mt-0 capitalize">
-                    {key.includes("_") ? key.split("_").join(" ") : key}
-                  </h3>
-                  <p>{settings[item][key]}</p>
-                </div>
-                <button className="btn btn-ghost">Change</button>
-              </div>
-            ))}
-          </div>
-        ))}
+        <SettingsList settings={settings} />
       </section>
     </Fragment>
   );
