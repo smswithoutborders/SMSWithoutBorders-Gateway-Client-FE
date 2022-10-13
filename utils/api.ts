@@ -32,9 +32,9 @@ export async function getSettings() {
   return data;
 }
 
-export async function updateSetting({ key, value, section }: any) {
+export async function updateSetting({ label, value, section }: any) {
   const { data } = await axios.post(`/system/configs/sections/${section}`, {
-    [key]: value,
+    [label]: value,
   });
   return data;
 }

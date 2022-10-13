@@ -1,38 +1,15 @@
 import { Fragment, useState } from "react";
 import { updateSetting } from "../utils/api";
-import {
-  useQueryClient,
-  useMutation,
-} from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
-
-type UpdatedSetting = {
-  key: string;
-  value: string;
-  section: string;
-};
 
 type SettingListItem = {
   label: string;
   value: string;
   section: string;
-  update: any;
 };
+
 const SettingsList = ({ settings }: any) => {
-  const queryClient = useQueryClient();
-
-  // send messages
-  const { mutate: handleUpdateSetting, isLoading } = useMutation(
-    (data: UpdatedSetting) => updateSetting(data),
-    {
-      onSuccess: () => {
-        toast.success("Setting updated");
-        queryClient.invalidateQueries(["settings"]);
-      },
-      onError: () => toast.error("Failed to update setting, please try again"),
-    }
-  );
-
   return (
     <Fragment>
       {Object.keys(settings).map((item: string, idx: number) => (
@@ -50,7 +27,6 @@ const SettingsList = ({ settings }: any) => {
                 label={label}
                 value={settings[item][label]}
                 section={item}
-                update={handleUpdateSetting}
               />
             </div>
           ))}
@@ -60,24 +36,28 @@ const SettingsList = ({ settings }: any) => {
   );
 };
 
-const SettingsListItem = ({
-  label,
-  value,
-  section,
-  update,
-}: SettingListItem) => {
+const SettingsListItem = ({ label, value, section }: SettingListItem) => {
+  const queryClient = useQueryClient();
   const [toggled, setToggled] = useState<boolean>(false);
   const [updatedValue, setUpdatedValue] = useState<string>(value);
 
   // update setting value
-  function handleUpdate() {
-    const data = {
-      key: label,
-      value: updatedValue,
-      section,
-    };
-    update(data);
-  }
+  const { mutate: handleUpdateSetting, isLoading } = useMutation(
+    () =>
+      updateSetting({
+        label,
+        value: updatedValue,
+        section,
+      }),
+    {
+      onSuccess: () => {
+        toast.success("Setting updated");
+        queryClient.invalidateQueries(["settings"]);
+        setToggled(false);
+      },
+      onError: () => toast.error("Failed to update setting, please try again"),
+    }
+  );
 
   return (
     <Fragment>
@@ -100,10 +80,12 @@ const SettingsListItem = ({
           />
           <div className="flex space-x-2">
             <button
-              onClick={() => handleUpdate()}
-              className="flex items-center btn btn-primary"
+              onClick={() => handleUpdateSetting()}
+              className={`flex items-center btn btn-primary ${
+                isLoading && "loading"
+              }`}
             >
-              Save
+              {isLoading ? "Saving" : "Save"}
             </button>
             <button className="btn btn-ghost" onClick={() => setToggled(false)}>
               cancel
