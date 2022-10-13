@@ -41,6 +41,11 @@ const Navbar = () => {
                 <a>Modems</a>
               </Link>
             </li>
+            <li>
+              <Link href="/settings">
+                <a>Settings</a>
+              </Link>
+            </li>
           </ul>
         </div>
         <div className="flex items-center space-x-2">
@@ -64,6 +69,11 @@ const Navbar = () => {
           <li>
             <Link href="/modems">
               <a>Modems</a>
+            </Link>
+          </li>
+          <li>
+            <Link href="/settings">
+              <a>Settings</a>
             </Link>
           </li>
         </ul>

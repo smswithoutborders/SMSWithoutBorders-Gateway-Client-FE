@@ -26,3 +26,8 @@ export async function deleteMessage(modem: any, id: number) {
   const { data } = await axios.delete(`/modems/${modem}/sms/${id}`);
   return data;
 }
+
+export async function getSettings() {
+  const { data } = await axios.get("/system/configs");
+  return data;
+}
