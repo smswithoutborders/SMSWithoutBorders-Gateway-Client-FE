@@ -3,7 +3,7 @@ import { Fragment } from "react";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
 import { getState } from "../utils/api";
-import { BsArrowUp, BsArrowDown } from "react-icons/bs";
+import { BsArrowUp, BsArrowDown, BsGithub} from "react-icons/bs";
 
 const Navbar = () => {
   const { data: state = {} } = useQuery(["state"], getState);
@@ -45,6 +45,17 @@ const Navbar = () => {
               <Link href="/settings">
                 <a>Settings</a>
               </Link>
+            </li>
+            <li>
+              <a
+                href="https://github.com/smswithoutborders"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center"
+              >
+                <BsGithub />
+                <span>GitHub</span>
+              </a>
             </li>
           </ul>
         </div>
