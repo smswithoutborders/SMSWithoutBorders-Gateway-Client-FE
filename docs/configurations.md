@@ -31,7 +31,7 @@ Below are the defaults
 ## Start development server
 
 ```bash
-yarn start
+yarn dev
 ```
 
 Open [http://localhost:18500](http://localhost:18500) to view it in the browser.
