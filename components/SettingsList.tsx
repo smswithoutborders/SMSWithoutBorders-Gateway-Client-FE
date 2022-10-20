@@ -1,7 +1,10 @@
 import { Fragment, useState } from "react";
-import { updateSetting } from "../utils/api";
+import { updateSetting, restartAPI } from "../utils/api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { setGatewayApiUrl } from "../utils/storage";
 import toast from "react-hot-toast";
+import Spinner from "./Spinner";
+import ErrorAlert from "./ErrorAlert";
 
 type SettingListItem = {
   label: string;
@@ -41,6 +44,19 @@ const SettingsListItem = ({ label, value, section }: SettingListItem) => {
   const [toggled, setToggled] = useState<boolean>(false);
   const [updatedValue, setUpdatedValue] = useState<string>(value);
 
+  // restart API after setting update
+  const {
+    mutate: handleRestart,
+    isLoading: isRestarting,
+    isError,
+  } = useMutation(restartAPI, {
+    onSuccess: () => {
+      toast.success("Gateway restarted");
+      queryClient.invalidateQueries(["settings"]);
+      setToggled(false);
+    },
+  });
+
   // update setting value
   const { mutate: handleUpdateSetting, isLoading } = useMutation(
     () =>
@@ -50,9 +66,31 @@ const SettingsListItem = ({ label, value, section }: SettingListItem) => {
         section,
       }),
     {
-      onSuccess: () => {
+      onSuccess: ({ label, value }: { label: string; value: string }) => {
+        let url = "";
         toast.success("Setting updated");
+        const settings = queryClient.getQueryData(["settings"]) as any;
+        const prevHost = settings["API"]["host"];
+        const prevPort = settings["API"]["port"];
+        // if port or host update
+        if (["port", "host"].includes(label)) {
+          if (label === "host") {
+            console.log(prevHost, value);
+            url = `http://${value}:${prevPort}`;
+          } else {
+            if (label === "port") {
+              console.log(prevPort, value);
+              url = `http://${prevHost}:${value}`;
+            }
+          }
+          setGatewayApiUrl(url);
+        }
+
         queryClient.invalidateQueries(["settings"]);
+        // restart api
+        handleRestart("inbound");
+        handleRestart("outbound");
+        // toggle view
         setToggled(false);
       },
       onError: () => toast.error("Failed to update setting, please try again"),
@@ -69,7 +107,7 @@ const SettingsListItem = ({ label, value, section }: SettingListItem) => {
           </button>
         </div>
       ) : (
-        <div className="flex flex-wrap space-y-4 md:space-y-0 items-center my-4 w-full justify-between md:space-x-4">
+        <div className="flex flex-wrap items-center justify-between w-full my-4 space-y-4 md:space-y-0 md:space-x-4">
           <input
             type="text"
             name="value"
@@ -82,7 +120,7 @@ const SettingsListItem = ({ label, value, section }: SettingListItem) => {
             <button
               onClick={() => handleUpdateSetting()}
               className={`flex items-center btn btn-primary ${
-                isLoading && "loading"
+                isLoading || (isRestarting && "loading")
               }`}
             >
               {isLoading ? "Saving" : "Save"}
