@@ -3,8 +3,6 @@ import { updateSetting, restartAPI } from "../utils/api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { setGatewayApiUrl } from "../utils/storage";
 import toast from "react-hot-toast";
-import Spinner from "./Spinner";
-import ErrorAlert from "./ErrorAlert";
 
 type SettingListItem = {
   label: string;
@@ -45,34 +43,26 @@ const SettingsListItem = ({ label, value, section }: SettingListItem) => {
   const [updatedValue, setUpdatedValue] = useState<string>(value);
 
   // restart API after setting update
-  const {
-    mutate: handleRestart,
-    isLoading: isRestarting,
-    isError,
-  } = useMutation(restartAPI, {
-    onSuccess: (_, service) => {
-      // https://react-hot-toast.com/docs/toast
-      toast.promise(
-        new Promise((resolve) => {
-          setTimeout(() => resolve(service), 60000);
-        }),
-        {
-          loading: `Waiting for service ${service} to restart`,
-          success: () => {
-            queryClient.invalidateQueries(["settings"]);
-            return `Service ${service} restarted`;
-          },
-          error: `Failed to restart ${service} service`,
-        },
-        {
-          duration: 60000,
-          success: {
-            duration: 4000,
-          },
-        }
-      );
-    },
-  });
+  const { mutateAsync: handleRestart, isLoading: isRestarting } = useMutation(
+    restartAPI,
+    {
+      onSuccess: (_, service) => {
+        // https://react-hot-toast.com/docs/toast
+        toast.promise(
+          new Promise((resolve) => {
+            setTimeout(() => resolve(service), 7500);
+          }),
+          {
+            loading: `Waiting for service ${service} to restart`,
+            success: () => {
+              return `Service ${service} restarted`;
+            },
+            error: `Failed to restart ${service} service`,
+          }
+        );
+      },
+    }
+  );
 
   // update setting value
   const { mutate: handleUpdateSetting, isLoading } = useMutation(
@@ -83,28 +73,32 @@ const SettingsListItem = ({ label, value, section }: SettingListItem) => {
         section,
       }),
     {
-      onSuccess: ({ label, value }: { label: string; value: string }) => {
-        let url = "";
+      onSuccess: async ({ label, value }: { label: string; value: string }) => {
         toast.success("Setting updated");
+        // restart api
+        await handleRestart("outbound");
+        // give time for the first service to restart so it doesnt break
+        setTimeout(async () => {
+          await handleRestart("inbound");
+          // update configs
+          queryClient.invalidateQueries(["settings"]);
+        }, 7500);
+
         const settings = queryClient.getQueryData(["settings"]) as any;
         const prevHost = settings["API"]["host"];
         const prevPort = settings["API"]["port"];
+        let url = "";
         // if port or host update
         if (["port", "host"].includes(label)) {
           if (label === "host") {
-            console.log(prevHost, value);
             url = `http://${value}:${prevPort}`;
           } else {
             if (label === "port") {
-              console.log(prevPort, value);
               url = `http://${prevHost}:${value}`;
             }
           }
           setGatewayApiUrl(url);
         }
-        // restart api
-        handleRestart("inbound");
-        handleRestart("outbound");
         // toggle view
         setToggled(false);
       },
