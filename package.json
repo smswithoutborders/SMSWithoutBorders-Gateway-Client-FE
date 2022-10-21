@@ -1,52 +1,34 @@
 {
-  "name": "c-deck",
+  "name": "smswithoutborders-gateway-client-fe",
   "version": "0.1.0",
   "private": true,
-  "dependencies": {
-    "@carbon/charts": "^0.41.64",
-    "@carbon/charts-react": "^0.41.64",
-    "@testing-library/jest-dom": "^5.12.0",
-    "@testing-library/react": "^11.2.6",
-    "@testing-library/user-event": "^13.1.8",
-    "axios": "^0.21.1",
-    "carbon-components": "^10.33.0",
-    "carbon-components-react": "^7.33.0",
-    "carbon-icons": "^7.0.7",
-    "d3": "5.x",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-icons": "^4.2.0",
-    "react-router-dom": "^5.2.0",
-    "react-scripts": "^4.0.3",
-    "sass": "^1.32.12",
-    "web-vitals": "^1.1.1"
-  },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "dev": "next dev -p ${PORT-18500}",
+    "build": "next build && next export",
+    "start": "next start",
+    "lint": "next lint"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "dependencies": {
+    "@tailwindcss/typography": "^0.5.7",
+    "@tanstack/react-query": "^4.10.1",
+    "@tanstack/react-query-devtools": "^4.10.4",
+    "autoprefixer": "^10.4.12",
+    "axios": "^1.1.2",
+    "daisyui": "^2.31.0",
+    "next": "12.3.1",
+    "postcss": "^8.4.17",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-hot-toast": "^2.4.0",
+    "react-icons": "^4.4.0",
+    "tailwindcss": "^3.1.8"
   },
   "devDependencies": {
-    "babel-plugin-transform-remove-console": "^6.9.4",
-    "yarn-upgrade-all": "^0.5.4"
+    "@types/node": "18.8.3",
+    "@types/react": "18.0.21",
+    "@types/react-dom": "18.0.6",
+    "eslint": "8.24.0",
+    "eslint-config-next": "12.3.1",
+    "typescript": "4.8.4"
   }
 }

@@ -1,58 +1,21 @@
-# **SMSwithoutborders Admin**
+<img src="https://github.com/smswithoutborders/SMSWithoutBorders-Resources/raw/master/multimedia/img/swob_logo_icon.png" align="right" width="350px"/>
 
+# SMSWithoutBorders Gateway Client UI
 
-## Setup Guide
+The Web User Interface for managing your gateway clients
 
-Quick start guide to get the dashboard *running*:
+## Documentation
 
-### `npm install or yarn install`
+1. [Configurations](docs/configurations.md)
+2. [Features](docs/features.md)
 
-Installs all dependencies
+## Contribution
 
-Note : If errors occur with npm use yarn instead
+We are thrilled to have you contribute to this project
 
-### Set env variables
+Please take a moment to read our [contributing guide](docs/contributing.md) to learn about our development process.
+You can also open an issue to discuss potential changes/additions.
 
-The .env file in project root contains all modifiable system variables.
+## Licensing
 
-### `npm start or yarn start`
-
-Runs the app in the development mode.
-
-Open [http://localhost:18500](http://localhost:18500) to view it in the browser.
-
-The page will reload if you make edits.
-
-You will also see any lint errors in the console.
-
-### `npm run build or yarn build`
-
-Builds the app for production to the `build` folder using webpack and Babel.
-
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.
-## Demo login credentials for Dashboard
-
-- Username: admin
-
-- password: admin
-## Built With
-
-- [Carbon Design Systems](https://carbondesignsystems.com)
-
-- [Carbon Components](https://github.com/carbon-design-system/carbon)
-
-- [Carbon Charts](https://github.com/carbon-design-system/carbon-charts)
-
-- [Carbon Icons](https://github.com/carbon-design-system/carbon-*icons*)
-
-- [React Icons](https://react-icons.github.io)
-
-- [React Router](https://reactrouter.com)
-
-
-
-
-
-
+This project is licensed under the [GNU General Public License v3.0](LICENSE).
