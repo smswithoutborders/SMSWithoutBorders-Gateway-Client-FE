@@ -50,10 +50,27 @@ const SettingsListItem = ({ label, value, section }: SettingListItem) => {
     isLoading: isRestarting,
     isError,
   } = useMutation(restartAPI, {
-    onSuccess: () => {
-      toast.success("Gateway restarted");
-      queryClient.invalidateQueries(["settings"]);
-      setToggled(false);
+    onSuccess: (_, service) => {
+      // https://react-hot-toast.com/docs/toast
+      toast.promise(
+        new Promise((resolve) => {
+          setTimeout(() => resolve(service), 60000);
+        }),
+        {
+          loading: `Waiting for service ${service} to restart`,
+          success: () => {
+            queryClient.invalidateQueries(["settings"]);
+            return `Service ${service} restarted`;
+          },
+          error: `Failed to restart ${service} service`,
+        },
+        {
+          duration: 60000,
+          success: {
+            duration: 4000,
+          },
+        }
+      );
     },
   });
 
@@ -85,8 +102,6 @@ const SettingsListItem = ({ label, value, section }: SettingListItem) => {
           }
           setGatewayApiUrl(url);
         }
-
-        queryClient.invalidateQueries(["settings"]);
         // restart api
         handleRestart("inbound");
         handleRestart("outbound");
