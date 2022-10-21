@@ -17,7 +17,9 @@ export async function getState() {
 }
 
 export async function restartAPI(service: string) {
-  const { data } = await client.post(`/system/state/restart/services/${service}`);
+  const { data } = await client.post(
+    `/system/state/restart/services/${service}`
+  );
   return data;
 }
 
@@ -46,9 +48,12 @@ export async function getSettings() {
   return data;
 }
 
-export async function updateSetting({ label, value, section }: any) {
+export async function updateSetting({
+  label,
+  value,
+  section,
+}: SettingListItem) {
   await client.post(`/system/configs/sections/${section}`, {
     [label]: value,
   });
-  return { label, value };
 }

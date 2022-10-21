@@ -4,12 +4,6 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { setGatewayApiUrl } from "../utils/storage";
 import toast from "react-hot-toast";
 
-type SettingListItem = {
-  label: string;
-  value: string;
-  section: string;
-};
-
 const SettingsList = ({ settings }: any) => {
   return (
     <Fragment>
@@ -66,14 +60,9 @@ const SettingsListItem = ({ label, value, section }: SettingListItem) => {
 
   // update setting value
   const { mutate: handleUpdateSetting, isLoading } = useMutation(
-    () =>
-      updateSetting({
-        label,
-        value: updatedValue,
-        section,
-      }),
+    updateSetting,
     {
-      onSuccess: async ({ label, value }: { label: string; value: string }) => {
+      onSuccess: async (_, { label, value }: SettingListItem) => {
         toast.success("Setting updated");
         // restart api
         await handleRestart("outbound");
@@ -127,7 +116,13 @@ const SettingsListItem = ({ label, value, section }: SettingListItem) => {
           />
           <div className="flex space-x-2">
             <button
-              onClick={() => handleUpdateSetting()}
+              onClick={() =>
+                handleUpdateSetting({
+                  label,
+                  value: updatedValue,
+                  section,
+                })
+              }
               className={`flex items-center btn btn-primary ${
                 isLoading || (isRestarting && "loading")
               }`}
